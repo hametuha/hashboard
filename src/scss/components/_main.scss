@@ -1,0 +1,65 @@
+@keyframes loading-animation {
+  0%   {
+    transform: rotate(0deg);
+  }
+  50%   {
+    transform: rotate(180deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+.loading{
+  position: relative;
+  z-index: 1;
+  opacity: .4;
+  &:before{
+    position: absolute;
+    display: block;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+  }
+  &:after{
+    $size: 150px;
+    display: block;
+    z-index: 101;
+    position: absolute;
+    content: "cached";
+    font-family: 'Material Icons';
+    font-size: $size / 3 * 2;
+    left: 50%;
+    top: 50%;
+    margin-top: $size / -2;
+    margin-left: $size / -2;
+    width: $size;
+    height: $size;
+    text-align: center;
+    line-height: $size;
+    transform: translate(-50%, -50%);
+    color: #000;
+    animation: loading-animation 1.5s ease-in-out 0s infinite;
+  }
+}
+
+.hb-main{
+  &-title{
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    & + .right{
+      position: relative;
+      z-index: 11;
+    }
+  }
+  &-desc{
+    padding: 0.5em 1.5em;
+    color: $page-description-color;
+    background-color: $page-description-bg;
+  }
+}

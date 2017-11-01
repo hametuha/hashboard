@@ -1,0 +1,29 @@
+$main-background-color: #fff;
+
+main{
+  background: $main-background-color;
+  padding-left: 300px;
+  @media #{$medium-and-down} {
+    padding-left: 0;
+  }
+}
+
+.hb-container{
+  $pad: 1.5rem;
+  padding: 0 $pad;
+  @media #{$medium-and-down} {
+    padding: 0 $pad / 2;
+  }
+
+}
+
+.hb-main{
+  padding: 1.5rem;
+  @media #{$medium-and-down} {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
+.row{
+  @extend %clearfix;
+}

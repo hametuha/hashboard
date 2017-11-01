@@ -1,0 +1,36 @@
+.hb-fieldset{
+  $fieldset-color: #777;
+  padding: 0.35em 0 0.75em;
+  @extend %hb-row;
+  border-color: $fieldset-color;
+  margin-bottom: 40px;
+  &-description{
+    color: $fieldset-color;
+    padding: 0 0.75rem 0.5rem;
+  }
+  legend {
+    margin-left: 0.75rem;
+    color: $fieldset-color;
+    padding: 5px;
+    font-weight: bold;
+  }
+}
+
+.hb-input-description{
+  margin: 0.2em 0 0.5em;
+  color: #9e9e9e;
+  font-size: 0.85em;
+}
+
+.toast{
+  .material-icons{
+    vertical-align:middle;
+    margin-right: 10px;
+  }
+  .success{
+    color: $success-color;
+  }
+  .error{
+    color: $error-color;
+  }
+}

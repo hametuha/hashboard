@@ -1,0 +1,18 @@
+.hb-site{
+  &-info{
+    padding: 20px 20px 40px;
+  }
+
+  &-icon{
+    max-width: $site-icon-max-width;
+    width: auto;
+    height: auto;
+    margin: 0 auto 10px;
+    display: block;
+  }
+  &-name{
+    display: block;
+    text-align: center;
+    color: $site-title-color;
+  }
+}
