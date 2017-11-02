@@ -34,3 +34,49 @@
     color: $error-color;
   }
 }
+
+#hb-password-strength{
+  margin: 1em 0;
+  padding: 1em;
+  font-size: 0.85em;
+  color: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  span:before{
+    display: inline;
+    content: "sentiment_neutral";
+    font-family: "Material Icons";
+    margin-right: 0.2em;
+    font-size: 2em;
+    vertical-align: middle;
+  }
+  &.weak{
+    color: $error-color;
+    border-color: $error-color;
+    span:before{
+      content: "sentiment_very_dissatisfied";
+    }
+  }
+  &.strong{
+    color: $success-color;
+    border-color: $success-color;
+    span:before{
+      content: "sentiment_very_satisfied";
+    }
+  }
+  &.good{
+    color: $primary-color;
+    border-color: $primary-color;
+    span:before{
+      content: "sentiment_satisfied";
+    }
+  }
+  &.bad{
+    color: $warning-color;
+    border-color: $warning-color;
+    span:before{
+      content: "sentiment_dissatisfied";
+    }
+  }
+
+}

@@ -3,6 +3,7 @@
 namespace Hametuha\Hashboard\Screens;
 
 
+use Hametuha\Hashboard;
 use Hametuha\Hashboard\Pattern\Screen;
 use Hametuha\Hashboard\Service\UserMail;
 
@@ -74,9 +75,11 @@ class Account extends Screen {
 					'password' => [
 						'label' => __( 'Password', 'hashboard' ),
 						'description' => __( 'To change password, enter new password here. If you leave blank, nothing will be changed.', 'hashboard' ),
+                        'action' => rest_url( '/hashboard/v1/user/password' ),
+                        'method' => 'POST',
                         'submit' => __( 'Save New Password', 'hashboard' ),
 						'fields' => [
-							'user_pass1' => [
+							'user_pass' => [
 								'label'       => __( 'New Password', 'hashboard' ),
 								'type'        => 'password',
 								'description' => wp_get_password_hint(),
@@ -121,6 +124,10 @@ class Account extends Screen {
 				<?php
 			}
 		}
+		if ( 'user_pass2' == $key ) {
+		    $black_lists = [ $user->user_login, current( explode( '@', $user->user_email ) ), $user->first_name, $user->last_name ];
+            printf( '<div id="hb-password-strength" data-blacklists="%s">%s<span></span></div>', esc_attr( implode(',', $black_lists) ), esc_html__( 'Password Strength: ', 'hashboard' ) );
+        }
 	}
 
 	/**
@@ -132,5 +139,12 @@ class Account extends Screen {
 	protected function get_mail_description( \WP_User $user ) {
 		$messages = sprintf( __( '<p>Your current email is <code>%s</code>. To change email, enter new one and proceed to confirmation process.</p>', 'hashboard' ), esc_html( $user->user_email ) );
 		return $messages;
+	}
+
+	/**
+	 * Footer action
+	 */
+	public function footer() {
+	    wp_enqueue_script( 'hashboard-password', Hashboard::url('/assets/js/hashboard-password.js' ), [ 'password-strength-meter' ], Hashboard::version(), true );
 	}
 }

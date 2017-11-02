@@ -47,6 +47,8 @@ class Account extends Api {
 					],
 				];
 				break;
+			case 'DELETE': // Cancel mail change
+				break;
 			default:
 				return [];
 				break;
@@ -131,7 +133,7 @@ class Account extends Api {
 		if ( 'GET' == $request->get_method() ) {
 			return true;
 		} else {
-			return current_user_can( Hashboard::get_default_capability() );
+			return parent::permission_callback( $request );
 		}
 	}
 
