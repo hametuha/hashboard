@@ -14,7 +14,7 @@ class Dashboard extends Screen {
 	}
 
 	public function label() {
-		return __( 'Dashboard', 'dashboard' );
+		return __( 'Dashboard', 'hashboard' );
 	}
 
 	public function description() {

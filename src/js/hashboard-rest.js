@@ -13,6 +13,7 @@
      * @param {String} method
      * @param {String} url
      * @param {Object} data
+     * @param {Boolean} processData
      */
     hbRest: function(method, url, data){
       method = method.toUpperCase();

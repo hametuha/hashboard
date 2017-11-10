@@ -1,6 +1,7 @@
 <?php
 namespace Hametuha;
 
+use Hametuha\Hashboard\API\Avatar;
 use Hametuha\Hashboard\Pattern\Screen;
 use Hametuha\Hashboard\Screens\Dashboard;
 use Hametuha\Hashboard\Screens\Profile;
@@ -31,6 +32,7 @@ class Hashboard extends Singleton {
 	 * Hashboard constructor.
 	 */
 	protected function init() {
+		$this->load_text_domain();
 		add_filter( 'query_vars', [ $this, 'query_vars' ] );
 		add_filter( 'rewrite_rules_array', [ $this, 'rewrite_rules' ] );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
@@ -60,6 +62,19 @@ class Hashboard extends Singleton {
 			}
 			call_user_func( [ $class_name, 'get_instance' ] );
 		}
+
+		// Enable avatar
+		Avatar::get_instance();
+	}
+
+	/**
+	 * Load text domain
+	 *
+	 * @return bool
+	 */
+	public function load_text_domain() {
+		$mo = sprintf( 'hashboard-%s.mo', get_user_locale() );
+		return load_textdomain( 'hashboard', self::dir() . '/languages/' . $mo );
 	}
 
 	/**
@@ -200,6 +215,10 @@ class Hashboard extends Singleton {
 	 */
 	public function pre_get_posts( \WP_Query &$wp_query ) {
 		if ( $wp_query->is_main_query() && ( $action = $wp_query->get( 'hashboard' ) ) ) {
+			if ( ! current_user_can( self::get_default_capability() ) ) {
+				auth_redirect();
+				exit;
+			}
 			switch ( $action ) {
 				case $this->get_prefix():
 					$slug = 'dashboard';

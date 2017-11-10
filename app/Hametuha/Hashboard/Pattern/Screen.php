@@ -192,8 +192,10 @@ abstract class Screen extends Singleton {
 			'group' => '',
 			'col'   => 1,
 			'icon'  => '',
+			'html'        => false,
 			'placeholder' => '',
             'description' => '',
+			'media_type'  => 'image',
 		], $fields );
 
 		$out = '';
@@ -207,7 +209,7 @@ abstract class Screen extends Singleton {
 		 */
 		do_action( 'hashboard_before_field_rendered', $key, $fields, $user );
 		// If HTML is set, render it.
-		if ( isset( $fields['html'] ) ) {
+		if ( $fields['html'] ) {
 			echo $fields['html'];
 		} else {
 			if ( $fields[ 'src' ] ) {
@@ -242,8 +244,28 @@ abstract class Screen extends Singleton {
 						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : ''
 					);
 					break;
+				case 'media':
+					wp_enqueue_media();
+					printf(
+						'<input type="hidden" name="%1$s" /><button id="%1$s" class="waves-effect waves-light btn hb-media-helper" data-media-type="%2$s" type="button"><i class="material-icons left">photo</i>%3$s</button>',
+						esc_attr( $key ),
+						esc_attr( $fields['media_type'] ),
+						__( 'Select', 'hashboard' )
+					);
+					break;
+				case 'file':
+					printf( '
+						<div class="btn">
+							<span>%1$s</span>
+							<input type="file" name="%2$s" id="%2$s">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text" placeholder="%3$s">
+						</div>
+    				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $fields['placeholder'] ) );
+					break;
 			}
-			if ( 'hidden' !== $fields['type'] ) {
+			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file' ] ) ) {
 				printf( '<label for="%s">%s</label>', esc_attr( $key ), wp_kses( $fields['label'], [ 'i' => [ 'class' => true ] ] ) );
 			}
             if ( $fields['description'] ) {
@@ -261,7 +283,7 @@ abstract class Screen extends Singleton {
         $out = ob_get_contents();
         ob_end_clean();
 		// Wrap fields.
-		$out = sprintf( '<div class="input-field col s%d">%s</div>', ceil( 12 / $fields['col'] ), $out );
+		$out = sprintf( '<div class="input-field %s col s%d">%s</div>', 'file' == $fields['type'] ? 'file-field' : '' , ceil( 12 / $fields['col'] ), $out );
 		if ( 'open' == $fields['group'] ) {
 			$out = '<div class="row">' . $out;
 		} elseif ( 'close' == $fields['group'] ) {

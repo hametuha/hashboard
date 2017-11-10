@@ -129,7 +129,7 @@ SQL;
 	 * @param int $expires
 	 * @return string
 	 */
-	protected function regenerate_user_hash( $user_id, $expires = 86400 ) {
+	public function regenerate_user_hash( $user_id, $expires = 86400 ) {
 		$new_mail = get_user_meta( $user_id, self::NEW_MAIL_KEY, true );
 		if ( ! $new_mail ) {
 			return '';
@@ -155,7 +155,7 @@ SQL;
 	/**
 	 * Send confirmation link to user.
 	 *
-	 * @param int $user_id
+	 * @param int  $user_id
 	 * @return bool|\WP_Error
 	 */
 	public function notify( $user_id ) {

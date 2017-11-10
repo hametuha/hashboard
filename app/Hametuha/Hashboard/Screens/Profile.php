@@ -2,6 +2,7 @@
 namespace Hametuha\Hashboard\Screens;
 
 
+use Hametuha\Hashboard;
 use Hametuha\Hashboard\Pattern\Screen;
 
 /**
@@ -37,10 +38,13 @@ class Profile extends Screen {
 	 * @return array
 	 */
 	protected function default_children() {
-		return [
+		$page = [
 			'profile'  => __( 'Profile', 'hashboard' ),
-			'contacts' => __( 'Contacts', 'hashboard' ),
 		];
+		if ( wp_get_user_contact_methods() ) {
+			$page[ 'contacts' ] = __( 'Contacts', 'hashboard' );
+		}
+		return $page;
 	}
 
 
@@ -65,57 +69,104 @@ class Profile extends Screen {
 		if ( is_null( $user ) ) {
 			$user = wp_get_current_user();
 		}
+		switch ( $page ) {
+			case 'contacts':
+				$groups = [];
+				$methods = wp_get_user_contact_methods();
+				$methods = [
+					'url' => [
+						'label' => 'URL',
+						'type' => 'text',
+						'value' => $user->user_url,
+					],
+				];
+				foreach ( wp_get_user_contact_methods() as $key => $label ) {
+					$methods[ $key ] = [
+						'label' => $label,
+						'type' => 'text',
+						'src' => $key,
+					];
+				}
+				if ( $methods ) {
+					$groups[ 'contacts' ] = [
+						'label' => __( 'Contacts', 'hashboard' ),
+						'fields' => $methods,
+					];
+				}
+				return $groups;
+				break;
+			default:
+				ob_start();
+				Hashboard::load_template( 'gravatar.php', [ 'user' => $user ] );
+				$avatar = ob_get_contents();
+				ob_end_clean();
+				return [
+					'names' => [
+						'label' => __( 'Name', 'hashboard' ),
+						'action' => rest_url( 'hashboard/v1/user/profile' ),
+						'method' => 'POST',
+						'submit' => __( 'Update Profile', 'hashboard' ),
+						'fields' => [
+							'display_name' => [
+								'label' => __( 'Display Name', 'hashboard' ),
+								'type' => 'text',
+								'value' => $user->display_name,
+								'group' => 'open',
+								'col' => 2,
+							],
+							'nickname' => [
+								'label' => __( 'Nickname', 'hashboard' ),
+								'type' => 'text',
+								'src' => 'nickname',
+								'group' => 'close',
+								'col' => 2,
+							],
+							'first_name' => [
+								'label' => __( 'First Name', 'hashboard' ),
+								'src'  => 'first_name',
+								'type' => 'text',
+								'group' => 'open',
+								'col' => 2,
+							],
+							'last_name' => [
+								'label' => __( 'Last Name', 'hashboard' ),
+								'src'  => 'last_name',
+								'type' => 'text',
+								'group' => 'close',
+								'col' => 2,
+							],
+							'description' => [
+								'label' => __( 'Your Profile', 'hashboard' ),
+								'type' => 'textarea',
+								'src' => 'description',
+							],
+						]
+					],
+					'picture' => [
+						'label' => __( 'Profile Picture', 'hashboard' ),
+						'method' => 'POST',
+						'action' => rest_url( '/hashboard/v1/user/avatar' ),
+						'fields' => [
+							'gravatar' => [
+								'html'  => $avatar,
+								'group' => 'open',
+								'col'   => 2,
+							],
+							'local_img' => [
+								'label' => __( 'Select Photo', 'hashboard' ),
+								'type'  => 'file',
+								'group' => 'close',
+								'col'   => 2,
+								'description' => __( 'You can alternatively upload image file.', 'hashboard' ),
+							],
+						],
+					],
+				];
+				break;
+		}
 		$groups = [
-			'names' => [
-				'label' => __( 'Name', 'hashboard' ),
-				'fields' => [
-					'display_name' => [
-						'label' => __( 'Display Name', 'hashboard' ),
-						'type' => 'text',
-						'value' => $user->display_name,
-					],
-					'first_name' => [
-						'label' => __( 'First Name', 'hashboard' ),
-						'type' => 'text',
-						'group' => 'open',
-						'col' => 2,
-					],
-					'last_name' => [
-						'label' => __( 'Last Name', 'hashboard' ),
-						'type' => 'text',
-						'group' => 'close',
-						'col' => 2,
-					],
-					'description' => [
-						'label' => __( 'Your Profile', 'hashboard' ),
-						'type'  => 'textarea',
-						'src'   => 'description',
-					],
-				]
-			],
 		];
 		// Add contact methods.
-		$methods = wp_get_user_contact_methods();
-		$methods = [
-			'url' => [
-				'label' => 'URL',
-				'type'  => 'text',
-				'value' => $user->user_url,
-			],
-		];
-		foreach ( wp_get_user_contact_methods() as $key => $label ) {
-			$methods[ $key ] = [
-				'label' => $label,
-				'type'  => 'text',
-				'src'   => $key,
-			];
-		}
-		if ( $methods ) {
-			$groups['contacts'] = [
-				'label' => __( 'Contacts', 'hashboard' ),
-				'fields' => $methods,
-			];
-		}
 		return $groups;
 	}
 

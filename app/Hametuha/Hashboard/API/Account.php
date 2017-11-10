@@ -6,8 +6,6 @@ namespace Hametuha\Hashboard\API;
 use Hametuha\Hashboard;
 use Hametuha\Hashboard\Pattern\Api;
 use Hametuha\Hashboard\Service\UserMail;
-use OpenCloud\Identity\Resource\User;
-use phpseclib\Crypt\Hash;
 
 /**
  * Account API
@@ -48,6 +46,7 @@ class Account extends Api {
 				];
 				break;
 			case 'DELETE': // Cancel mail change
+				return [];
 				break;
 			default:
 				return [];
@@ -77,17 +76,48 @@ class Account extends Api {
 			} elseif ( ! $result ) {
 				throw new \Exception( __( 'Failed to send confirmation mail. Please check if mail address is valid.', 'hashboard' ), 500 );
 			}
-			/**
-			 * hashboard_mail_request_message
-			 *
-			 * @param string $message
-			 */
-			$message = apply_filters( 'hashboard_mail_request_message', __( 'A confirmation mail has been sent to your new mail address. Please open it and click confirmation link.', 'hashboard' ) );
 			return [
 				'success' => true,
-				'message' => $message,
+				'message' => $this->get_notification_message(),
 			];
 		}
+	}
+
+	/**
+	 * Handle put request.
+	 *
+	 * @param \WP_REST_Request $request
+	 * @return array|bool|\WP_Error
+	 * @throws \Exception
+	 */
+	public function handle_put( \WP_REST_Request $request ) {
+		$mail = UserMail::get_instance();
+		if ( ! $mail->regenerate_user_hash( get_current_user_id() ) ) {
+			throw new \Exception( __( 'Failed to regenerate request. try again later.', 'hashboard' ), 500 );
+		}
+		$result = $mail->notify( get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		} else {
+			return [
+				'success' => true,
+				'message' => $this->get_notification_message(),
+			];
+		}
+	}
+
+	/**
+	 * Handle delete request.
+	 *
+	 * @param \WP_REST_Request $request
+	 * @return array
+	 */
+	public function handle_delete( \WP_REST_Request $request ) {
+		$result = UserMail::get_instance()->expire_user_hash( get_current_user_id() );
+		return [
+			'success' => true,
+			'message' => __( 'Your request has been canceled.', 'hashboard' ),
+		];
 	}
 
 	/**
@@ -132,9 +162,25 @@ class Account extends Api {
 	public function permission_callback( \WP_REST_Request $request ) {
 		if ( 'GET' == $request->get_method() ) {
 			return true;
+		} elseif( in_array( $request->get_method(), [ 'PUT', 'DELETE' ] ) ) {
+			return UserMail::get_instance()->has_queue( get_current_user_id() );
 		} else {
 			return parent::permission_callback( $request );
 		}
+	}
+
+	/**
+	 * Get notification sent message.
+	 *
+	 * @return string
+	 */
+	private function get_notification_message() {
+		/**
+		 * hashboard_mail_request_message
+		 *
+		 * @param string $message
+		 */
+		return apply_filters( 'hashboard_mail_request_message', __( 'A confirmation mail has been sent to your new mail address. Please open it and click confirmation link.', 'hashboard' ) );
 	}
 
 }

@@ -1,5 +1,6 @@
+$fieldset-color: #777 !default;
+
 .hb-fieldset{
-  $fieldset-color: #777;
   padding: 0.35em 0 0.75em;
   @extend %hb-row;
   border-color: $fieldset-color;
@@ -18,8 +19,18 @@
 
 .hb-input-description{
   margin: 0.2em 0 0.5em;
-  color: #9e9e9e;
+  color: $fieldset-color;
   font-size: 0.85em;
+}
+
+.hb-gravatar{
+  &-img{
+    display: block;
+    margin: 0 0 0.5em;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+  }
 }
 
 .toast{

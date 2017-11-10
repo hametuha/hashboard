@@ -1,0 +1,301 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Project-Id-Version: HashBoard\n"
+"POT-Creation-Date: 2017-11-08 19:32+0900\n"
+"PO-Revision-Date: 2017-11-08 19:43+0900\n"
+"Language-Team: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: hashboard.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
+"Language: ja\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: app/Hametuha/Hashboard.php:167
+msgid "Log out"
+msgstr "ログアウト"
+
+#: app/Hametuha/Hashboard.php:174
+msgid "WP Admin"
+msgstr "WP管理画面"
+
+#: app/Hametuha/Hashboard.php:327
+#, php-format
+msgid "Template %s doesn't exist."
+msgstr "テンプレート %s は存在しません。"
+
+#: app/Hametuha/Hashboard/API/Account.php:67
+msgid "This email is already registered. Please try another."
+msgstr "このメールはすでに登録されています。別のものをお試しください。"
+
+#: app/Hametuha/Hashboard/API/Account.php:71
+msgid "Sorry, but failed to accept new mail request. Please try again later."
+msgstr ""
+"申し訳ございませんが、新しいメールのリクエストを受け付けられませんでした。別"
+"のものをお試しください。"
+
+#: app/Hametuha/Hashboard/API/Account.php:77
+msgid ""
+"Failed to send confirmation mail. Please check if mail address is valid."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Account.php:96
+msgid "Failed to regenerate request. try again later."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Account.php:119
+msgid "Your request has been canceled."
+msgstr "リクエストはキャンセルされました。"
+
+#: app/Hametuha/Hashboard/API/Account.php:145
+#, php-format
+msgid "Return to <a href=\"%1$s\">%2$s</a>."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Account.php:183
+msgid ""
+"A confirmation mail has been sent to your new mail address. Please open it "
+"and click confirmation link."
+msgstr ""
+"新しいメールアドレスに確認メールを送信しました。そのメールを開き、確認用リン"
+"クをクリックしてください。"
+
+#: app/Hametuha/Hashboard/API/Password.php:64
+msgid "Your password successfully changed."
+msgstr "パスワードは変更されました。"
+
+#: app/Hametuha/Hashboard/Pattern/Screen.php:122
+msgid "Save"
+msgstr "保存する"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:21
+msgid "Your Account"
+msgstr "あなたのアカウント"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:30
+#: app/Hametuha/Hashboard/Screens/Account.php:60
+msgid "Account"
+msgstr "アカウント"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:34
+msgid "Your account information. These will be secret."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Account.php:62
+msgid "Change Email"
+msgstr "メールを変更"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:67
+msgid "Enter new email here"
+msgstr "新しいメールアドレスをここに入力"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:76
+msgid "Password"
+msgstr "パスワード"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:77
+msgid ""
+"To change password, enter new password here. If you leave blank, nothing "
+"will be changed."
+msgstr ""
+"パスワードを変更するには、こちらに新しいパスワードを入力してください。空白の"
+"ままにしておいた場合、変更されません。"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:80
+msgid "Save New Password"
+msgstr "新しいパスワードを保存"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:83
+msgid "New Password"
+msgstr "新しいパスワード"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:89
+msgid "Enter password again"
+msgstr "もう一度パスワードを入力"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:91
+msgid "For confirmation, enter same password as above."
+msgstr "確認のため、上と同じパスワードをもう一度入力してください。"
+
+#: app/Hametuha/Hashboard/Screens/Account.php:119
+#, php-format
+msgid ""
+"You are now requesting <code>%1$s</code> as new email. Please check your "
+"mail box and finish confirmation. Otherwise, <a href=\"%2$s\" class=\"hb-"
+"mail-resend\">resend</a> or <a href=\"%2$s\" class=\"hb-mail-cancel\">cancel "
+"request</a>."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Account.php:129
+msgid "Password Strength: "
+msgstr "パスワード強度: "
+
+#: app/Hametuha/Hashboard/Screens/Account.php:140
+#, php-format
+msgid ""
+"<p>Your current email is <code>%s</code>. To change email, enter new one and "
+"proceed to confirmation process.</p>"
+msgstr ""
+"<p>現在のメールアドレスは <code>%s</code> です。メールを変更するには新しいア"
+"ドレスを入力し、確認手続きを進めてください。</p>"
+
+#. Description of the plugin/theme
+#: app/Hametuha/Hashboard/Screens/Dashboard.php:17
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: app/Hametuha/Hashboard/Screens/Dashboard.php:21
+#, php-format
+msgid "Welcome to %s!"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:32
+#: app/Hametuha/Hashboard/Screens/Profile.php:42
+msgid "Profile"
+msgstr "プロフィール"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:45
+#: app/Hametuha/Hashboard/Screens/Profile.php:91
+msgid "Contacts"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:57
+msgid "Your public profile."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:103
+msgid "Name"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:106
+msgid "Update Profile"
+msgstr "プロフィールを更新"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:109
+msgid "Display Name"
+msgstr "表示名"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:116
+msgid "Nickname"
+msgstr "ニックネーム"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:123
+msgid "First Name"
+msgstr "名"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:130
+msgid "Last Name"
+msgstr "姓"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:137
+msgid "Your Profile"
+msgstr "あなたのプロフィール"
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:144
+msgid "Photo"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:152
+msgid "Upload Photo"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:103
+msgid "Hash key is not valid and user not found."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:106
+msgid ""
+"Email change request is expired. Please make another request at your account "
+"page."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:110
+msgid ""
+"You new mail address is not found. Please try again or contact to site "
+"administrator."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:113
+msgid "This email is used by other user. Please try another one."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:164
+msgid "Specified user doesn't seem on requesting mail change."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:176
+#, php-format
+msgid "Mail change confirmation : %s"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:179
+#, php-format
+msgid ""
+"Dear %1$s,\n"
+"\n"
+"To confirm new mail address, click link below.\n"
+"%2$s\n"
+"\n"
+"This mail is sent because you requested to change email address.\n"
+"If you have no idea of it, simply just ignore this mail.\n"
+"\n"
+"To check your current email address, please go to dashboard.\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserMail.php:210
+msgid ""
+"Failed to send confirmation mail. Please try again later or contact to site "
+"administrator."
+msgstr ""
+
+#: templates/body.php:58
+msgid "Return to Site"
+msgstr "サイトに戻る"
+
+#: templates/body.php:104
+msgid "Please wait..."
+msgstr ""
+
+#: vendor/hametuha/pattern/app/Hametuha/Pattern/Model.php:164
+#, php-format
+msgid "Model %1$s has no column \"%2$s\"."
+msgstr ""
+
+#: vendor/hametuha/pattern/app/Hametuha/Pattern/Model.php:238
+msgid "Failed to insert data. Something is wrong with database."
+msgstr ""
+
+#: vendor/hametuha/pattern/app/Hametuha/Pattern/RestApi.php:25
+#, php-format
+msgid "%s: REST API route is empty."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "HashBoard"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://hametuha.com"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Hametuha INC."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://hametuha.co.jp"
+msgstr ""
