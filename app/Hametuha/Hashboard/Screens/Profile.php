@@ -4,6 +4,7 @@ namespace Hametuha\Hashboard\Screens;
 
 use Hametuha\Hashboard;
 use Hametuha\Hashboard\Pattern\Screen;
+use Hametuha\Hashboard\Service\UserContacts;
 
 /**
  * Profile screen.
@@ -72,24 +73,13 @@ class Profile extends Screen {
 		switch ( $page ) {
 			case 'contacts':
 				$groups = [];
-				$methods = wp_get_user_contact_methods();
-				$methods = [
-					'url' => [
-						'label' => 'URL',
-						'type' => 'text',
-						'value' => $user->user_url,
-					],
-				];
-				foreach ( wp_get_user_contact_methods() as $key => $label ) {
-					$methods[ $key ] = [
-						'label' => $label,
-						'type' => 'text',
-						'src' => $key,
-					];
-				}
+				$methods = UserContacts::get_instance()->get_user_contact_methods( $user );
 				if ( $methods ) {
 					$groups[ 'contacts' ] = [
 						'label' => __( 'Contacts', 'hashboard' ),
+						'action' => rest_url( 'hashboard/v1/user/contacts' ),
+						'method' => 'POST',
+						'submit' => __( 'Update', 'hashboard' ),
 						'fields' => $methods,
 					];
 				}
@@ -146,6 +136,7 @@ class Profile extends Screen {
 						'label' => __( 'Profile Picture', 'hashboard' ),
 						'method' => 'POST',
 						'action' => rest_url( '/hashboard/v1/user/avatar' ),
+						'submit' => __( 'Upload', 'hashboard' ),
 						'fields' => [
 							'gravatar' => [
 								'html'  => $avatar,

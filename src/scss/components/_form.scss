@@ -27,7 +27,10 @@ $fieldset-color: #777 !default;
   &-img{
     display: block;
     margin: 0 0 0.5em;
-    max-width: 100%;
+    max-width: 160px;
+    @media #{$medium-and-down} {
+      max-width: 120px;
+    }
     width: auto;
     height: auto;
   }

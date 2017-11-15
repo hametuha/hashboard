@@ -175,7 +175,7 @@ class UserPicture extends Singleton {
 	}
 
 	/**
-	 * ユーザーのプロフィール写真を更新する
+	 * Update user's profile pic
 	 *
 	 * @param int $user_id
 	 * @param int $attachment_id
@@ -187,7 +187,7 @@ class UserPicture extends Singleton {
 	}
 
 	/**
-	 * ユーザーのプロフィール写真を外す
+	 * Remove user's profile pic
 	 *
 	 * @param int $user_id
 	 *
@@ -198,7 +198,7 @@ class UserPicture extends Singleton {
 	}
 
 	/**
-	 * アバターのSRC属性を削除する
+	 * Remove avatar's srcsets.
 	 *
 	 * @param string $avatar
 	 *
@@ -209,7 +209,7 @@ class UserPicture extends Singleton {
 	}
 
 	/**
-	 * アバターをフィルタリングする
+	 * Filter avatar
 	 *
 	 * @param array               $args
 	 * @param string|int|\WP_User $id_or_email
@@ -243,7 +243,7 @@ class UserPicture extends Singleton {
 	}
 
 	/**
-	 * ユーザーが削除された時のフィルター
+	 * When user is deleted
 	 *
 	 * @param int $user_id
 	 * @param int $attachment_id
