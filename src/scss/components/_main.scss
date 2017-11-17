@@ -44,6 +44,17 @@
     color: #000;
     animation: loading-animation 1.5s ease-in-out 0s infinite;
   }
+  &-small{
+    $size: 60px;
+    &:after{
+      margin-top: $size / -2;
+      margin-left: $size / -2;
+      font-size: $size / 3 * 2;
+      width: $size;
+      height: $size;
+      line-height: $size;
+    }
+  }
 }
 
 .hb-main{

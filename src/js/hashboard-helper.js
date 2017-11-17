@@ -84,15 +84,67 @@
   // Mail change handler
   $(document).on('click', '.hb-mail-resend, .hb-mail-cancel', function(e){
     e.preventDefault();
-    var method = $(this).hasClass('hb-mail-resend') ? 'PUT' : 'DELETE';
-    var $form  = $(this).parents('form');
+    var $button = $(this);
+    var method = $button.hasClass('hb-mail-resend') ? 'PUT' : 'DELETE';
+    var $form  = $button.parents('form');
     $form.addClass('loading');
     $.hbRest( method, $(this).attr('href') ).done(function(response){
+      if ( 'DELETE' === method ) {
+        $button.parents('.hb-warning').remove();
+      }
       Materialize.toast('<span><i class="material-icons success">done</i>' + response.message + '</span>', 4000);
     }).fail(function(response){
       Materialize.toast('<span><i class="material-icons error">error</i>' + response.responseJSON.message + '</span>', 4000);
     }).always(function(){
       $form.removeClass('loading');
+    });
+  });
+
+  // Initiallize slelect
+  $(document).ready(function() {
+    $('fieldset select').material_select();
+  });
+
+  var handleStatus = function( $form )  {
+    var $statusBox = $form.find('.hb-status-display');
+    // Check if box exists.
+    if ( ! $statusBox.length ) {
+      return;
+    }
+    // Check if source exists
+    var endpoint = $statusBox.attr('data-endpoint');
+    if ( ! endpoint ) {
+      return;
+    }
+    // O.K. Let's grab it.
+    $statusBox.addClass('loading loading-small');
+    $.hbRest('GET', endpoint ).done(function(response){
+      $statusBox.removeClass('success error');
+      if(response.success){
+        $statusBox.addClass('success');
+      }else{
+        $statusBox.addClass('error');
+      }
+      $statusBox.text(response.message);
+    }).fail(function(response){
+      $statusBox.addClass('error');
+      if ( response.responseJSON.message ) {
+        $statusBox.text(response.responseJSON.message);
+      }
+    }).always(function(){
+      $statusBox.removeClass('loading loading-small');
+    });
+  };
+
+  // When data is updated.
+  $(document).on('updated.form.hashboard', function(event, $form, response){
+    handleStatus($form);
+  });
+
+  // When form is displayed.
+  $(document).ready(function(){
+    $('.hb-form').each(function(index, form){
+      handleStatus( $(form) );
     });
   });
 

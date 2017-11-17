@@ -155,10 +155,6 @@ class Profile extends Screen {
 				];
 				break;
 		}
-		$groups = [
-		];
-		// Add contact methods.
-		return $groups;
 	}
 
 }

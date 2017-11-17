@@ -96,7 +96,10 @@ $user = wp_get_current_user();
             </div>
         </div>
     </nav>
-    <?php if ( $desc = $page->description() ) : ?>
+    <?php
+    $desc = $page->description();
+    $desc = apply_filters( 'hashboard_page_description', $desc, $page, $child );
+    if ( $desc ) : ?>
     <div class="hb-main-desc">
         <?php echo wpautop( $desc ) ?>
     </div><!-- // .hb-main-desc -->

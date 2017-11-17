@@ -125,6 +125,12 @@ abstract class Screen extends Singleton {
 				printf( '<form class="hb-form" id="form-%s" action="%s" method="%s">', esc_attr( $name ), esc_url( $settings['action'] ), esc_attr( $settings['method'] ) );
 			}
 			printf( '<fieldset id="fieldset-%s" class="hb-fieldset">', esc_attr( $name ) );
+			/**
+			 * hashboard_before_fields_rendered
+			 *
+			 * Excecuted just after form is rendered.
+			 */
+			do_action( 'hashboard_before_fields_rendered', $this->slug(), $page, $name );
 			if ( $settings['label'] ) {
 				printf( '<legend>%s</legend>', esc_html( $settings['label'] ) );
 			}
@@ -135,11 +141,17 @@ abstract class Screen extends Singleton {
 				$this->render_field( wp_get_current_user(), $key, $field );
 			}
 			if ( $settings['submit'] ) {
-			    printf( '<div class="row"><div class="col s12"><button class="btn waves-effect waves-light" type="submit">%s</button></div></div>', esc_html( $settings['submit'] ) );
-				echo '</fieldset>';
+				printf( '<div class="row"><div class="col s12"><button class="btn waves-effect waves-light" type="submit">%s</button></div></div>', esc_html( $settings[ 'submit' ] ) );
+			}
+			/**
+			 * hashboard_after_fields_rendered
+			 *
+			 * Excecuted just after form is rendered.
+			 */
+			do_action( 'hashboard_after_fields_rendered', $this->slug(), $page, $name );
+			echo '</fieldset>';
+			if ( $settings['submit'] ) {
 				echo '</form>';
-			} else {
-				echo '</fieldset>';
 			}
 		}
 	}
@@ -196,6 +208,8 @@ abstract class Screen extends Singleton {
 			'placeholder' => '',
             'description' => '',
 			'media_type'  => 'image',
+			'default' => '',
+			'options' => []
 		], $fields );
 
 		$out = '';
@@ -222,6 +236,9 @@ abstract class Screen extends Singleton {
                 );
             }
 			switch ( $fields['type'] ) {
+				case 'separator':
+					printf( '<div class="col s12"><p class="hb-separator">%s</p></div>', wp_kses_post( $fields['label'] ) );
+					break;
 				case 'textarea':
 					printf(
 						'<textarea id="%1$s" name="%1$s" class="materialize-textarea" %3$s>%2$s</textarea>',
@@ -229,6 +246,19 @@ abstract class Screen extends Singleton {
 						esc_textarea( $fields['value'] ),
 						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : ''
 					);
+					break;
+				case 'select':
+					printf( '<select name="%1$s" id="%1$s">', esc_attr( $key ) );
+					foreach ( $fields['options'] as $v => $l ) {
+						$cur = $fields['value'] ?: $fields['default'];
+						printf(
+							'<option value="%s"%s>%s</option>',
+							esc_attr( $v ),
+							selected( $cur, $v, false ),
+							esc_html( $l )
+						);
+					}
+					echo '</select>';
 					break;
 				case 'url':
 				case 'password':
@@ -265,7 +295,7 @@ abstract class Screen extends Singleton {
     				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $fields['placeholder'] ) );
 					break;
 			}
-			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file' ] ) ) {
+			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file', 'separator' ] ) ) {
 				printf( '<label for="%s">%s</label>', esc_attr( $key ), wp_kses( $fields['label'], [ 'i' => [ 'class' => true ] ] ) );
 			}
             if ( $fields['description'] ) {
@@ -283,7 +313,13 @@ abstract class Screen extends Singleton {
         $out = ob_get_contents();
         ob_end_clean();
 		// Wrap fields.
-		$out = sprintf( '<div class="input-field %s col s%d">%s</div>', 'file' == $fields['type'] ? 'file-field' : '' , ceil( 12 / $fields['col'] ), $out );
+		if ( ! in_array( $fields['type'], [ 'separator' ] ) ) {
+			$out = sprintf(
+				'<div class="input-field %s col s%d">%s</div>',
+				'file' == $fields['type'] ? 'file-field' : '' ,
+				( is_numeric( $fields['col'] ) && $fields['col'] ) ? ceil( 12 / $fields['col'] ) : 12,
+			$out );
+		}
 		if ( 'open' == $fields['group'] ) {
 			$out = '<div class="row">' . $out;
 		} elseif ( 'close' == $fields['group'] ) {

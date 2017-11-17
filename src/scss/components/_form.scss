@@ -17,6 +17,13 @@ $fieldset-color: #777 !default;
   }
 }
 
+.hb-separator{
+  color: $fieldset-color;
+  legend + .row &{
+    margin-top: 0;
+  }
+}
+
 .hb-input-description{
   margin: 0.2em 0 0.5em;
   color: $fieldset-color;
@@ -92,5 +99,20 @@ $fieldset-color: #777 !default;
       content: "sentiment_dissatisfied";
     }
   }
+}
 
+.hb-status-display{
+  padding: 1em;
+  font-size: 0.9em;
+  border: 1px solid transparent;
+  margin: 0 0 1em;
+  border-radius: 3px;
+  &.success{
+    color: $success-color;
+    background: transparentize( $success-color, .9 );
+  }
+  &.error{
+    color: $error-color;
+    background: transparentize( $error-color, .9 );
+  }
 }

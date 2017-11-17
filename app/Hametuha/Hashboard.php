@@ -36,17 +36,19 @@ class Hashboard extends Singleton {
 		add_filter( 'query_vars', [ $this, 'query_vars' ] );
 		add_filter( 'rewrite_rules_array', [ $this, 'rewrite_rules' ] );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_action( 'init', function() {
+			/**
+			 * hashboard_screens
+			 *
+			 * @param array $screens Associative array of Hametuha\Hashboard\Pattern\Screen
+			 */
+			$this->screens = apply_filters( 'hashboard_screens', [
+				'dashboard' => Dashboard::class,
+				'profile'   => Profile::class,
+				'account'   => Account::class,
+			] );
+		}, 1 );
 		//add_action( 'ini', [ $this, 'register_assets' ] );
-		/**
-		 * hashboard_screens
-		 *
-		 * @param array $screens Associative array of Hametuha\Hashboard\Pattern\Screen
-		 */
-		$this->screens = apply_filters( 'hashboard_screens', [
-			'dashboard' => Dashboard::class,
-			'profile'   => Profile::class,
-			'account'   => Account::class,
-		] );
 		// Register all API
 		foreach ( scandir( __DIR__ . '/Hashboard/API' ) as $file ) {
 			if ( ! preg_match( '#^([^._].*)\.php$#u', $file, $matches ) ) {
