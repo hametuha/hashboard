@@ -47,9 +47,10 @@ abstract class Screen extends Singleton {
 	/**
 	 * Get description of this screen.
 	 *
+	 * @param string $page
 	 * @return string
 	 */
-	abstract public function description();
+	abstract public function description( $page = '' );
 
 	/**
 	 * Executed inside constructor.
@@ -101,8 +102,8 @@ abstract class Screen extends Singleton {
 	 *
 	 * @return string
 	 */
-	public function meta_description() {
-		$description = $this->description();
+	public function meta_description( $page = '' ) {
+		$description = $this->description( $page );
 		return strip_tags( str_replace( "\n", '', $description ) );
 	}
 

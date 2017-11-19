@@ -53,7 +53,8 @@ gulp.task('jshint', function () {
 gulp.task('copylib', function () {
   return eventStream.merge(
     gulp.src([
-      './node_modules/materialize-css/dist/js/materialize.min.js'
+      './node_modules/materialize-css/dist/js/materialize.min.js',
+      './node_modules/vue/dist/vue.min.js'
     ])
       .pipe(gulp.dest('./assets/js')),
     gulp.src([

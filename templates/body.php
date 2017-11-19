@@ -1,7 +1,7 @@
 <?php
 /** @var \Hametuha\Hashboard\Pattern\Screen $page */
 /** @var \Hametuha\Hashboard $hashboard */
-
+/** @var string $child */
 $user = wp_get_current_user();
 
 ?><!doctype html>
@@ -9,7 +9,7 @@ $user = wp_get_current_user();
 <head>
     <meta charset="<?php bloginfo( 'charset' ) ?>"/>
     <title><?php echo esc_html( $page->label() ) ?> | <?php bloginfo( 'name' ) ?></title>
-    <meta name="description" content="<?php echo esc_attr( $page->meta_description() ) ?>"/>
+    <meta name="description" content="<?php echo esc_attr( $page->meta_description( $child ) ) ?>"/>
     <?php $page->head(); ?>
 	<?php do_action( 'hashboard_head', $page ) ?>
     <?php wp_styles()->do_items( false ) ?>
@@ -97,7 +97,7 @@ $user = wp_get_current_user();
         </div>
     </nav>
     <?php
-    $desc = $page->description();
+    $desc = $page->description( $child );
     $desc = apply_filters( 'hashboard_page_description', $desc, $page, $child );
     if ( $desc ) : ?>
     <div class="hb-main-desc">

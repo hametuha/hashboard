@@ -207,7 +207,52 @@ class Hashboard extends Singleton {
 		] );
 		// Hashboard Utility
 		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [ 'materialize', 'hashboard-rest' ], self::version(), true );
+		// Vue.js
+		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
+		// Vue Components.
+		foreach ( [ 'components' ] as $group ) {
+			$base_dir = self::dir() . "/assets/js/{$group}";
+			if ( ! is_dir( $base_dir ) ) {
+				continue;
+			}
+			foreach ( scandir( $base_dir ) as $js ) {
+				if ( preg_match( '#^([^._].*)\.js$#u', $js, $matches ) ) {
+					$handle = "hb-{$group}-{$matches[1]}";
+					wp_register_script( $handle, self::url( "/assets/js/{$group}/$js" ), [ 'vue-js', 'materialize' ], self::version(), true );
+					$vars = self::jsVars( $handle );
+					if ( $vars ) {
+						wp_localize_script( $handle, ucfirst( preg_replace_callback( '#-.#u', function( $str ){
+							return ucfirst( str_replace( '-', '', $str[0] ) );
+						}, $handle ) ), $vars );
+					}
+				}
+			}
+		}
+	}
 
+	/**
+	 * Components Variables
+	 *
+	 * @param string $handle
+	 * @return array
+	 */
+	public static function jsVars( $handle ) {
+		switch ( $handle ) {
+			case 'hb-components-month-selector':
+				$vars = [
+					'yearSuffix' => _x( '', 'year_suffix', 'hashboard' ),
+					'month' => [],
+					'update' => __( 'Update', 'hashboard' ),
+				];
+				for ( $i = 1; $i <= 12; $i++ ) {
+					$vars['month'][] = mysql2date( 'F', sprintf( '2000-%02d-01 00:00:00', $i ) );
+				}
+				return $vars;
+				break;
+			default:
+				return [];
+				break;
+		}
 	}
 
 	/**

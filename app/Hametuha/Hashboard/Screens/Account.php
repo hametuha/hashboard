@@ -30,7 +30,7 @@ class Account extends Screen {
 		return __( 'Account', 'hashboard' );
 	}
 
-	public function description() {
+	public function description( $page = '' ) {
 		return __( 'Your account information. These will be secret.', 'hashboard' );
 	}
 

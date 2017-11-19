@@ -48,13 +48,7 @@ class Profile extends Screen {
 		return $page;
 	}
 
-
-	/**
-	 * Get description of this screen.
-	 *
-	 * @return string
-	 */
-	public function description() {
+	public function description( $page = '' ) {
 		return __( 'Your public profile.', 'hashboard' );
 	}
 

@@ -17,7 +17,7 @@ class Dashboard extends Screen {
 		return __( 'Dashboard', 'hashboard' );
 	}
 
-	public function description() {
+	public function description( $page = '' ) {
 		return sprintf( __( 'Welcome to %s!', 'hashboard' ), get_bloginfo( 'name' ) );
 	}
 

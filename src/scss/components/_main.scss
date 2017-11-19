@@ -1,20 +1,20 @@
 @keyframes loading-animation {
-  0%   {
+  0% {
     transform: rotate(0deg);
   }
-  50%   {
+  50% {
     transform: rotate(180deg);
   }
-  100%{
+  100% {
     transform: rotate(360deg);
   }
 }
 
-.loading{
+.loading {
   position: relative;
   z-index: 1;
   opacity: .4;
-  &:before{
+  &:before {
     position: absolute;
     display: block;
     content: "";
@@ -24,7 +24,7 @@
     right: 0;
     z-index: 100;
   }
-  &:after{
+  &:after {
     $size: 150px;
     display: block;
     z-index: 101;
@@ -44,9 +44,9 @@
     color: #000;
     animation: loading-animation 1.5s ease-in-out 0s infinite;
   }
-  &-small{
+  &-small {
     $size: 60px;
-    &:after{
+    &:after {
       margin-top: $size / -2;
       margin-left: $size / -2;
       font-size: $size / 3 * 2;
@@ -57,21 +57,45 @@
   }
 }
 
-.hb-main{
-  &-title{
+.hb-main {
+  &-title {
     display: block;
     position: absolute;
     width: 100%;
     z-index: 10;
     & + .left,
-    & + .left +.right{
+    & + .left + .right {
       position: relative;
       z-index: 11;
     }
   }
-  &-desc{
+  &-desc {
     padding: 0.5em 1.5em;
     color: $page-description-color;
     background-color: $page-description-bg;
+  }
+}
+
+.hb-main-inner {
+  a:link, a:visited {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+  a:hover, a:active {
+    color: $warning-color;
+    text-decoration: none;
+  }
+}
+
+.hb-main-inner {
+  .pagination{
+    text-align: center;
+    a:link, a:visited {
+      text-decoration: none;
+    }
+    a:hover, a:active {
+      text-decoration: none;
+    }
+
   }
 }

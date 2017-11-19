@@ -6,6 +6,10 @@
   }
 }
 
+strong{
+  font-weight: 700;
+}
+
 %hb-row{
   @extend %clearfix;
   $row-pad: -1.5rem;
