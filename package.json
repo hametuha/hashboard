@@ -19,6 +19,7 @@
   "author": "Hametuha INC.",
   "license": "GPL-3.0",
   "devDependencies": {
+    "chart.js": "^2.7.1",
     "event-stream": "^3.3.2",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -42,7 +43,9 @@
     "jshint-stylish": "^2.0",
     "lodash": "^4.2.1",
     "materialize-css": "^0.100",
+    "moment": "^2.19.2",
     "respond.js": "^1.4.2",
-    "vue": "^2.5.4"
+    "vue": "^2.5.4",
+    "vue-chartjs": "^3.0.2"
   }
 }

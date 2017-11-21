@@ -54,7 +54,11 @@ gulp.task('copylib', function () {
   return eventStream.merge(
     gulp.src([
       './node_modules/materialize-css/dist/js/materialize.min.js',
-      './node_modules/vue/dist/vue.min.js'
+      './node_modules/vue/dist/vue.min.js',
+      './node_modules/moment/min/moment-with-locales.min.js',
+      './node_modules/chart.js/dist/Chart.min.js',
+      './node_modules/vue-chartjs/dist/vue-chartjs.min.js',
+      './node_modules/vue-chartjs/dist/vue-chartjs.js.map'
     ])
       .pipe(gulp.dest('./assets/js')),
     gulp.src([

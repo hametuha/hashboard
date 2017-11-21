@@ -1,0 +1,39 @@
+
+strong{
+  font-weight: 700;
+}
+
+.text-success{
+  color: $success-color;
+}
+.text-error{
+  color: $error-color;
+}
+
+
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+
+thead{
+  th{
+    text-align: center;
+  }
+}
+tfoot{
+  i.material-icons{
+    vertical-align: middle;
+  }
+}
+
+@for  $n from 1 through 10 {
+  .cell-#{$n}{
+    width: #{$n+1}em;
+  }
+}

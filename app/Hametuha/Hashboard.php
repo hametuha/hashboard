@@ -48,7 +48,7 @@ class Hashboard extends Singleton {
 				'account'   => Account::class,
 			] );
 		}, 1 );
-		//add_action( 'ini', [ $this, 'register_assets' ] );
+		// add_action( 'ini', [ $this, 'register_assets' ] );
 		// Register all API
 		foreach ( scandir( __DIR__ . '/Hashboard/API' ) as $file ) {
 			if ( ! preg_match( '#^([^._].*)\.php$#u', $file, $matches ) ) {
@@ -199,6 +199,10 @@ class Hashboard extends Singleton {
 		wp_register_style( 'materialize', self::url( '/assets/css/style.css' ), [ 'material-design-icon' ], self::version() );
 		// Materialize JS
 		wp_register_script( 'materialize', self::url( '/assets/js/materialize.min.js' ), [ 'jquery' ], '0.100.2', true );
+		// Chart JS
+		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.1', true );
+		// Moment
+		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.19.2', true );
 		// Hash Rest
 		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), ['jquery'], self::version(), true );
 		wp_localize_script( 'hashboard-rest', 'HashRest', [
@@ -209,8 +213,10 @@ class Hashboard extends Singleton {
 		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [ 'materialize', 'hashboard-rest' ], self::version(), true );
 		// Vue.js
 		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
+		// Chart JS vue
+		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.0.2', true );
 		// Vue Components.
-		foreach ( [ 'components' ] as $group ) {
+		foreach ( [ 'components', 'filters' ] as $group ) {
 			$base_dir = self::dir() . "/assets/js/{$group}";
 			if ( ! is_dir( $base_dir ) ) {
 				continue;
@@ -218,7 +224,20 @@ class Hashboard extends Singleton {
 			foreach ( scandir( $base_dir ) as $js ) {
 				if ( preg_match( '#^([^._].*)\.js$#u', $js, $matches ) ) {
 					$handle = "hb-{$group}-{$matches[1]}";
-					wp_register_script( $handle, self::url( "/assets/js/{$group}/$js" ), [ 'vue-js', 'materialize' ], self::version(), true );
+					$deps = [ 'vue-js', 'materialize' ];
+					switch ( $matches[1] ) {
+						case 'moment':
+							$deps[] = 'moment';
+							break;
+						case 'month-selector':
+							$deps[] = 'hb-filters-moment';
+							break;
+						case 'bar-chart':
+						case 'line-chart':
+							$deps[] = 'chart-js-vue';
+							break;
+					}
+					wp_register_script( $handle, self::url( "/assets/js/{$group}/$js" ), $deps, self::version(), true );
 					$vars = self::jsVars( $handle );
 					if ( $vars ) {
 						wp_localize_script( $handle, ucfirst( preg_replace_callback( '#-.#u', function( $str ){

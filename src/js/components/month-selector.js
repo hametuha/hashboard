@@ -1,4 +1,3 @@
-
 /*global Vue: true*/
 /*global HbComponentsMonthSelector*/
 
@@ -43,9 +42,6 @@
         }
       }
     },
-    mounted: function(){
-      this.updateYearMonth();
-    },
     computed: {
       month: function() {
         return HbComponentsMonthSelector.month;
@@ -66,9 +62,12 @@
         return HbComponentsMonthSelector.update;
       }
     },
+    mounted: function(){
+        console.log(this.curMonth, this.curYear);
+    },
     methods: {
       updateYearMonth: function(){
-        this.$emit( 'date-updated', this.curYear + '-' + ( '0' + this.curMonth ).slice(-2) );
+        this.$emit( 'date-updated', this.curYear, ( '0' + this.curMonth ).slice(-2));
       }
     }
   });
