@@ -50,19 +50,24 @@ class Hashboard extends Singleton {
 		}, 1 );
 		// add_action( 'ini', [ $this, 'register_assets' ] );
 		// Register all API
-		foreach ( scandir( __DIR__ . '/Hashboard/API' ) as $file ) {
-			if ( ! preg_match( '#^([^._].*)\.php$#u', $file, $matches ) ) {
-				continue;
+		foreach ( [
+					  'API' => RestApi::class,
+					  'Bridge' => Singleton::class,
+				  ] as $name => $subclass ) {
+			foreach ( scandir( __DIR__ . '/Hashboard/' . $name ) as $file ) {
+				if ( !preg_match( '#^([^._].*)\.php$#u', $file, $matches ) ) {
+					continue;
+				}
+				$class_name = "Hametuha\\Hashboard\\{$name}\\{$matches[1]}";
+				if ( !class_exists( $class_name ) ) {
+					continue;
+				}
+				$reflection = new \ReflectionClass( $class_name );
+				if ( !$reflection->isSubclassOf( $subclass ) || $reflection->isAbstract() ) {
+					continue;
+				}
+				call_user_func( [ $class_name, 'get_instance' ] );
 			}
-			$class_name = "Hametuha\\Hashboard\\API\\{$matches[1]}";
-			if ( ! class_exists( $class_name ) ) {
-				continue;
-			}
-			$reflection = new \ReflectionClass( $class_name );
-			if ( ! $reflection->isSubclassOf( RestApi::class ) || $reflection->isAbstract() ) {
-				continue;
-			}
-			call_user_func( [ $class_name, 'get_instance' ] );
 		}
 
 		// Enable avatar
@@ -208,6 +213,7 @@ class Hashboard extends Singleton {
 		wp_localize_script( 'hashboard-rest', 'HashRest', [
 			'root'  => rest_url('/'),
 			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'error' => __( 'Server returns error. Please try again later', 'hashboard' ),
 		] );
 		// Hashboard Utility
 		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [ 'materialize', 'hashboard-rest' ], self::version(), true );
@@ -401,6 +407,20 @@ class Hashboard extends Singleton {
 			}
 			include $located;
 		}
+	}
+
+	/**
+	 * Get screen URL
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public static function screen_url( $path = '' ) {
+		$base = untrailingslashit( home_url( self::get_instance()->get_prefix() ) );
+		if ( $path ) {
+			$base .= '/' . ltrim( $path, '/' );
+		}
+		return $base;
 	}
 
 	/**

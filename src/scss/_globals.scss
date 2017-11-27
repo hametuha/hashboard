@@ -48,8 +48,25 @@ code{
   border-color: $secondary-color;
 }
 
+.hb-error{
+  @extend %alert-box;
+  color: $error-color;
+  border-color: $error-color;
+}
+
 .hb-warning{
   @extend %alert-box;
   color: $warning-color;
   border-color: $warning-color;
+}
+
+a.link{
+  &:link, &:visited {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+  &:hover, &:active {
+    color: $warning-color;
+    text-decoration: none;
+  }
 }

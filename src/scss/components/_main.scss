@@ -74,17 +74,15 @@
     color: $page-description-color;
     background-color: $page-description-bg;
   }
+  hr{
+    margin: 2em 0;
+    display: block;
+    border: none;
+    border-bottom: 1px solid $separator-color;
+  }
 }
 
 .hb-main-inner {
-  a:link, a:visited {
-    color: $primary-color;
-    text-decoration: underline;
-  }
-  a:hover, a:active {
-    color: $warning-color;
-    text-decoration: none;
-  }
 }
 
 .hb-main-inner {

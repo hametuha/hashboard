@@ -17,9 +17,10 @@ class Account extends Screen {
 	protected $icon = 'lock_outline';
 
 	protected function default_children() {
-		return [
+		$children = [
 			'account' => __( 'Your Account', 'hashboard' ),
 		];
+		return $children;
 	}
 
 	public function slug() {

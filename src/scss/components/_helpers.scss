@@ -27,6 +27,9 @@ thead{
   }
 }
 tfoot{
+  th, td{
+    border-top: 3px double $separator-color;
+  }
   i.material-icons{
     vertical-align: middle;
   }
