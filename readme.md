@@ -1,10 +1,10 @@
-# Karma - Extensible Point System for WordPress
+# Hashboard
 
 Contributors: Takahashi_Fumiki, hametuha  
-Tags: point, woocommerce  
+Tags: sns, login
 Requires at least: 4.7  
-Tested up to: 4.8.2  
-Stable tag: 3.0.8  
+Tested up to: 4.9.1  
+Stable tag: 0.8.0  
 Requires PHP: 5.5  
 License: GPL 3.0 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -17,7 +17,10 @@ W.I.P
 
 ## Installation
 
-W.I.P
+1. Download from [Github](https://github.com/hametuha/hashboard) and follow the build instruction below.
+2. Install via composer `comopser require hametuha/hashboard`
+3. Install from WordPress.org repo(W.I.P)
+
 
 ## Frequently Asked Questions 
 
