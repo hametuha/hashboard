@@ -9,7 +9,7 @@ Requires PHP: 5.5
 License: GPL 3.0 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Karma is point system database.
+Hashboard gives you an user-oriented and extensible dashboard.
 
 ## Description
 
