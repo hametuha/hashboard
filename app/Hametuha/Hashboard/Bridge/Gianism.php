@@ -79,7 +79,7 @@ class Gianism extends Singleton {
 		$string = esc_html__( 'Your %s is generated automatically by SNS login. Please change it to valid one. Otherwise, you may be locked from your account.', 'hashboard' );
 		switch ( $name ) {
 			case 'account':
-				if ( !preg_match( '#@pseud\.[^.]+\.[^.]+$#u', wp_get_current_user()->user_email ) ) {
+				if ( preg_match( '#@pseud\.[^.]+\.[^.]+$#u', wp_get_current_user()->user_email ) ) {
 					?>
                     <div class="row">
                         <div class="col s12">
@@ -92,7 +92,7 @@ class Gianism extends Singleton {
 				}
 				break;
 			case 'password':
-				if ( !get_user_meta( get_current_user_id(), '_wpg_unknown_password', true ) ) {
+				if ( get_user_meta( get_current_user_id(), '_wpg_unknown_password', true ) ) {
 				    ?>
                     <div class="row">
                         <div class="col s12">

@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: HashBoard\n"
-"POT-Creation-Date: 2017-11-08 19:32+0900\n"
+"POT-Creation-Date: 2017-12-11 01:23+0900\n"
 "PO-Revision-Date: 2017-11-08 19:31+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: hashboard.php\n"
@@ -20,16 +20,32 @@ msgstr ""
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+"X-Poedit-SearchPathExcluded-3: src\n"
 
-#: app/Hametuha/Hashboard.php:167
+#: app/Hametuha/Hashboard.php:178
 msgid "Log out"
 msgstr ""
 
-#: app/Hametuha/Hashboard.php:174
+#: app/Hametuha/Hashboard.php:185
 msgid "WP Admin"
 msgstr ""
 
-#: app/Hametuha/Hashboard.php:327
+#: app/Hametuha/Hashboard.php:216
+msgid "Server returns error. Please try again later"
+msgstr ""
+
+#: app/Hametuha/Hashboard.php:268
+msgctxt "year_suffix"
+msgid ""
+msgstr ""
+
+#: app/Hametuha/Hashboard.php:270 app/Hametuha/Hashboard/Screens/Profile.php:76
+msgid "Update"
+msgstr ""
+
+#: app/Hametuha/Hashboard.php:403
 #, php-format
 msgid "Template %s doesn't exist."
 msgstr ""
@@ -66,62 +82,127 @@ msgid ""
 "and click confirmation link."
 msgstr ""
 
+#: app/Hametuha/Hashboard/API/Avatar.php:32
+msgid "BASE64 encoded image data."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Avatar.php:36
+msgid "Only BASE64 encoded image data is acceptable."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Avatar.php:70
+msgid "Failed to save file data."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Avatar.php:78
+msgid "Failed to upload"
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Avatar.php:82
+msgid "Your profile picture is successfully changed."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Contacts.php:27
+msgid "Should be URL format."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Contacts.php:32
+msgid "Should be mail format."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Contacts.php:37
+msgid "Should be numeric."
+msgstr ""
+
+#: app/Hametuha/Hashboard/API/Contacts.php:95
+msgid "Your contact information is successfully updated."
+msgstr ""
+
 #: app/Hametuha/Hashboard/API/Password.php:64
 msgid "Your password successfully changed."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Pattern/Screen.php:122
+#: app/Hametuha/Hashboard/API/Profile.php:86
+msgid "Your profile has been updated."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Bridge/Gianism.php:33
+#: app/Hametuha/Hashboard/Bridge/Gianism.php:55
+msgid "SNS Account"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Bridge/Gianism.php:56
+msgid "Manage your SNS accounts."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Bridge/Gianism.php:79
+#, php-format
+msgid ""
+"Your %s is generated automatically by SNS login. Please change it to valid "
+"one. Otherwise, you may be locked from your account."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Bridge/Gianism.php:87
+msgid "Email"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Bridge/Gianism.php:100
+#: app/Hametuha/Hashboard/Screens/Account.php:77
+msgid "Password"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Pattern/Screen.php:123
 msgid "Save"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Pattern/Screen.php:284
+msgid "Select"
 msgstr ""
 
 #: app/Hametuha/Hashboard/Screens/Account.php:21
 msgid "Your Account"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:30
-#: app/Hametuha/Hashboard/Screens/Account.php:60
+#: app/Hametuha/Hashboard/Screens/Account.php:31
+#: app/Hametuha/Hashboard/Screens/Account.php:61
 msgid "Account"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:34
+#: app/Hametuha/Hashboard/Screens/Account.php:35
 msgid "Your account information. These will be secret."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:62
+#: app/Hametuha/Hashboard/Screens/Account.php:63
 msgid "Change Email"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:67
+#: app/Hametuha/Hashboard/Screens/Account.php:68
 msgid "Enter new email here"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:76
-msgid "Password"
-msgstr ""
-
-#: app/Hametuha/Hashboard/Screens/Account.php:77
+#: app/Hametuha/Hashboard/Screens/Account.php:78
 msgid ""
 "To change password, enter new password here. If you leave blank, nothing "
 "will be changed."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:80
+#: app/Hametuha/Hashboard/Screens/Account.php:81
 msgid "Save New Password"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:83
+#: app/Hametuha/Hashboard/Screens/Account.php:84
 msgid "New Password"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:89
+#: app/Hametuha/Hashboard/Screens/Account.php:90
 msgid "Enter password again"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:91
+#: app/Hametuha/Hashboard/Screens/Account.php:92
 msgid "For confirmation, enter same password as above."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:119
+#: app/Hametuha/Hashboard/Screens/Account.php:120
 #, php-format
 msgid ""
 "You are now requesting <code>%1$s</code> as new email. Please check your "
@@ -130,11 +211,11 @@ msgid ""
 "request</a>."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:129
+#: app/Hametuha/Hashboard/Screens/Account.php:130
 msgid "Password Strength: "
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Account.php:140
+#: app/Hametuha/Hashboard/Screens/Account.php:141
 #, php-format
 msgid ""
 "<p>Your current email is <code>%s</code>. To change email, enter new one and "
@@ -151,54 +232,62 @@ msgstr ""
 msgid "Welcome to %s!"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:32
-#: app/Hametuha/Hashboard/Screens/Profile.php:42
+#: app/Hametuha/Hashboard/Screens/Profile.php:33
+#: app/Hametuha/Hashboard/Screens/Profile.php:43
 msgid "Profile"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:45
-#: app/Hametuha/Hashboard/Screens/Profile.php:91
+#: app/Hametuha/Hashboard/Screens/Profile.php:46
+#: app/Hametuha/Hashboard/Screens/Profile.php:73
 msgid "Contacts"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:57
+#: app/Hametuha/Hashboard/Screens/Profile.php:52
 msgid "Your public profile."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:103
+#: app/Hametuha/Hashboard/Screens/Profile.php:89
 msgid "Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:106
+#: app/Hametuha/Hashboard/Screens/Profile.php:92
 msgid "Update Profile"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:109
+#: app/Hametuha/Hashboard/Screens/Profile.php:95
 msgid "Display Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:116
+#: app/Hametuha/Hashboard/Screens/Profile.php:102
 msgid "Nickname"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:123
+#: app/Hametuha/Hashboard/Screens/Profile.php:109
 msgid "First Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:130
+#: app/Hametuha/Hashboard/Screens/Profile.php:116
 msgid "Last Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:137
+#: app/Hametuha/Hashboard/Screens/Profile.php:123
 msgid "Your Profile"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:144
-msgid "Photo"
+#: app/Hametuha/Hashboard/Screens/Profile.php:130
+msgid "Profile Picture"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:152
-msgid "Upload Photo"
+#: app/Hametuha/Hashboard/Screens/Profile.php:133
+msgid "Upload"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:141
+msgid "Select Photo"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:145
+msgid "You can alternatively upload image file."
 msgstr ""
 
 #: app/Hametuha/Hashboard/Service/UserMail.php:103
@@ -254,26 +343,35 @@ msgid ""
 "administrator."
 msgstr ""
 
+#: app/Hametuha/Hashboard/Service/UserPicture.php:119
+#, php-format
+msgid "Uploaded file is too large. Size cannot exceed %s."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Service/UserPicture.php:122
+msgid "File must be image. Allowed type is Jpeg, GIF and PNG."
+msgstr ""
+
 #: templates/body.php:58
 msgid "Return to Site"
 msgstr ""
 
-#: templates/body.php:104
+#: templates/body.php:107
 msgid "Please wait..."
 msgstr ""
 
-#: vendor/hametuha/pattern/app/Hametuha/Pattern/Model.php:164
+#: templates/gianism.php:44
 #, php-format
-msgid "Model %1$s has no column \"%2$s\"."
+msgid ""
+"You mail is generated automatically by SNS login and invalid. Please change "
+"it at <a href=\"%s\">account setting</a>."
 msgstr ""
 
-#: vendor/hametuha/pattern/app/Hametuha/Pattern/Model.php:238
-msgid "Failed to insert data. Something is wrong with database."
-msgstr ""
-
-#: vendor/hametuha/pattern/app/Hametuha/Pattern/RestApi.php:25
+#: templates/gravatar.php:7
 #, php-format
-msgid "%s: REST API route is empty."
+msgid ""
+"Your profile picture is displayed via <a href=\"%s\">Gravatar</a> based on "
+"your email."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
