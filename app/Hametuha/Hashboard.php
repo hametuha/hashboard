@@ -48,7 +48,6 @@ class Hashboard extends Singleton {
 				'account'   => Account::class,
 			] );
 		}, 1 );
-		// add_action( 'ini', [ $this, 'register_assets' ] );
 		// Register all API
 		foreach ( [
 					  'API' => RestApi::class,
@@ -236,7 +235,7 @@ class Hashboard extends Singleton {
 							$deps[] = 'moment';
 							break;
 						case 'month-selector':
-							$deps[] = 'hb-filters-moment';
+//							$deps[] = 'hb-filters-moment';
 							break;
 						case 'bar-chart':
 						case 'line-chart':
@@ -433,7 +432,9 @@ class Hashboard extends Singleton {
 		if ( $path ) {
 			$path = '/' . ltrim( $path, '/' );
 		}
-		return rtrim( plugin_dir_url( self::dir() . '/assets' ), '/' ) . $path;
+		$base_url = explode( 'wp-content/themes', get_stylesheet_directory_uri() );
+		$base_url = str_replace( ABSPATH, $base_url[0], self::dir() );
+		return untrailingslashit( $base_url ) . $path;
 	}
 
 }

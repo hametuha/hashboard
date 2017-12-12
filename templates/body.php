@@ -10,9 +10,11 @@ $user = wp_get_current_user();
     <meta charset="<?php bloginfo( 'charset' ) ?>"/>
     <title><?php echo esc_html( $page->label() ) ?> | <?php bloginfo( 'name' ) ?></title>
     <meta name="description" content="<?php echo esc_attr( $page->meta_description( $child ) ) ?>"/>
-    <?php $page->head(); ?>
-	<?php do_action( 'hashboard_head', $page ) ?>
-    <?php wp_styles()->do_items( false ) ?>
+    <?php
+        $page->head();
+        do_action( 'hashboard_head', $page );
+        wp_styles()->do_items( false );
+    ?>
 </head>
 <body>
 
@@ -107,7 +109,31 @@ $user = wp_get_current_user();
     <div class="hb-main" data-text="<?php esc_attr_e( 'Please wait...', 'hashboard' ) ?>">
         <div class="hb-container">
             <div class="hb-main-inner">
-                <?php $page->render( $child ) ?>
+                <?php
+				/**
+				 * hashboard_before_main
+                 *
+                 * Display something before main container
+                 *
+                 * @param \Hametuha\Hashboard\Pattern\Screen $page
+                 * @param string $child
+				 */
+                do_action( 'hashboard_before_main', $page, $child );
+
+                $page->render( $child );
+
+				/**
+				 * hashboard_after_main
+				 *
+				 * Display something just after main container
+				 *
+				 * @param \Hametuha\Hashboard\Pattern\Screen $page
+				 * @param string $child
+				 */
+				do_action( 'hashboard_after_main', $page, $child );
+
+                ?>
+
             </div>
         </div>
     </div>
