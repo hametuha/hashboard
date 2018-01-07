@@ -1,3 +1,10 @@
+/*!
+ * Month selector
+ *
+ * wpdeps=vue-js,materialize
+ */
+
+
 /*global Vue: true*/
 /*global HbComponentsMonthSelector*/
 
@@ -63,7 +70,7 @@
       }
     },
     mounted: function(){
-        console.log(this.curMonth, this.curYear);
+        // console.log(this.curMonth, this.curYear);
     },
     methods: {
       updateYearMonth: function(){

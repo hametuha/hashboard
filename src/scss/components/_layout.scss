@@ -8,6 +8,21 @@ main{
   }
 }
 
+.nav-wrapper .button-collapse{
+  z-index: 11;
+  padding: 0 18px;
+  margin: 0;
+}
+
+.side-nav{
+  &.initialized{
+    transition: transform .05s linear;
+  }
+  &.open{
+    transform: translateX(0);
+  }
+}
+
 .hb-container{
   $pad: 1.5rem;
   padding: 0 $pad;
@@ -26,4 +41,12 @@ main{
 
 .row{
   @extend %clearfix;
+}
+
+.masonry{
+  column-break-inside: avoid;
+  &-block{
+    display: inline-block;
+    overflow: visible;
+  }
 }

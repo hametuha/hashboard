@@ -19,7 +19,7 @@ $user = wp_get_current_user();
 <body>
 
 <header class="hb-header">
-    <ul class="hb-menu side-nav fixed">
+    <ul id="nav-mobile" class="hb-menu side-nav fixed">
         <li class="hb-site-info">
             <?php if ( has_site_icon() ) : ?>
                 <img src="<?php site_icon_url() ?>" alt="<?php bloginfo( 'name' ) ?>" class="hb-site-icon"/>
@@ -70,9 +70,9 @@ $user = wp_get_current_user();
                 <span class="hb-main-title page-title">
                     <?php echo esc_html( $page->label() ) ?>
                 </span>
-                <ul class="left hide-on-large-only">
-                    <li><a href="#hoge"><i class="material-icons">menu</i></a> </li>
-                </ul>
+                <a href="#" data-activate="nav-mobile" class="button-collapse hide-on-large-only">
+                    <i class="material-icons">menu</i>
+                </a>
                 <ul class="right">
                     <li>
                         <a href="#" data-activates="hb-sub-menu" class="dropdown-button" data-beloworigin="true" data-alignment="right" data-constrainWidth="false">
@@ -131,7 +131,6 @@ $user = wp_get_current_user();
 				 * @param string $child
 				 */
 				do_action( 'hashboard_after_main', $page, $child );
-
                 ?>
 
             </div>

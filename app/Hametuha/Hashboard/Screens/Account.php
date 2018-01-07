@@ -146,6 +146,6 @@ class Account extends Screen {
 	 * Footer action
 	 */
 	public function footer() {
-	    wp_enqueue_script( 'hashboard-password', Hashboard::url('/assets/js/hashboard-password.js' ), [ 'password-strength-meter' ], Hashboard::version(), true );
+	    wp_enqueue_script( 'hb-components-password' );
 	}
 }

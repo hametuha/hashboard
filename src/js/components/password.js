@@ -1,5 +1,7 @@
-/**
- * Description
+/*!
+ * Password Strength meter.
+ *
+ * wpdeps=password-strength-meter
  */
 
 /*global wp:true */
@@ -7,7 +9,6 @@
 
 (function ($) {
   'use strict';
-
   $(document).on('keyup', 'input[name=user_pass], input[name=user_pass2]', function(e){
     var $container = $('#hb-password-strength');
     var $submit    = $container.parents('form').find('button[type=submit]');

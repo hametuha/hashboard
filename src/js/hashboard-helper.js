@@ -10,6 +10,15 @@
 
   var fileContainer = {};
 
+  $(".button-collapse").sideNav({
+    onOpen: function($el) {
+      $('#nav-mobile' ).addClass('open initialized');
+    },
+    onClose: function(el) {
+      $('#nav-mobile' ).removeClass('open');
+    }
+  });
+
   $(document).on('click', '.hb-submenu-trigger', function(e){
     e.preventDefault();
     $(this).parents('.hb-menu-item').toggleClass('toggle');

@@ -1,8 +1,11 @@
-/**
+/*!
  * Bar chart component
+ *
+ * wpdeps=chart-js-vue,materialize
  */
 
 /*global Vue: false*/
+/*global VueChartJs:false */
 
 (function ($) {
 

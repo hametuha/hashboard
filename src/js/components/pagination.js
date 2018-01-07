@@ -1,8 +1,10 @@
-/**
+/*!
  * Pagination for ViewJS
+ *
+ * wpdeps=vue-js,materialize
  */
 
-/*global View: false*/
+/*global Vue: false*/
 
 (function(){
 
@@ -115,7 +117,4 @@
       }
     }
   });
-
-
-
 })();

@@ -1,5 +1,7 @@
-/**
+/*!
  * Line chart component
+ *
+ * wpdeps=chart-js-vue,materialize
  */
 
 /*global Vue: false*/
