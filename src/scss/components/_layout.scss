@@ -43,10 +43,21 @@ main{
   @extend %clearfix;
 }
 
-.masonry{
-  column-break-inside: avoid;
+.hb-masonry{
+  $full-width: 100%;
+  &-sizer,
   &-block{
-    display: inline-block;
-    overflow: visible;
+    width: $full-width / 3;
+  }
+  &-block{
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+    &[data-size='2']{
+      width: $full-width / 3 * 2;
+    }
+    &[data-size='3']{
+      width: $full-width;
+    }
   }
 }

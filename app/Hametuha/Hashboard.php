@@ -277,7 +277,7 @@ class Hashboard extends Singleton {
 	 */
 	public function pre_get_posts( \WP_Query &$wp_query ) {
 		if ( $wp_query->is_main_query() && ( $action = $wp_query->get( 'hashboard' ) ) ) {
-			if ( !current_user_can( self::get_default_capability() ) ) {
+			if ( ! current_user_can( self::get_default_capability() ) ) {
 				auth_redirect();
 				exit;
 			}
