@@ -33,6 +33,7 @@ gulp.task('js', function () {
     .pipe($.sourcemaps.init({
       loadMaps: true
     }))
+    .pipe($.babel())
     .pipe($.uglify({
       preserveComments: 'some'
     }))
@@ -85,13 +86,12 @@ gulp.task('imagemin', function () {
 // watch
 gulp.task('watch', function () {
   // Make SASS
-  gulp.watch('./src/scss/**/*.scss', ['sass']);
+  gulp.watch('src/scss/**/*.scss', ['sass']);
   // JS
-  gulp.watch(['./src/js/**/*.js'], ['js', 'jshint']);
+  gulp.watch(['src/js/**/*.js'], ['js', 'jshint']);
   // Minify Image
-  gulp.watch('./src/img/**/*', ['imagemin']);
+  gulp.watch('src/img/**/*', ['imagemin']);
 });
-
 
 // Build
 gulp.task('build', ['copylib', 'jshint', 'js', 'sass', 'imagemin']);

@@ -1,5 +1,5 @@
 /*!
- * Pagination for ViewJS
+ * Pagination for Vue.JS
  *
  * wpdeps=vue-js,materialize
  */
@@ -33,13 +33,10 @@
           case 'right':
           case 'left':
             return '<i class="material-icons">chevron_' + this.label + '</i>';
-            break;
           case 'more_horiz':
             return '<i class="material-icons">' + this.label + '</i>';
-            break;
           default:
             return this.number;
-            break;
         }
       },
       className: function(){
@@ -53,7 +50,7 @@
     methods: {
       clickHandler: function() {
         if ( !this.disabled && !this.current ) {
-          this.$emit('paginated', this.number)
+          this.$emit('paginated', this.number);
         }
       }
     }
@@ -104,8 +101,8 @@
         return this.rightPad < (this.total - 1);
       },
       range: function() {
-        var range = [];
-        for(var i = this.leftPad, l = this.rightPad; i <= l; i++){
+        let range = [];
+        for(let i = this.leftPad, l = this.rightPad; i <= l; i++){
           range.push(i);
         }
         return range;

@@ -3,6 +3,7 @@
 namespace Hametuha;
 
 use Hametuha\Hashboard\API\Avatar;
+use Hametuha\Hashboard\Pattern\Editor;
 use Hametuha\Hashboard\Pattern\Screen;
 use Hametuha\Hashboard\Screens\Dashboard;
 use Hametuha\Hashboard\Screens\Profile;
@@ -10,6 +11,7 @@ use Hametuha\Hashboard\Screens\Account;
 use Hametuha\Pattern\RestApi;
 use Hametuha\Pattern\Singleton;
 use Hametuha\WpEnqueueManager;
+use WP_CLI\Iterators\Exception;
 
 /**
  * Bootstrap instance
@@ -24,7 +26,14 @@ class Hashboard extends Singleton {
 	 * @var array
 	 */
 	public $screens = [];
-
+	
+	/**
+	 * List of editors.
+	 *
+	 * @var array
+	 */
+	protected $editors = [];
+	
 	/**
 	 * @var string
 	 */
@@ -35,6 +44,10 @@ class Hashboard extends Singleton {
 	 */
 	protected function init() {
 		$this->load_text_domain();
+		/**
+		 * Register editors.
+		 */
+		$this->editors = apply_filters( 'hashboard_editors', [] );
 		add_filter( 'query_vars', [ $this, 'query_vars' ] );
 		add_filter( 'rewrite_rules_array', [ $this, 'rewrite_rules' ] );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
@@ -50,7 +63,7 @@ class Hashboard extends Singleton {
 				'account' => Account::class,
 			] );
 		}, 1 );
-		// Register all API
+		// Register all API.
 		foreach ( [
 					  'API' => RestApi::class,
 					  'Bridge' => Singleton::class,
@@ -147,6 +160,7 @@ class Hashboard extends Singleton {
 		$prefix = $this->get_prefix();
 		return array_merge( [
 			"^{$prefix}/?$" => 'index.php?hashboard=dashboard',
+			"^{$prefix}/editor/([^/]+)/(\d+)/?$" => 'index.php?hashboard=editor&hashboard-child=$matches[1]&p=$matches[2]',
 			"^{$prefix}/([^/]+)/?$" => 'index.php?hashboard=$matches[1]',
 			"^{$prefix}/([^/]+)/([^/]+)/?$" => 'index.php?hashboard=$matches[1]&hashboard-child=$matches[2]',
 		], $rules );
@@ -195,7 +209,7 @@ class Hashboard extends Singleton {
 		 */
 		return apply_filters( 'hashboar_user_actions', $links );
 	}
-
+	
 	/**
 	 * Register assets.
 	 */
@@ -216,57 +230,22 @@ class Hashboard extends Singleton {
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 			'error' => __( 'Server returns error. Please try again later', 'hashboard' ),
 		] );
-		// Hashboard Utility
+		// Hashboard Utility.
 		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [ 'materialize', 'hashboard-rest' ], self::version(), true );
-		// Vue.js
+		// Vue.js.
 		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
-		// Chart JS vue
+		// Chart JS vue.
 		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.0.2', true );
 		// Register scripts.
 		foreach ( [ 'components', 'filters' ] as $group ) {
 			$base_dir = self::dir() . "/assets/js/{$group}";
-			if ( !is_dir( $base_dir ) ) {
+			if ( ! is_dir( $base_dir ) ) {
 				continue;
 			}
 			// Bulk register.
 			WpEnqueueManager::register_js( $base_dir, "hb-{$group}-", self::version() );
 			// Localize scripts.
-			foreach ( scandir( $base_dir ) as $js ) {
-				if ( preg_match( '#^([^._].*)\.js$#u', $js, $matches ) ) {
-					$handle = "hb-{$group}-{$matches[1]}";
-					self::jsVars( $handle );
-				}
-			}
-		}
-	}
-
-	/**
-	 * Components Variables
-	 *
-	 * @param string $handle
-	 * @return void
-	 */
-	public static function jsVars( $handle ) {
-		$vars = [];
-		switch ( $handle ) {
-			case 'hb-components-month-selector':
-				$vars = [
-					'yearSuffix' => _x( '', 'year_suffix', 'hashboard' ),
-					'month' => [],
-					'update' => __( 'Update', 'hashboard' ),
-				];
-				for ( $i = 1; $i <= 12; $i++ ) {
-					$vars[ 'month' ][] = mysql2date( 'F', sprintf( '2000-%02d-01 00:00:00', $i ) );
-				}
-				break;
-			default:
-				// Do nothing.
-				break;
-		}
-		if ( $vars ) {
-			wp_localize_script( $handle, ucfirst( preg_replace_callback( '#-.#u', function ( $str ) {
-				return ucfirst( str_replace( '-', '', $str[ 0 ] ) );
-			}, $handle ) ), $vars );
+			WpEnqueueManager::register_js_var_files( self::dir() . '/l10n' );
 		}
 	}
 
@@ -289,36 +268,65 @@ class Hashboard extends Singleton {
 					$slug = $action;
 					break;
 			}
-			if ( isset( $this->screens[ $slug ] ) ) {
+			try {
 				$this->current = $slug;
-				$class_name = $this->screens[ $this->current ];
-				/** @var Screen $screen */
-				$screen = $class_name::get_instance();
-				// Is there children?
-				$child = $wp_query->get( 'hashboard-child' );
-				if ( !$screen->has_children( $child ) ) {
-					$child = '';
+				if ( 'editor' === $slug ) {
+					// Render editor if available.
+					$key = $wp_query->get( 'hashboard-child' );
+					if ( ! isset( $this->editors[ $key ] ) ) {
+						throw new \Exception( 'no editor', 404 );
+					}
+					$class_name = $this->editors[ $key ];
+					if ( ! class_exists( $class_name ) ) {
+						throw new \Exception( 'no editor', 404 );
+					}
+					$reflection = new \ReflectionClass( $class_name );
+					if ( $reflection->isAbstract() || ! $reflection->isSubclassOf( Editor::class ) ) {
+						throw new \Exception( 'no editor', 404 );
+					}
+					/** @var Editor $class_name */
+					$class_name::get_instance()->render( $wp_query->get( 'p' ), wp_get_current_user() );
+					exit;
+				} elseif ( isset( $this->screens[ $slug ] ) ) {
+					// Render screen.
+					$class_name = $this->screens[ $this->current ];
+					/** @var Screen $screen */
+					$screen = $class_name::get_instance();
+					// Is there children?
+					$child = $wp_query->get( 'hashboard-child' );
+					if ( !$screen->has_children( $child ) ) {
+						$child = '';
+					}
+					// Register assets.
+					$this->register_assets();
+					wp_enqueue_style( 'materialize' );
+					wp_enqueue_script( 'hashboard' );
+					/**
+					 * hashboard_enqueue_scripts
+					 *
+					 * Print scripts
+					 *
+					 * @param bool $is_head
+					 */
+					do_action( 'hashboard_enqueue_scripts' );
+					self::load_template( 'body.php', [
+						'page' => $screen,
+						'hashboard' => self::get_instance(),
+						'child' => $child,
+					] );
+					exit;
+				} else {
+					throw new Exception( 'no editor', 404 );
 				}
-				// Register assets.
-				$this->register_assets();
-				wp_enqueue_style( 'materialize' );
-				wp_enqueue_script( 'hashboard' );
-				/**
-				 * hashboard_enqueue_scripts
-				 *
-				 * Print scripts
-				 *
-				 * @param bool $is_head
-				 */
-				do_action( 'hashboard_enqueue_scripts' );
-				self::load_template( 'body.php', [
-					'page' => $screen,
-					'hashboard' => self::get_instance(),
-					'child' => $child,
-				] );
-				exit;
-			} else {
-				$wp_query->set_404();
+			} catch ( \Exception $e ) {
+				if ( 404 == $e->getCode() ) {
+					$wp_query->set_404();
+				} else {
+					wp_die( $e->getMessage(), get_status_header_desc( $e->getCode() ), [
+						'back_link' => true,
+						'response'  => $e->getCode(),
+					] );
+				}
 			}
 		}
 	}
@@ -360,6 +368,18 @@ class Hashboard extends Singleton {
 	 */
 	public static function dir() {
 		return dirname( dirname( __DIR__ ) );
+	}
+	
+	/**
+	 * Get editor URL
+	 *
+	 * @param $key
+	 * @param $object
+	 *
+	 * @return string
+	 */
+	public static function editor( $key, $object ) {
+		return self::url( sprintf( '/%s/%d', $key, $object ) );
 	}
 
 	/**

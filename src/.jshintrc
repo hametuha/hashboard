@@ -7,6 +7,7 @@
   "devel" : false,
   "debug"    : true,
   "jquery": true,
+  "esversion": 6,
   "globals": {
     "google": false,
     "ga": false

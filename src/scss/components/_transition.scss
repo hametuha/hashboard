@@ -1,0 +1,29 @@
+
+
+$animation-delay: .2s;
+
+.slide-fade{
+  &-enter-active{
+    transition: opacity $animation-delay linear, transform $animation-delay linear;
+    transition-delay: $animation-delay;
+  }
+  &-leave-active{
+    transition: opacity $animation-delay linear, transform $animation-delay linear;
+  }
+  &-enter{
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  &-enter-to{
+    opacity: 1;
+    transform: translateX(0);
+  }
+  &-leave{
+    opacity: 1;
+    transform: translateX(0);
+  }
+  &-leave-to{
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

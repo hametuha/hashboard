@@ -1,0 +1,30 @@
+.hb-input-field{
+
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #eee;
+
+  &-value{
+    div:first-child:last-child{
+      min-height: 3rem;
+      line-height: 3rem;
+    }
+    padding: $input-padding;
+    margin: 0 0 20px 0;
+    box-sizing: content-box;
+  }
+
+  &-tooltip{
+    i{
+      font-size: 18px;
+      vertical-align: text-bottom;
+      margin-left: 0.25em;
+    }
+    cursor: pointer;
+    color: #ccc;
+    &:hover{
+      color: #444;
+    }
+  }
+
+}

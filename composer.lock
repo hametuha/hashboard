@@ -46,19 +46,20 @@
         },
         {
             "name": "hametuha/wp-enqueue-manager",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hametuha/wp-enqueue-manager.git",
-                "reference": "d38413d9caf47a6799420812fc32e55ec4fd6a75"
+                "reference": "8f0b14a97e3a38f86ca67e078619a89fc29b885a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hametuha/wp-enqueue-manager/zipball/d38413d9caf47a6799420812fc32e55ec4fd6a75",
-                "reference": "d38413d9caf47a6799420812fc32e55ec4fd6a75",
+                "url": "https://api.github.com/repos/hametuha/wp-enqueue-manager/zipball/8f0b14a97e3a38f86ca67e078619a89fc29b885a",
+                "reference": "8f0b14a97e3a38f86ca67e078619a89fc29b885a",
                 "shasum": ""
             },
             "require": {
+                "php": ">=5.6",
                 "symfony/finder": "^3.4"
             },
             "require-dev": {
@@ -82,8 +83,8 @@
                     "email": "guy@hametuha.com"
                 }
             ],
-            "description": "A PHP library for bulk register.",
-            "time": "2017-12-20T10:12:34+00:00"
+            "description": "A WordPress library to bulk register assets.",
+            "time": "2018-01-28T17:00:19+00:00"
         },
         {
             "name": "paragonie/random_compat",

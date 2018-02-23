@@ -5,6 +5,7 @@
  */
 
 /*global Vue: false*/
+/*global VueChartJs: false*/
 
 (function ($) {
 
@@ -17,6 +18,6 @@
     mounted: function () {
       this.renderChart( this.chartData, this.options);
     }
-  })
+  });
 
 })(jQuery);

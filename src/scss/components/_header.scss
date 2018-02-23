@@ -1,11 +1,22 @@
 .nav-wrapper{
-  text-align: center;
   font-size: 20px;
+  &.hb-nav-wrapper{
+    text-align: left;
+    & > *{
+      z-index: 11;
+    }
+    .btn-floating .material-icons{
+      height: 40px;
+      line-height: 40px
+    }
+  }
+  ul.right{
+    position: relative;
+    z-index: 11;
+  }
 }
 
 .hb-header{
-
-
 
   &-avatar{
     width: 48px;
@@ -15,6 +26,10 @@
     }
   }
 
+}
+
+.hb-main-title{
+  text-align: center;
 }
 
 .side-nav li>a>i.material-icons{

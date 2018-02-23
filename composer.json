@@ -2,7 +2,7 @@
     "name": "hametuha/hashboard",
     "description": "Web service like dashboard for WordPress.",
     "type": "wordpress-plugin",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Hametuha INC",

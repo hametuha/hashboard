@@ -17,7 +17,11 @@
      */
     hbRest: function (method, url, data) {
       method = method.toUpperCase();
-      var args = {
+      if ( ! /^https?:\/\//.test(url) ) {
+        url = HashRest.root + url;
+      }
+
+      let args = {
         method: method,
         beforeSend: function (xhr) {
           xhr.setRequestHeader('X-WP-Nonce', HashRest.nonce);
@@ -31,8 +35,8 @@
             args.data = data;
             break;
           default:
-            var query = [];
-            for (var prop in data) {
+            let query = [];
+            for (let prop in data) {
               if (data.hasOwnProperty(prop)) {
                 query.push(prop + '=' + encodeURIComponent(data[prop]));
               }
@@ -48,7 +52,7 @@
     },
     hbRestError: function () {
       return function(response) {
-        var msg = HashRest.error;
+        let msg = HashRest.error;
         if (response.responseJSON && response.responseJSON.message) {
           msg = response.responseJSON.message;
         }
@@ -56,6 +60,4 @@
       };
     }
   });
-
-
 })(jQuery);

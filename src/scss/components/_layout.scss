@@ -39,6 +39,57 @@ main{
   }
 }
 
+// Sidenav
+.top-nav-over{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  & + .hb-main{
+    padding-top: $navbar-height + 40;
+  }
+  & .hb-container{
+    position: relative;
+    z-index: 1000;
+  }
+}
+
+.side-nav {
+  img.circle{
+    margin: 0 auto;
+  }
+  .user-view{
+    padding-bottom: $sidenav-padding;
+    .white-text{
+      text-shadow: 0 0 5px rgba(0, 0, 0, .8);
+    }
+  }
+  .background{
+    &:after{
+      position: absolute;
+      content: "";
+      display: block;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, .4);
+    }
+  }
+  &-visible{
+    transform: translateX(0) !important;
+  }
+  &-pad {
+    padding-top: $navbar-height;
+  }
+}
+.with-side-nav{
+  padding-left: 300px;
+}
+
+
+
 .row{
   @extend %clearfix;
 }
