@@ -2,21 +2,56 @@
  * Description
  */
 
-/*global Hashboard: false*/
-/*global Materialize: false*/
+/*global Hashboard: true*/
 
 (function ($) {
+
   'use strict';
 
-  var fileContainer = {};
+  let Hashboard = window.Hashboard || {};
+  let fileContainer = {};
 
-  $(".button-collapse").sideNav({
-    onOpen: function($el) {
-      $('#nav-mobile' ).addClass('open initialized');
-    },
-    onClose: function(el) {
-      $('#nav-mobile' ).removeClass('open');
+  // Fit sidebar height to window.
+  let fitHeight = function(){
+    $('#hb-side-nav').height(window.innerHeight);
+  };
+  // Initialize on ready.
+  $(document).ready(function(){
+    fitHeight();
+    $('#hb-side-nav').addClass('initialized');
+  });
+
+  // Bind resize event.
+  let timer = null;
+  $(window).on('resize', function(){
+    if(timer){
+      clearTimeout(timer);
     }
+    timer = setTimeout(function(){
+      fitHeight();
+    }, 10);
+  });
+
+  // Toggle buttons.
+  $(document).on('click', '.side-nav-toggle', function(e){
+    $($(this).attr('data-target')).toggleClass('open');
+    let $backdrop = $('.hb-sidebar-backdrop');
+    if($backdrop.length){
+      $backdrop.remove();
+    }else{
+      let backdrop = `
+          <div class="hb-sidebar-backdrop">
+            <button type="button" class="d-md-none side-nav-toggle" data-target="#hb-side-nav">
+                <i class="material-icons">close</i>
+            </button>
+          </div>
+        `;
+      $('body').append(backdrop);
+    }
+  });
+
+  $(document).on('click', '.hb-sidebar-backdrop', function(e){
+    $(this).find('.side-nav-toggle').trigger('click');
   });
 
   $(document).on('click', '.hb-submenu-trigger', function(e){
@@ -26,14 +61,14 @@
 
   // File data store.
   $(document).on('change', '.hb-form input[type=file]', function(e){
-    var name = $(this).attr('name');
+    let name = $(this).attr('name');
     if(!this.files.length){
       if ( fileContainer[name]){
         fileContainer[name] = null;
       }
       return;
     }
-    var fr = new FileReader();
+    let fr = new FileReader();
     fr.onload = function(event){
       fileContainer[name] = event.target.result;
     };
@@ -43,12 +78,12 @@
   // Form handler
   $(document).on('submit', '.hb-form', function(e){
     e.preventDefault();
-    var $form  = $(this);
-    var method = $form.attr('method').toUpperCase();
-    var action = $form.attr('action');
-    var params = {};
+    let $form  = $(this);
+    let method = $form.attr('method').toUpperCase();
+    let action = $form.attr('action');
+    let params = {};
     $form.find('input,select,textarea').each(function(index, input){
-      var $input = $(input);
+      let $input = $(input);
       if(!$input.attr('name')){
         return true;
       }
@@ -69,10 +104,10 @@
     });
     $form.addClass('loading');
     $.hbRest(method, action, params).done(function(response){
-      Materialize.toast('<span><i class="material-icons success">done</i>' + response.message + '</span>', 4000);
+      Hashboard.toast('<span><i class="material-icons success">done</i>' + response.message + '</span>', 4000);
       $(document).trigger('updated.form.hashboard', [$form, response]);
     }).fail(function(response){
-      Materialize.toast('<span><i class="material-icons error">error</i>' + response.responseJSON.message + '</span>', 4000);
+      Hashboard.toast('<span><i class="material-icons error">error</i>' + response.responseJSON.message + '</span>', 4000);
     }).always(function(){
       $form.removeClass('loading');
     });
@@ -93,35 +128,30 @@
   // Mail change handler
   $(document).on('click', '.hb-mail-resend, .hb-mail-cancel', function(e){
     e.preventDefault();
-    var $button = $(this);
-    var method = $button.hasClass('hb-mail-resend') ? 'PUT' : 'DELETE';
-    var $form  = $button.parents('form');
+    let $button = $(this);
+    let method = $button.hasClass('hb-mail-resend') ? 'PUT' : 'DELETE';
+    let $form  = $button.parents('form');
     $form.addClass('loading');
     $.hbRest( method, $(this).attr('href') ).done(function(response){
       if ( 'DELETE' === method ) {
         $button.parents('.hb-warning').remove();
       }
-      Materialize.toast('<span><i class="material-icons success">done</i>' + response.message + '</span>', 4000);
+      Hashboard.toast('<span><i class="material-icons success">done</i>' + response.message + '</span>', 4000);
     }).fail(function(response){
-      Materialize.toast('<span><i class="material-icons error">error</i>' + response.responseJSON.message + '</span>', 4000);
+      Hashboard.toast('<span><i class="material-icons error">error</i>' + response.responseJSON.message + '</span>', 4000);
     }).always(function(){
       $form.removeClass('loading');
     });
   });
 
-  // Initiallize slelect
-  $(document).ready(function() {
-    $('fieldset select').material_select();
-  });
-
-  var handleStatus = function( $form )  {
-    var $statusBox = $form.find('.hb-status-display');
+  let handleStatus = function( $form )  {
+    let $statusBox = $form.find('.hb-status-display');
     // Check if box exists.
     if ( ! $statusBox.length ) {
       return;
     }
     // Check if source exists
-    var endpoint = $statusBox.attr('data-endpoint');
+    let endpoint = $statusBox.attr('data-endpoint');
     if ( ! endpoint ) {
       return;
     }

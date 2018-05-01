@@ -1,19 +1,49 @@
-$fieldset-color: #777 !default;
+$fieldset-color: $gray-700 !default;
+$fieldset-margin: 40px !default;
+$filedset-border-color: $fieldset-color !default;
+$fieldset-border-width: 50px !default;
+$fieldset-border-height: 5px !default;
+$label-icon-color: $gray-500 !default;
+
+.hb-form{
+  & + & {
+    &:before {
+      content: "";
+      display: block;
+      margin: 0 auto $fieldset-margin;
+      height: $fieldset-border-height;
+      width: $fieldset-border-width;
+      background-color: $filedset-border-color;
+    }
+  }
+}
+
+// Icon in label
+.form-row,.input-group{
+  label > .prefix {
+    font-size: inherit;
+    color: $label-icon-color;
+    vertical-align: text-bottom;
+    margin-right: 0.25em;
+  }
+}
 
 .hb-fieldset{
   padding: 0.35em 0 0.75em;
   @extend %hb-row;
   border-color: $fieldset-color;
-  margin-bottom: 40px;
+  margin-bottom: $fieldset-margin;
   &-description{
     color: $fieldset-color;
-    padding: 0 0.75rem 0.5rem;
+    padding: 0 0 0.5rem;
   }
   legend {
-    margin-left: 0.75rem;
     color: $fieldset-color;
-    padding: 5px;
+    padding: 5px 0;
     font-weight: bold;
+  }
+  .form-row{
+    margin-bottom: 1em;
   }
 }
 
@@ -43,18 +73,6 @@ $fieldset-color: #777 !default;
   }
 }
 
-.toast{
-  .material-icons{
-    vertical-align:middle;
-    margin-right: 10px;
-  }
-  .success{
-    color: $success-color;
-  }
-  .error{
-    color: $error-color;
-  }
-}
 
 #hb-password-strength{
   margin: 1em 0;

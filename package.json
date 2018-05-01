@@ -21,6 +21,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "bootstrap": "^4.0.0",
     "chart.js": "^2.7.1",
     "event-stream": "^3.3.2",
     "gulp": "^3.9.0",
@@ -45,10 +46,12 @@
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.0",
     "lodash": "^4.2.1",
-    "materialize-css": "^0.100",
+    "materialize-css": "^1.0.0-alpha.4",
     "moment": "^2.19.2",
+    "popper.js": "^1.12.9",
     "respond.js": "^1.4.2",
     "vue": "^2.5.4",
-    "vue-chartjs": "^3.0.2"
+    "vue-chartjs": "^3.0.2",
+    "vue-moment": "^3.2.0"
   }
 }

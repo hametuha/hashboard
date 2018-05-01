@@ -7,7 +7,9 @@ var gulp        = require('gulp'),
 
 // Sassのタスク
 gulp.task('sass', function () {
-  return gulp.src(['./src/scss/**/*.scss'])
+  return gulp.src([
+    './src/scss/**/*.scss',
+  ])
     .pipe($.plumber({
       errorHandler: $.notify.onError('<%= error.message %>')
     }))
@@ -18,7 +20,7 @@ gulp.task('sass', function () {
       outputStyle    : 'compressed',
       includePaths   : [
         './src/scss',
-        './node_modules/materialize-css/sass'
+        './node_modules/bootstrap/scss'
       ]
     }))
     .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
@@ -30,6 +32,9 @@ gulp.task('sass', function () {
 // Minify All
 gulp.task('js', function () {
   return gulp.src(['./src/js/**/*.js'])
+    .pipe($.plumber({
+      errorHandler: $.notify.onError('<%= error.message %>')
+    }))
     .pipe($.sourcemaps.init({
       loadMaps: true
     }))
@@ -46,7 +51,7 @@ gulp.task('js', function () {
 // JS Hint
 gulp.task('jshint', function () {
   return gulp.src([
-      './src/js/**/*.js',
+      './src/js/**/*.js'
   ])
     .pipe($.jshint('./src/.jshintrc'))
     .pipe($.jshint.reporter('jshint-stylish'));
@@ -55,19 +60,19 @@ gulp.task('jshint', function () {
 // Build modernizr
 gulp.task('copylib', function () {
   return eventStream.merge(
+    // copy js
     gulp.src([
-      './node_modules/materialize-css/dist/js/materialize.min.js',
+      './node_modules/bootstrap/dist/js/bootstrap.min.js',
+      './node_modules/bootstrap/dist/js/bootstrap.min.js.map',
+      './node_modules/popper.js/dist/umd/popper.min.js',
+      './node_modules/popper.js/dist/umd/popper.min.js.map',
       './node_modules/vue/dist/vue.min.js',
       './node_modules/moment/min/moment-with-locales.min.js',
       './node_modules/chart.js/dist/Chart.min.js',
       './node_modules/vue-chartjs/dist/vue-chartjs.min.js',
       './node_modules/vue-chartjs/dist/vue-chartjs.js.map'
     ])
-      .pipe(gulp.dest('./assets/js')),
-    gulp.src([
-      './node_modules/materialize-css/dist/fonts/**/*'
-    ]).
-    pipe(gulp.dest('./assets/fonts'))
+      .pipe(gulp.dest('./assets/js'))
   );
 });
 

@@ -10,6 +10,8 @@
   "esversion": 6,
   "globals": {
     "google": false,
-    "ga": false
+    "ga": false,
+    "Vue": false,
+    "moment": false
   }
 }

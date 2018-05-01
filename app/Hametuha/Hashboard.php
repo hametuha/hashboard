@@ -216,37 +216,40 @@ class Hashboard extends Singleton {
 	public function register_assets() {
 		// Material Design Icons
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', [], null );
-		wp_register_style( 'materialize', self::url( '/assets/css/style.css' ), [ 'material-design-icon' ], self::version() );
-		// Materialize JS
-		wp_register_script( 'materialize', self::url( '/assets/js/materialize.min.js' ), [ 'jquery' ], '0.100.2', true );
+		wp_register_style( 'bootstrap', self::url( '/assets/css/style.css' ), [ 'material-design-icon' ], self::version() );
+		// Bootstrap
+		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.12.9', true );
+		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.0.0', true );
 		// Chart JS
 		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.1', true );
 		// Moment
 		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.19.2', true );
 		// Hash Rest
-		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), [ 'jquery' ], self::version(), true );
+		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), [ 'jquery', 'hb-plugins-toast' ], self::version(), true );
 		wp_localize_script( 'hashboard-rest', 'HashRest', [
 			'root' => rest_url( '/' ),
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 			'error' => __( 'Server returns error. Please try again later', 'hashboard' ),
 		] );
 		// Hashboard Utility.
-		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [ 'materialize', 'hashboard-rest' ], self::version(), true );
+		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [
+			'bootstrap', 'hashboard-rest', 'hb-plugins-toast', 'hb-plugins-fitrows'
+		], self::version(), true );
 		// Vue.js.
 		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
 		// Chart JS vue.
 		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.0.2', true );
 		// Register scripts.
-		foreach ( [ 'components', 'filters' ] as $group ) {
+		foreach ( [ 'components', 'filters', 'plugins' ] as $group ) {
 			$base_dir = self::dir() . "/assets/js/{$group}";
 			if ( ! is_dir( $base_dir ) ) {
 				continue;
 			}
 			// Bulk register.
 			WpEnqueueManager::register_js( $base_dir, "hb-{$group}-", self::version() );
-			// Localize scripts.
-			WpEnqueueManager::register_js_var_files( self::dir() . '/l10n' );
 		}
+		// Localize scripts.
+		WpEnqueueManager::register_js_var_files( self::dir() . '/l10n' );
 	}
 
 	/**
@@ -299,7 +302,7 @@ class Hashboard extends Singleton {
 					}
 					// Register assets.
 					$this->register_assets();
-					wp_enqueue_style( 'materialize' );
+					wp_enqueue_style( 'bootstrap' );
 					wp_enqueue_script( 'hashboard' );
 					/**
 					 * hashboard_enqueue_scripts

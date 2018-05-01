@@ -1,5 +1,5 @@
 /*global HashRest: false*/
-/*global Materialize: false*/
+/*global Hashboard: false*/
 
 (function ($) {
 
@@ -56,7 +56,7 @@
         if (response.responseJSON && response.responseJSON.message) {
           msg = response.responseJSON.message;
         }
-        Materialize.toast('<i class="material-icons error">close</i>' + msg, 4000);
+        Hashboard.toast('<i class="material-icons error">close</i>' + msg, 4000);
       };
     }
   });

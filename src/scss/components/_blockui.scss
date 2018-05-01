@@ -1,7 +1,12 @@
+$loading-duration: $animation-duration !default;
+$loading-animation: opacity $loading-duration linear !default;
+$loading-image-size: 100px !default;
+$loading-container-min-height: $loading-image-size * 1.5;
+
 .vanish{
   &-enter-active,
   &-leave-active{
-    transition: opacity $animation-duration linear;
+    transition: $loading-animation;
   }
   &-enter{
     opacity: 0;
@@ -17,6 +22,12 @@
   }
 }
 
+
+
+[data-loading-wrapper='true']{
+  min-height: $loading-container-min-height;
+}
+
 .hb-loading-indicator{
   position: absolute;
   top: 0;
@@ -30,6 +41,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: $loading-image-size;
+    height: $loading-image-size;
   }
   &-title{
     position: absolute;

@@ -94,7 +94,7 @@ abstract class Editor extends Singleton {
 		}
 		// Enqueueu many things.
 		Hashboard::get_instance()->register_assets();
-		wp_enqueue_style( 'materialize' );
+		wp_enqueue_style( 'bootstrap' );
 		wp_enqueue_script( 'hashboard' );
 		do_action( 'hashboard_enqueue_scripts' );
 		Hashboard::load_template( 'editor.php', [

@@ -10,10 +10,10 @@
 (function ($) {
   'use strict';
   $(document).on('keyup', 'input[name=user_pass], input[name=user_pass2]', function(e){
-    var $container = $('#hb-password-strength');
-    var $submit    = $container.parents('form').find('button[type=submit]');
-    var blackList = $container.attr('data-blacklists').split(',');
-    var weakness = wp.passwordStrength.meter( $('input[name=user_pass]').val(), blackList, $('input[name=user_pass2]').val() );
+    let $container = $('#hb-password-strength');
+    let $submit    = $container.parents('form').find('button[type=submit]');
+    let blackList = $container.attr('data-blacklists').split(',');
+    let weakness = wp.passwordStrength.meter( $('input[name=user_pass]').val(), blackList, $('input[name=user_pass2]').val() );
     switch ( weakness ) {
       case 5:
         $container.attr('class', 'weak').find('span').text(pwsL10n.mismatch);

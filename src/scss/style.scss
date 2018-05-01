@@ -1,8 +1,15 @@
-@import "_variables.scss";
-@import "materialize_override";
+@charset "UTF-8";
 
-@import "materialize";
+@import "bootstrap_override";
+
+
+[ng-cloak]{
+  display: none;
+}
+
+@import "bootstrap";
 
 @import "globals";
+
 @import "components/*";
 

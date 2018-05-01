@@ -1,7 +1,7 @@
 /*!
  * Bar chart component
  *
- * wpdeps=chart-js-vue,materialize
+ * wpdeps=chart-js-vue,bootstrap
  */
 
 /*global Vue: false*/

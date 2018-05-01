@@ -1,7 +1,7 @@
 /*!
  * Sequence for Vue.JS
  *
- * wpdeps=vue-js,materialize
+ * wpdeps=vue-js,bootstrap
  */
 
 /*global Vue: false*/

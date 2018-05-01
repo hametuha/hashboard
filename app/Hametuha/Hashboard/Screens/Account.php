@@ -114,10 +114,10 @@ class Account extends Screen {
 			$controller = UserMail::get_instance();
 			if ( $controller->has_queue( $user->ID ) ) {
 				?>
-				<div class="hb-warning">
+				<div class="alert alert-warning hb-warning">
                     <?php printf(
                         // translators:
-                        wp_kses_post( __( 'You are now requesting <code>%1$s</code> as new email. Please check your mail box and finish confirmation. Otherwise, <a href="%2$s" class="hb-mail-resend">resend</a> or <a href="%2$s" class="hb-mail-cancel">cancel request</a>.' ) ),
+                        wp_kses_post( __( 'You are now requesting <code>%1$s</code> as new email. Please check your mail box and finish confirmation. Otherwise, <a href="%2$s" class="hb-mail-resend alert-link">resend</a> or <a href="%2$s" class="hb-mail-cancel alert-link">cancel request</a>.', 'hashboard' ) ),
                         esc_html( get_user_meta( $user->ID, $controller::NEW_MAIL_KEY, true ) ),
                         rest_url( 'hashboard/v1/user/account' )
                     ) ?>

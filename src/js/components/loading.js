@@ -27,6 +27,9 @@
         default: HbComponentsLoading.title
       }
     },
+    mounted: function(){
+      this.$parent.$el.setAttribute('data-loading-wrapper', 'true');
+    },
     computed: {
       src: function(){
         return HbComponentsLoading.img;

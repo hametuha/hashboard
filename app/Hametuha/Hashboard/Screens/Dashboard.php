@@ -38,6 +38,7 @@ HTML;
 		$blocks[] = [
 			'id'   => 'welcome',
             'html' => $welcome,
+            'title' => sprintf( __( 'Welcome to %s!', 'hashboard' ), get_bloginfo( 'name' ) ),
             'size' => 3,
 		];
 		/**
@@ -56,18 +57,26 @@ HTML;
 	 */
 	public function render( $page = '' ) {
 		?>
-		<div class="hb-masonry">
+		<div class="hb-masonry" id="hb-dashboard-masonry">
             <div class="hb-masonry-sizer"></div>
 			<?php foreach ( (array) $this->get_blocks() as $block ) :
                 $block = wp_parse_args( $block, [
                     'id' => '',
                     'html' => '',
                     'size' => 1,
+                    'title' => '',
                 ] );
 			    $size = max( min( $block['size'], 3), 1 );
                 ?>
 				<div class="hb-masonry-block" id="<?= esc_attr( $block['id'] ) ?>" data-size="<?= esc_attr( $size ) ?>">
-					<?php echo $block['html']; ?>
+                    <div class="hb-masonry-inner">
+						<?php if ( $block[ 'title' ] ) : ?>
+                            <h3 class="hb-masonry-title"><?= wp_kses( $block[ 'title' ], [ 'a' => [ 'href' => true, 'target' => [ '_self', '_blank' ] ], 'strong' => true, 'i' => [ 'class' => true ] ] ) ?></h3>
+						<?php endif; ?>
+                        <div class="hb-masonry-content">
+							<?php echo $block[ 'html' ]; ?>
+                        </div>
+                    </div>
 				</div>
 			<?php endforeach; ?>
 		</div>

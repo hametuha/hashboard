@@ -1,3 +1,6 @@
+$medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
+
+
 %clearfix{
   &:after{
     content: "";
@@ -16,13 +19,6 @@
     margin-right:  $row-pad / 2;
     margin-left:  $row-pad / 2;
   }
-}
-
-code{
-  padding: 2px 5px;
-  display: inline-block;
-  background-color: #f9f9f9;
-  @extend .cyan-text, .text-darken-4;
 }
 
 %alert-box{
@@ -55,9 +51,7 @@ code{
 }
 
 .hb-warning{
-  @extend %alert-box;
-  color: $warning-color;
-  border-color: $warning-color;
+  margin: 0.5rem 0;
 }
 
 a.link{

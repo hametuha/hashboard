@@ -18,7 +18,7 @@ $user = wp_get_current_user();
 </head>
 <body>
 
-<header class="hb-header">
+<header class="hb-sidebar" id="hb-side-nav">
     <ul id="nav-mobile" class="hb-menu side-nav fixed">
         <li class="hb-site-info">
             <?php if ( has_site_icon() ) : ?>
@@ -67,34 +67,34 @@ $user = wp_get_current_user();
     <nav class="top-nav">
         <div class="hb-container">
             <div class="nav-wrapper">
-                <span class="hb-main-title page-title">
+                <span class="hb-header-title page-title">
                     <?php echo esc_html( $page->label() ) ?>
                 </span>
-                <a href="#" data-activate="nav-mobile" class="button-collapse hide-on-large-only">
+                <button id="hb-side-nav-toggle" data-target="#hb-side-nav" type="button"
+                        class="d-md-none side-nav-toggle hb-header-menu">
                     <i class="material-icons">menu</i>
-                </a>
-                <ul class="right">
-                    <li>
-                        <a href="#" data-activates="hb-sub-menu" class="dropdown-button" data-beloworigin="true" data-alignment="right" data-constrainWidth="false">
-                            <?php echo get_avatar( get_current_user_id(), 96, $user->display_name, $user->display_name, [
-                                'class' => 'circle responsive-img hb-header-avatar',
-                            ] ) ?>
-                        </a>
-                        <ul id='hb-sub-menu' class='dropdown-content'>
-                            <?php foreach ( $hashboard->user_actions() as $link ) : ?>
-                                <?php if ( 'divider' ===  $link['label'] ) : ?>
-                                    <li class="divider"></li>
-                                <?php else : ?>
-                                    <li>
-                                        <a href="<?php echo esc_url( $link['url'] ) ?>" class="<?php echo isset( $link['class'] ) ? esc_attr( $link['class'] ) : '' ?>">
-                                            <?php echo wp_kses_post( $link['label'] ) ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-                    </li>
-                </ul>
+                </button>
+
+                <div class="hb-header-dropdown btn-group">
+                    <button class="dropdown hb-header-dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<?php echo get_avatar( get_current_user_id(), 96, $user->display_name, $user->display_name, [
+							'class' => 'circle responsive-img hb-header-avatar',
+						] ) ?>
+                    </button>
+                    <div id="hb-sub-menu" class="dropdown-menu dropdown-menu-right hb-header-dropdown-menu">
+						<?php foreach ( $hashboard->user_actions() as $link ) : ?>
+							<?php if ( 'divider' ===  $link['label'] ) : ?>
+                                <div class="dropdown-divider"></div>
+							<?php else : ?>
+                                <a href="<?php echo esc_url( $link[ 'url' ] ) ?>"
+                                   class="dropdown-item <?php echo isset( $link[ 'class' ] ) ? esc_attr( $link[ 'class' ] ) : '' ?>">
+									<?php echo wp_kses_post( $link[ 'label' ] ) ?>
+                                </a>
+							<?php endif; ?>
+						<?php endforeach; ?>
+                    </div>
+                </div>
+
             </div>
         </div>
     </nav>

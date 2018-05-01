@@ -1,24 +1,36 @@
 /*!
  * Month selector
  *
- * wpdeps=vue-js,materialize
+ * wpdeps=vue-js,bootstrap
  */
 
 
 /*global Vue: true*/
 /*global HbComponentsMonthSelector*/
 
-(function ($) {
+(function () {
 
   'use strict';
 
   Vue.component('hb-month-selector', {
-    template: '<div class="hb-month-selector row">' +
-      '<div class="col s2"><p>{{label}}</p></div>' +
-      '<div class="col s4"><select class="browser-default" v-model="curYear"><option v-for="year in years" :value="year.value">{{year.label}}</option></select></div>' +
-      '<div class="col s4"><select class="browser-default" v-model="curMonth"><option v-for="(label, value) in month" :value="value+1" :key="value">{{label}}</option></select></div>' +
-      '<div class="col s2"><button type="button" class="waves-effect waves-grey btn-flat" v-on:click="updateYearMonth">{{updateLabel}}</button></div>' +
-    '</div>',
+    template: `
+      <div class="hb-month-selector form-row" :title="label">
+        <div class="form-group col">
+          <select class="form-control" v-model="curYear">
+            <option v-for="year in years" :value="year.value">{{year.label}}</option>
+          </select>
+          </div>
+        <div class="form-group col">
+          <select class="form-control" v-model="curMonth">
+            <option v-for="(label, value) in month" :value="value+1" :key="value">{{label}}</option>
+          </select>
+        </div>
+        <div class="form-group col">
+          <button type="button" class="btn btn-secondary ripple" v-on:click="updateYearMonth">
+            {{updateLabel}}
+          </button>
+        </div>
+      </div>`,
     props: {
       label: {
         type: String,
@@ -74,9 +86,9 @@
     },
     methods: {
       updateYearMonth: function(){
-        this.$emit( 'date-updated', this.curYear, ( '0' + this.curMonth ).slice(-2));
+        this.$emit( 'date-updated', this.curYear.toString(), ( '0' + this.curMonth ).slice(-2));
       }
     }
   });
 
-})(jQuery);
+})();

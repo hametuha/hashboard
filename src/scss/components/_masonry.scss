@@ -1,0 +1,51 @@
+$hb-masonry-border: 1px solid $gray-300 !default;
+$hb-masonry-radius: 2px !default;
+$hb-masonry-gap: 10px !default;
+$hb-masonry-title-size: 20px !default;
+
+
+.hb-masonry{
+  $full-width: 100%;
+  &-sizer,
+  &-block{
+    width: $full-width / 3;
+  }
+
+  @media #{$medium-and-down} {
+    &-sizer,
+    &-block{
+      width: 100%;
+    }
+  }
+
+  &-block{
+    box-sizing: border-box;
+    padding: $hb-masonry-gap $hb-masonry-gap 0;
+    margin-bottom: $hb-masonry-gap;
+
+    &[data-size='2']{
+      width: $full-width / 3 * 2;
+    }
+    &[data-size='3']{
+      width: $full-width;
+    }
+  }
+  &-inner{
+    position: relative;
+    border: $hb-masonry-border;
+    border-radius: $hb-masonry-radius;
+    padding: $hb-masonry-gap;
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .1);
+    &:hover{
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, .1);
+    }
+  }
+  &-title{
+    margin-top: 0;
+    font-size: $hb-masonry-title-size;
+    font-weight: normal;
+    padding-bottom: $hb-masonry-gap;
+    border-bottom: $hb-masonry-border;
+  }
+}

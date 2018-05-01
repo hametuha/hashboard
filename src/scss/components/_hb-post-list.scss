@@ -1,0 +1,52 @@
+$post-list-gap: 10px !default;
+$post-list-divider: 1px solid #eee !default;
+$post-list-link: #000 !default;
+$post-list-bg: #f9f9f9 !default;
+$post-list-new-color: $danger !default;
+
+.hb-post-list{
+
+  &-list{
+    padding: 0;
+    margin: $post-list-gap * 2 0;
+  }
+
+
+  &-item{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &-link{
+    display: block;
+    padding: $post-list-gap;
+    margin: 0;
+    transition: background-color .3s linear;
+    &:link, &:visited{
+      text-decoration: none;
+      color: $post-list-link;
+    }
+    &:hover, &:active{
+      text-decoration: none;
+      color: $post-list-link;
+      background-color: $post-list-bg;
+    }
+  }
+
+  &-title{
+    display: block;
+    font-weight: bold;
+  }
+
+  &-date{
+    font-size: .85em;
+    color: #aaa;
+  }
+
+  &-new{
+    vertical-align: bottom;
+    color: $post-list-new-color;
+  }
+
+}

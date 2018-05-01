@@ -1,7 +1,7 @@
 /*!
  * Pagination for Vue.JS
  *
- * wpdeps=vue-js,materialize
+ * wpdeps=vue-js,bootstrap
  */
 
 /*global Vue: false*/
@@ -11,7 +11,7 @@
   'use strict';
 
   Vue.component('hb-pagination-button', {
-    template: '<li v-bind:class="className"><a href="#" v-on:click.stop.prevent="clickHandler" v-html="icon" ></a></li>',
+    template: '<li v-bind:class="className"><a class="page-link" href="#" v-on:click.stop.prevent="clickHandler" v-html="icon" ></a></li>',
     props: {
       number: Number,
       current: {
@@ -41,9 +41,9 @@
       },
       className: function(){
         return {
+          'page-item': true,
           disabled: this.disabled,
           active: this.current,
-          'waves-effect': !(this.disabled || this.current)
         };
      }
     },
@@ -57,7 +57,7 @@
   });
 
   Vue.component('hb-pagination', {
-    template: '<ul class="pagination">' +
+    template: '<ul :class="this.className">' +
                 '<hb-pagination-button :disabled="!hasPrev" label="left" number="1" v-on:paginated="paginated"></hb-pagination-button>' +
                 '<hb-pagination-button v-if="needLeft" disabled=true number="1" label="more_horiz"></hb-pagination-button>' +
                 '<hb-pagination-button v-for="n in range" :number="n" :current="n==current" v-on:paginated="paginated"></hb-pagination-button>' +
@@ -76,6 +76,10 @@
       max: {
         type: Number,
         default: 5
+      },
+      align: {
+        type: String,
+        default: 'center'
       }
     },
     computed: {
@@ -106,6 +110,12 @@
           range.push(i);
         }
         return range;
+      },
+      className: function(){
+        return {
+          pagination: true,
+          'justify-content-center': 'center' === this.align
+        }
       }
     },
     methods: {

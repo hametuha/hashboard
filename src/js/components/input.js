@@ -105,7 +105,7 @@
       checkboxHandler: function(){
         if(this.editing){
           // Enter edit mode
-          this.current = this.original
+          this.current = this.original;
         }else if(this.current !== this.original){
           this.$emit('data-changed', this.current, this.id);
         }

@@ -142,7 +142,7 @@ abstract class Screen extends Singleton {
 				$this->render_field( wp_get_current_user(), $key, $field );
 			}
 			if ( $settings['submit'] ) {
-				printf( '<div class="row"><div class="col s12"><button class="btn waves-effect waves-light" type="submit">%s</button></div></div>', esc_html( $settings[ 'submit' ] ) );
+				printf( '<div class="form-row"><div class="col-12"><button class="btn btn-outline-primary ripple" type="submit">%s</button></div></div>', esc_html( $settings[ 'submit' ] ) );
 			}
 			/**
 			 * hashboard_after_fields_rendered
@@ -210,7 +210,8 @@ abstract class Screen extends Singleton {
             'description' => '',
 			'media_type'  => 'image',
 			'default' => '',
-			'options' => []
+			'options' => [],
+			'rows' => 3,
 		], $fields );
 
 		$out = '';
@@ -231,25 +232,30 @@ abstract class Screen extends Singleton {
 				$fields[ 'value' ] = get_user_meta( $user->ID, $fields['src'], true );
 			}
 			if ( $fields['icon'] ) {
-				printf(
+				$fields['label'] = sprintf(
                     '<i class="material-icons prefix">%s</i>',
                     esc_html( $fields['icon'] )
-                );
+                ) . $fields['label'];
             }
+			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file', 'separator' ] ) ) {
+				printf( '<label for="%s">%s</label>', esc_attr( $key ), wp_kses( $fields['label'], [ 'i' => [ 'class' => true ] ] ) );
+			}
 			switch ( $fields['type'] ) {
 				case 'separator':
 					printf( '<div class="col s12"><p class="hb-separator">%s</p></div>', wp_kses_post( $fields['label'] ) );
 					break;
 				case 'textarea':
+					$rows = $fields['rows'];
 					printf(
-						'<textarea id="%1$s" name="%1$s" class="materialize-textarea" %3$s>%2$s</textarea>',
+						'<textarea id="%1$s" name="%1$s" class="form-control resizable" rows="%4$d" data-min-rows="%4$d" %3$s>%2$s</textarea>',
 						esc_attr( $key ),
 						esc_textarea( $fields['value'] ),
-						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : ''
+						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : '',
+						$fields['rows']
 					);
 					break;
 				case 'select':
-					printf( '<select name="%1$s" id="%1$s">', esc_attr( $key ) );
+					printf( '<select name="%1$s" id="%1$s" class="form-control">', esc_attr( $key ) );
 					foreach ( $fields['options'] as $v => $l ) {
 						$cur = $fields['value'] ?: $fields['default'];
 						printf(
@@ -268,7 +274,7 @@ abstract class Screen extends Singleton {
 				case 'number':
 				case 'hidden':
 					printf(
-						'<input type="%1$s" id="%2$s" name="%2$s" value="%3$s" %4$s />',
+						'<input class="form-control" type="%1$s" id="%2$s" name="%2$s" value="%3$s" %4$s />',
 						esc_attr( $fields['type'] ),
 						esc_attr( $key ),
 						esc_attr( $fields['value'] ),
@@ -285,22 +291,17 @@ abstract class Screen extends Singleton {
 					);
 					break;
 				case 'file':
+					$lang = explode( '_', get_locale() )[0];
 					printf( '
-						<div class="btn">
-							<span>%1$s</span>
-							<input type="file" name="%2$s" id="%2$s">
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" name="%2$s" id="%2$s" lang="%3$s">
+							<label class="custom-file-label" for="%2$s">%1$s</label>
 						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="%3$s">
-						</div>
-    				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $fields['placeholder'] ) );
+    				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $lang ) );
 					break;
 			}
-			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file', 'separator' ] ) ) {
-				printf( '<label for="%s">%s</label>', esc_attr( $key ), wp_kses( $fields['label'], [ 'i' => [ 'class' => true ] ] ) );
-			}
             if ( $fields['description'] ) {
-                printf( '<p class="hb-input-description">%s</p>', wp_kses_post( $fields['description'] ) );
+                printf( '<p class="form-text hb-input-description">%s</p>', wp_kses_post( $fields['description'] ) );
             }
 		}
 		/**
@@ -316,17 +317,17 @@ abstract class Screen extends Singleton {
 		// Wrap fields.
 		if ( ! in_array( $fields['type'], [ 'separator' ] ) ) {
 			$out = sprintf(
-				'<div class="input-field %s col s%d">%s</div>',
+				'<div class="%s col-12 col-md-%d">%s</div>',
 				'file' == $fields['type'] ? 'file-field' : '' ,
 				( is_numeric( $fields['col'] ) && $fields['col'] ) ? ceil( 12 / $fields['col'] ) : 12,
 			$out );
 		}
 		if ( 'open' == $fields['group'] ) {
-			$out = '<div class="row">' . $out;
+			$out = '<div class="form-row">' . $out;
 		} elseif ( 'close' == $fields['group'] ) {
 			$out .= '</div>';
 		} else {
-			$out = '<div class="row">' . $out . '</div>';
+			$out = '<div class="form-row">' . $out . '</div>';
 		}
 		echo $out;
 	}

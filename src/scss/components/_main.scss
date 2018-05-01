@@ -1,3 +1,9 @@
+$loading-img-width: 100px !default;
+$loading-img-height: $loading-img-width !default;
+$loading-img-background: transparent url('../img/ripple.gif') left top no-repeat !default;
+$loading-img-width-small: 60px !default;
+$loading-img-height-small: $loading-img-width-small !default;
+
 @keyframes loading-animation {
   0% {
     transform: rotate(0deg);
@@ -22,37 +28,25 @@
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 100;
+    z-index: 9000;
   }
   &:after {
-    $size: 150px;
     display: block;
-    z-index: 101;
     position: absolute;
-    content: "cached";
-    font-family: 'Material Icons';
-    font-size: $size / 3 * 2;
+    content: '';
+    z-index: 9001;
     left: 50%;
     top: 50%;
-    margin-top: $size / -2;
-    margin-left: $size / -2;
-    width: $size;
-    height: $size;
-    text-align: center;
-    line-height: $size;
+    background: $loading-img-background;
+    background-size: cover;
     transform: translate(-50%, -50%);
-    color: #000;
-    animation: loading-animation 1.5s ease-in-out 0s infinite;
+    width: $loading-img-width;
+    height: $loading-img-height;
   }
   &-small {
-    $size: 60px;
     &:after {
-      margin-top: $size / -2;
-      margin-left: $size / -2;
-      font-size: $size / 3 * 2;
-      width: $size;
-      height: $size;
-      line-height: $size;
+      width: $loading-img-width-small;
+      height: $loading-img-height-small;
     }
   }
 }
@@ -73,6 +67,12 @@
     padding: 0.5em 1.5em;
     color: $page-description-color;
     background-color: $page-description-bg;
+    p{
+      margin: 0;
+      & + p{
+        margin-top: 0.5em;
+      }
+    }
   }
   hr{
     margin: 2em 0;
