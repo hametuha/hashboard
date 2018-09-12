@@ -1,0 +1,73 @@
+extends _layout
+
+block vars
+    - var title='Buttons';
+
+block content
+    -
+        var buttons = {
+            primary: 'Primary',
+            secondary: 'Secondary',
+            success: 'Success',
+            info: 'Info',
+            warning: 'Warning',
+            danger: 'Danger',
+            link: 'Link'
+        };
+        var sized = {
+          lg: 'Large',
+          sm: 'Small'
+        };
+
+    p.text-muted Belows are the list of customized buttons.
+
+    hr
+
+    h2 Normal Buttons
+
+    h3 Variations
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-${className}`)= label
+
+    h2 Button Size
+        p
+            button.btn.btn-primary Default
+            each label, size in sized
+                button(class=`btn btn-${size} btn-primary`)= label
+
+    hr
+
+    h2 Rounded Buttons
+
+    h3 Variations
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-circle btn-${className}`)
+                i.material-icons settings
+
+
+    h3 Button Size
+    p
+        button.btn.btn-circle
+            i.material-icons settings
+        button.btn.btn-circle.btn-lg
+            i.material-icons settings
+        button.btn.btn-circle.btn-sm
+            i.material-icons settings
+
+    H3 Outlined
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-circle btn-outline-${className}`)
+                i.material-icons settings
+
+    h3 Floating
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-circle btn-floating btn-${className}`)
+                i.material-icons settings

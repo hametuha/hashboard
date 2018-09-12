@@ -20,12 +20,12 @@ $user = wp_get_current_user();
 	<nav class="top-nav top-nav-over">
 		<div class="hb-container">
 			<div class="nav-wrapper hb-nav-wrapper">
-                <span class="hb-main-title page-title">
+                <span class="hb-header-title">
                     <?php echo esc_html( $label ) ?>
                 </span>
-				<a title="<?php esc_attr_e( 'Return', 'hashboard' ) ?>" class="btn-floating waves-effect waves-dark grey lighten-4"
+				<a title="<?php esc_attr_e( 'Return', 'hashboard' ) ?>" class="btn btn-circle btn-sm btn-link btn-floating waves-effect"
 					href="<?= esc_url( $back_url ) ?>">
-					<i class="material-icons grey-text text-darken-2">chevron_left</i>
+					<i class="material-icons">chevron_left</i>
 				</a>
 			</div>
 		</div>

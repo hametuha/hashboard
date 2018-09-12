@@ -27,9 +27,12 @@ $user = wp_get_current_user();
             <span class="hb-site-name"><?php bloginfo( 'name' ) ?></span>
         </li>
         <li class="divider"></li>
-		<?php foreach ( $hashboard->screens as $screen ) :
+		<?php
+		$lists = [];
+		foreach ( $hashboard->screens as $screen ) :
 			/** @var \Hametuha\Hashboard\Pattern\Screen $instance */
 			$instance = $screen::get_instance();
+			ob_start();
 			?>
             <li class="hb-menu-item<?php echo $hashboard->current == $instance->slug() ? ' active toggle' : '' ?>">
                 <?php if ( ! $instance->get_children() ) : ?>
@@ -53,7 +56,13 @@ $user = wp_get_current_user();
                 </ul>
                 <?php endif; ?>
             </li>
-		<?php endforeach; ?>
+		<?php
+			$lists[ $instance->slug() ] = ob_get_contents();
+			ob_end_clean();
+		endforeach;
+		$lists = apply_filters( 'hashboard_sidebar_links', $lists );
+		echo implode( "\n", $lists );
+		?>
         <li class="divider"></li>
         <li class="hb-return-link">
             <a href="<?php echo home_url() ?>">

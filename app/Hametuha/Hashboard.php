@@ -237,6 +237,10 @@ class Hashboard extends Singleton {
 		], self::version(), true );
 		// Vue.js.
 		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
+		$vue_helper = <<<JS
+			window.bus = new Vue({});
+JS;
+		wp_add_inline_script( 'vue-js', $vue_helper );
 		// Chart JS vue.
 		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.0.2', true );
 		// Register scripts.

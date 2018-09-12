@@ -83,10 +83,6 @@ $top-nav-menu-transition: color .3s linear, background-color .3s linear !default
     & > *{
       z-index: 11;
     }
-    .btn-floating .material-icons{
-      height: 40px;
-      line-height: 40px
-    }
   }
   ul.right{
     position: relative;
@@ -106,6 +102,11 @@ $top-nav-menu-transition: color .3s linear, background-color .3s linear !default
   & .hb-container{
     position: relative;
     z-index: 1000;
+  }
+  .btn-circle{
+    position: absolute;
+    left: 10px;
+    top: 10px;
   }
 }
 

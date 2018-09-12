@@ -1,0 +1,27 @@
+$list-group-image-size: 80px !default;
+
+.list-group{
+
+  &-item{
+    @extend .clearfix;
+  }
+
+  &-image{
+    float: left;
+    width: auto;
+    height: auto;
+    max-width: $list-group-image-size;
+    margin-right: 20px;
+  }
+
+  &-icon{
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+
+  &-desc{
+
+  }
+}
