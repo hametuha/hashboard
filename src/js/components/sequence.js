@@ -6,7 +6,7 @@
 
 /*global Vue: false*/
 
-(function(){
+( function() {
 
   'use strict';
 
@@ -23,42 +23,42 @@
     props: {
       index: {
         type: Number,
-        required: true,
+        required: true
       },
       active: {
         type: Boolean,
-        default: false,
+        default: false
       },
       label: {
         type: String,
-        default: '',
+        default: ''
       },
       icon: {
         type: String,
-        default: '',
+        default: ''
       }
     },
     computed: {
-      btnClass: function(){
+      btnClass: function() {
         return {
           btn: true,
           'btn-floating': true,
           grey: ! this.active,
           'lighten-2': ! this.active,
-          pulse: this.active,
+          pulse: this.active
         };
       }
     },
     methods: {
-        selected: function(number){
-          if(!this.active){
-            this.$emit('select-index', this.index);
+        selected: function( number ) {
+          if ( ! this.active ) {
+            this.$emit( 'select-index', this.index );
           }
         }
     }
-  } );
+  });
 
-  Vue.component('hb-sequence', {
+  Vue.component( 'hb-sequence', {
 
     template: `
       <ul class="hb-sequence-wrapper">
@@ -74,19 +74,19 @@
       },
       steps: {
         type: Array,
-        default: [],
+        default: []
       },
       selectable: {
         type: Boolean,
-        default: true,
+        default: true
       }
     },
     methods: {
-      activate: function(number){
+      activate: function( number ) {
         this.active = number;
-        this.$emit('page-change', number);
+        this.$emit( 'page-change', number );
       }
     }
   });
 
-})();
+}() );

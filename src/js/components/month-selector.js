@@ -8,11 +8,11 @@
 /*global Vue: true*/
 /*global HbComponentsMonthSelector*/
 
-(function () {
+( function() {
 
   'use strict';
 
-  Vue.component('hb-month-selector', {
+  Vue.component( 'hb-month-selector', {
     template: `
       <div class="hb-month-selector form-row" :title="label">
         <div class="form-group col">
@@ -38,25 +38,25 @@
       },
       maxYear: {
         type: Number,
-        default: function(){
+        default: function() {
           return new Date().getFullYear();
         }
       },
       minYear: {
         type: Number,
-        default: function(){
+        default: function() {
           return new Date().getFullYear() - 10;
         }
       },
       curMonth: {
         type: Number,
-        default: function(){
-          return new Date().getMonth()+1;
+        default: function() {
+          return new Date().getMonth() + 1;
         }
       },
       curYear: {
         type: Number,
-        default: function(){
+        default: function() {
           return new Date().getFullYear();
         }
       }
@@ -68,7 +68,7 @@
       years: function() {
         var range = [];
         var year = this.maxYear;
-        while(year >= this.minYear){
+        while ( year >= this.minYear ) {
           range.push({
             value: year,
             label: year + HbComponentsMonthSelector.yearSuffix
@@ -77,18 +77,19 @@
         }
         return range;
       },
-      updateLabel: function(){
+      updateLabel: function() {
         return HbComponentsMonthSelector.update;
       }
     },
-    mounted: function(){
+    mounted: function() {
+
         // console.log(this.curMonth, this.curYear);
     },
     methods: {
-      updateYearMonth: function(){
-        this.$emit( 'date-updated', this.curYear.toString(), ( '0' + this.curMonth ).slice(-2));
+      updateYearMonth: function() {
+        this.$emit( 'date-updated', this.curYear.toString(), ( '0' + this.curMonth ).slice( -2 ) );
       }
     }
   });
 
-})();
+}() );

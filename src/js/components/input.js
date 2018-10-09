@@ -7,11 +7,11 @@
 /*global Vue: false*/
 /*global HbComponentsInput: false*/
 
-(function ($) {
+( function( $ ) {
 
   'use strict';
 
-  Vue.component('hb-input', {
+  Vue.component( 'hb-input', {
     template: `
       <div class="hb-input-field">
         <div class="row">
@@ -50,80 +50,81 @@
     props: {
       id: {
         type: String,
-        required: true,
+        required: true
       },
       original: {
         type: String,
-        default: "",
+        default: ''
       },
       title: {
         type: String,
-        required: true,
+        required: true
       },
       description: {
         type: String,
-        default: ""
+        default: ''
       },
       type: {
         type: String,
-        default: "text",
-        validator: function (value) {
+        default: 'text',
+        validator: function( value ) {
           return -1 < [
             'text', 'password', 'email', 'number', 'url',
-            'textarea', 'tel',
-          ].indexOf(value);
+            'textarea', 'tel'
+          ].indexOf( value );
         }
-      },
+      }
     },
     computed: {
       editingLabel: function() {
         return HbComponentsInput.editing;
       },
-      isTextArea: function(){
-        return this.type === 'textarea';
+      isTextArea: function() {
+        return 'textarea' === this.type;
       },
-      originalLines: function(){
-        return this.original.split("\n");
-      },
+      originalLines: function() {
+        return this.original.split( '\n' );
+      }
     },
-    data: function(){
+    data: function() {
       return {
         editing: false,
-        current: "",
+        current: '',
         editingLabel: HbComponentsInput.editing,
         editLabel: HbComponentsInput.edit,
-        noValue: HbComponentsInput.noValue,
+        noValue: HbComponentsInput.noValue
       };
     },
 
-    mounted: function(){
-      $(`label[for="${this.id}"] .tooltipped`).tooltip({delay: 50});
+    mounted: function() {
+      $( `label[for="${this.id}"] .tooltipped` ).tooltip({delay: 50});
     },
 
     methods: {
 
-      checkboxHandler: function(){
-        if(this.editing){
+      checkboxHandler: function() {
+        if ( this.editing ) {
+
           // Enter edit mode
           this.current = this.original;
-        }else if(this.current !== this.original){
-          this.$emit('data-changed', this.current, this.id);
+        } else if ( this.current !== this.original ) {
+          this.$emit( 'data-changed', this.current, this.id );
         }
       },
 
       enterEditing: function() {
         this.editing = true;
         this.current = this.original;
-        this.$emit('enter-edit');
+        this.$emit( 'enter-edit' );
       },
 
-      finishEditing: function(){
+      finishEditing: function() {
         this.editing  = false;
         this.original = this.current;
-        this.$emit('finish-edit', this.original);
+        this.$emit( 'finish-edit', this.original );
       }
     }
   });
 
 
-})(jQuery);
+}( jQuery ) );

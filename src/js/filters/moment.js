@@ -2,18 +2,19 @@
  * wpdeps=vue-js,moment
  */
 
+/* global Vue: false*/
 /* global HbFiltersMoment: false*/
 
-(function(){
+( function() {
 
   'use strict';
 
-  Vue.filter('moment', function(value, format='lll', locale=false){
-    if(!locale){
+  Vue.filter( 'moment', function( value, format = 'lll', locale = false ) {
+    if ( ! locale ) {
       locale = HbFiltersMoment.locale;
     }
-    moment.locale(locale);
-    return moment(value).format(format);
+    moment.locale( locale );
+    return moment( value ).format( format );
   });
 
-})();
+}() );

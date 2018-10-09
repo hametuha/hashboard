@@ -4,18 +4,19 @@
 
 /*global hoge: true*/
 
-(function ($) {
+( function( $ ) {
 
   'use strict';
 
   $.extend({
+
     /**
      * Get last date of month
      *
      * @param {Date} date
      * @return {String}
      */
-    hbGetLastDate: function(date){
+    hbGetLastDate: function( date ) {
       return this.hbGetLastDateOfMonth( date.getFullYear(), date.getMonth() + 1 );
     },
 
@@ -28,10 +29,10 @@
      */
     hbGetLastDateOfMonth: function( year, month ) {
       let nextYear, nextMonth;
-      if(12 == month){
+      if ( 12 == month ) {
         nextYear = year + 1;
         nextMonth    = 1;
-      }else{
+      } else {
         nextYear  = year;
         nextMonth = month;
       }
@@ -41,5 +42,4 @@
   });
 
 
-
-})(jQuery);
+}( jQuery ) );

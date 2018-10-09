@@ -200,6 +200,7 @@ abstract class Screen extends Singleton {
 		$fields = shortcode_atts( [
 			'label' => '',
 			'type'  => 'text',
+			'name'  => '',
 			'value' => '',
 			'src'   => '',
 			'group' => '',
@@ -212,8 +213,11 @@ abstract class Screen extends Singleton {
 			'default' => '',
 			'options' => [],
 			'rows' => 3,
+			'optional' => false,
 		], $fields );
-
+		if ( ! $fields['name'] ) {
+			$fields['name'] = $key;
+		}
 		$out = '';
         ob_start();
 		/**
@@ -238,7 +242,12 @@ abstract class Screen extends Singleton {
                 ) . $fields['label'];
             }
 			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file', 'separator' ] ) ) {
-				printf( '<label for="%s">%s</label>', esc_attr( $key ), wp_kses( $fields['label'], [ 'i' => [ 'class' => true ] ] ) );
+				printf(
+					'<label for="%s">%s %s</label>',
+					esc_attr( $key ),
+					wp_kses( $fields['label'],[ 'i' => [ 'class' => true ] ] ),
+					$fields['optional'] ? sprintf( '<small class="text-muted">%s</small>', esc_html__( '(Optional)', 'hashboard' ) ) : ''
+				);
 			}
 			switch ( $fields['type'] ) {
 				case 'separator':
@@ -247,15 +256,16 @@ abstract class Screen extends Singleton {
 				case 'textarea':
 					$rows = $fields['rows'];
 					printf(
-						'<textarea id="%1$s" name="%1$s" class="form-control resizable" rows="%4$d" data-min-rows="%4$d" %3$s>%2$s</textarea>',
+						'<textarea id="%1$s" name="%5$s" class="form-control resizable" rows="%4$d" data-min-rows="%4$d" %3$s>%2$s</textarea>',
 						esc_attr( $key ),
 						esc_textarea( $fields['value'] ),
 						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : '',
-						$fields['rows']
+						$fields['rows'],
+						esc_attr( $fields['name'] )
 					);
 					break;
 				case 'select':
-					printf( '<select name="%1$s" id="%1$s" class="form-control">', esc_attr( $key ) );
+					printf( '<select id="%1$s" name="%2$s" class="form-control">', esc_attr( $key ), esc_attr( $fields['name'] ) );
 					foreach ( $fields['options'] as $v => $l ) {
 						$cur = $fields['value'] ?: $fields['default'];
 						printf(
@@ -274,30 +284,32 @@ abstract class Screen extends Singleton {
 				case 'number':
 				case 'hidden':
 					printf(
-						'<input class="form-control" type="%1$s" id="%2$s" name="%2$s" value="%3$s" %4$s />',
+						'<input class="form-control" type="%1$s" id="%2$s" name="%5$s" value="%3$s" %4$s />',
 						esc_attr( $fields['type'] ),
 						esc_attr( $key ),
 						esc_attr( $fields['value'] ),
-						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : ''
+						$fields['placeholder'] ? sprintf( 'placeholder="%s"', esc_attr( $fields['placeholder'] ) ) : '',
+						esc_attr( $fields['name'] )
 					);
 					break;
 				case 'media':
 					wp_enqueue_media();
 					printf(
-						'<input type="hidden" name="%1$s" /><button id="%1$s" class="waves-effect waves-light btn hb-media-helper" data-media-type="%2$s" type="button"><i class="material-icons left">photo</i>%3$s</button>',
+						'<input type="hidden" name="%4$s" /><button id="%1$s" class="waves-effect waves-light btn hb-media-helper" data-media-type="%2$s" type="button"><i class="material-icons left">photo</i>%3$s</button>',
 						esc_attr( $key ),
 						esc_attr( $fields['media_type'] ),
-						__( 'Select', 'hashboard' )
+						__( 'Select', 'hashboard' ),
+						esc_attr( $fields['name'] )
 					);
 					break;
 				case 'file':
 					$lang = explode( '_', get_locale() )[0];
 					printf( '
 						<div class="custom-file">
-							<input type="file" class="custom-file-input" name="%2$s" id="%2$s" lang="%3$s">
+							<input type="file" class="custom-file-input" name="%4$s" id="%2$s" lang="%3$s">
 							<label class="custom-file-label" for="%2$s">%1$s</label>
 						</div>
-    				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $lang ) );
+    				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $lang ), esc_attr( $fields['name'] ) );
 					break;
 			}
             if ( $fields['description'] ) {

@@ -218,12 +218,17 @@ class Hashboard extends Singleton {
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', [], null );
 		wp_register_style( 'bootstrap', self::url( '/assets/css/style.css' ), [ 'material-design-icon' ], self::version() );
 		// Bootstrap
-		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.12.9', true );
-		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.0.0', true );
+		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.14.4', true );
+		// Popper
+		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.1.3', true );
 		// Chart JS
-		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.1', true );
+		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.2', true );
 		// Moment
-		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.19.2', true );
+		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.22.2', true );
+		// Vue.js.
+		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.17', true );
+		// Chart JS vue.
+		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.4.0', true );
 		// Hash Rest
 		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), [ 'jquery', 'hb-plugins-toast' ], self::version(), true );
 		wp_localize_script( 'hashboard-rest', 'HashRest', [
@@ -235,10 +240,6 @@ class Hashboard extends Singleton {
 		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [
 			'bootstrap', 'hashboard-rest', 'hb-plugins-toast', 'hb-plugins-fitrows'
 		], self::version(), true );
-		// Vue.js.
-		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
-		// Chart JS vue.
-		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.0.2', true );
 		// Register scripts.
 		foreach ( [ 'components', 'filters', 'plugins' ] as $group ) {
 			$base_dir = self::dir() . "/assets/js/{$group}";
@@ -311,7 +312,7 @@ class Hashboard extends Singleton {
 					 *
 					 * @param bool $is_head
 					 */
-					do_action( 'hashboard_enqueue_scripts' );
+					do_action( 'hashboard_enqueue_scripts', $screen, $child );
 					self::load_template( 'body.php', [
 						'page' => $screen,
 						'hashboard' => self::get_instance(),
