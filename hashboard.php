@@ -11,6 +11,8 @@
 
 defined( 'ABSPATH' ) || die();
 
+define( 'HASHBOARD', '0.8.0' );
+
 add_action( 'plugins_loaded', function() {
 	require __DIR__ . '/vendor/autoload.php';
 	call_user_func( [ 'Hametuha\\Hashboard', 'get_instance' ] );

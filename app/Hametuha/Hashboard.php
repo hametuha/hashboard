@@ -227,6 +227,10 @@ class Hashboard extends Singleton {
 		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.22.2', true );
 		// Vue.js.
 		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.17', true );
+		$vue_helper = <<<JS
+			window.bus = new Vue({});
+JS;
+		wp_add_inline_script( 'vue-js', $vue_helper );
 		// Chart JS vue.
 		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.4.0', true );
 		// Hash Rest

@@ -19,6 +19,17 @@ abstract class Editor extends Singleton {
 	 * @var mixed
 	 */
 	protected $object = null;
+
+	protected function init() {
+		add_action( 'hashboard_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+	}
+	
+	/**
+	 * Enqueue assets
+	 */
+	public function enqueue_scripts() {
+		// Do nothing.
+	}
 	
 	/**
 	 * Get slug.
