@@ -63,6 +63,8 @@ class Hashboard extends Singleton {
 				'account' => Account::class,
 			] );
 		}, 1 );
+		// Register assets globally.
+		add_action( 'init', [ $this, 'register_assets' ], 11 );
 		// Register all API.
 		foreach ( [
 					  'API' => RestApi::class,
@@ -305,8 +307,6 @@ JS;
 					if ( !$screen->has_children( $child ) ) {
 						$child = '';
 					}
-					// Register assets.
-					$this->register_assets();
 					wp_enqueue_style( 'bootstrap' );
 					wp_enqueue_script( 'hashboard' );
 					/**

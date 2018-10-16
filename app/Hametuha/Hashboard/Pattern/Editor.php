@@ -104,7 +104,6 @@ abstract class Editor extends Singleton {
 			throw new \Exception( __( 'You have no permission to edit this data.', 'hashboard' ), 403 );
 		}
 		// Enqueueu many things.
-		Hashboard::get_instance()->register_assets();
 		wp_enqueue_style( 'bootstrap' );
 		wp_enqueue_script( 'hashboard' );
 		do_action( 'hashboard_enqueue_scripts' );
