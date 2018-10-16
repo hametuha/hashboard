@@ -72,7 +72,7 @@ $user = wp_get_current_user();
     </ul>
 </header>
 
-<main>
+<main class="hb">
     <nav class="top-nav">
         <div class="hb-container">
             <div class="nav-wrapper">

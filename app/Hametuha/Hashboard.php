@@ -218,7 +218,7 @@ class Hashboard extends Singleton {
 	public function register_assets() {
 		// Material Design Icons
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', [], null );
-		wp_register_style( 'bootstrap', self::url( '/assets/css/style.css' ), [ 'material-design-icon' ], self::version() );
+		wp_register_style( 'bootstrap', self::url( '/assets/css/hashboard.css' ), [ 'material-design-icon' ], self::version() );
 		// Bootstrap
 		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.14.4', true );
 		// Popper
@@ -307,6 +307,7 @@ JS;
 					if ( !$screen->has_children( $child ) ) {
 						$child = '';
 					}
+					global $wp_styles;
 					wp_enqueue_style( 'bootstrap' );
 					wp_enqueue_script( 'hashboard' );
 					/**

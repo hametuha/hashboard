@@ -1,6 +1,6 @@
 $loading-img-width: 100px !default;
 $loading-img-height: $loading-img-width !default;
-$loading-img-background: transparent url('../img/ripple.gif') left top no-repeat !default;
+$loading-img-background: transparent url('#{$hb-img-path}/ripple.gif') left top no-repeat !default;
 $loading-img-width-small: 60px !default;
 $loading-img-height-small: $loading-img-width-small !default;
 

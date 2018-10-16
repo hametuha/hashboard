@@ -3,7 +3,7 @@
 Contributors: Takahashi_Fumiki, hametuha  
 Tags: sns, login
 Requires at least: 4.7  
-Tested up to: 4.9.1  
+Tested up to: 4.9.8  
 Stable tag: 0.8.0  
 Requires PHP: 5.5  
 License: GPL 3.0 or later  
