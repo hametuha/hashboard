@@ -112,6 +112,7 @@ abstract class Editor extends Singleton {
 			'object'   => $this->object,
 			'label'    => $this->get_label(),
 			'back_url' => $this->get_back_link(),
+			'child'    => get_query_var( 'hashboard-child' ),
 		] );
 	}
 

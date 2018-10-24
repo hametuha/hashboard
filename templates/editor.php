@@ -2,8 +2,8 @@
 /** @var \Hametuha\Hashboard\Pattern\Editor $editor */
 /** @var string $label */
 /** @var string $back_url */
+/** @var string $child */
 $user = wp_get_current_user();
-
 ?><!doctype html>
 <html>
 <head>
@@ -42,7 +42,7 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $page
 				 * @param string $child
 				 */
-				do_action( 'hashboard_before_main', $page, $child );
+				do_action( 'hashboard_before_main', $editor, $child );
 
 				$editor->content();
 				
@@ -54,7 +54,7 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $page
 				 * @param string $child
 				 */
-				do_action( 'hashboard_after_main', $page, $child );
+				do_action( 'hashboard_after_main', $editor	, $child );
 				?>
 
 			</div>

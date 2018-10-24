@@ -18,6 +18,11 @@ block content
           lg: 'Large',
           sm: 'Small'
         };
+        var radios = {
+          Select1: '10',
+          Select2: '20',
+          Select3: '30'
+        };
 
     p.text-muted Belows are the list of customized buttons.
 
@@ -71,3 +76,14 @@ block content
         each label, className in buttons
             button(class=`btn btn-circle btn-floating btn-${className}`)
                 i.material-icons settings
+
+    h3 Radio Buttons
+
+    each size in ['', '-lg', '-sm']
+        p
+            each value, label in radios
+                span(class=`hb-radio hb-radio${size}`)
+                    input(id=`hb-radio${size}-${value}`, type='radio', value=value, name='radio-sample')
+                    label.hb-radio-label(for=`hb-radio${size}-${value}`)
+                        i.material-icons check
+                        span.hb-radio-string=label

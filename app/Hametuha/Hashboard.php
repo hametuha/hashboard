@@ -190,13 +190,7 @@ class Hashboard extends Singleton {
 	 * @return array
 	 */
 	public function user_actions() {
-		$links = [
-			[
-				'label' => __( 'Log out', 'hashboard' ),
-				'url' => wp_logout_url(),
-				'class' => '',
-			],
-		];
+		$links = [];
 		if ( current_user_can( self::get_wp_accessible_capability() ) ) {
 			array_unshift( $links, [
 				'label' => __( 'WP Admin', 'hashboard' ),
@@ -204,6 +198,11 @@ class Hashboard extends Singleton {
 				'class' => '',
 			] );
 		}
+		$links['logout'] = [
+			'label' => __( 'Log out', 'hashboard' ),
+			'url' => wp_logout_url(),
+			'class' => '',
+		];
 		/**
 		 * hashboar_user_actions
 		 *

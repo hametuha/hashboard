@@ -110,28 +110,14 @@
     },
 
     methods: {
-
       checkboxHandler: function() {
-        if ( this.editing ) {
-
+        if ( ! this.editing ) {
           // Enter edit mode
           this.current = this.original;
         } else if ( this.current !== this.original ) {
           this.$emit( 'data-changed', this.current, this.id );
         }
       },
-
-      enterEditing: function() {
-        this.editing = true;
-        this.current = this.original;
-        this.$emit( 'enter-edit' );
-      },
-
-      finishEditing: function() {
-        this.editing  = false;
-        this.original = this.current;
-        this.$emit( 'finish-edit', this.original );
-      }
     }
   });
 

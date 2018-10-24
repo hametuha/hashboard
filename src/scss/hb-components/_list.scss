@@ -6,6 +6,15 @@ $list-group-image-size: 80px !default;
     @extend .clearfix;
   }
 
+  &-title{
+    font-weight: bold;
+    color: $black;
+    small{
+      color: $gray-600;
+      margin-left: 0.5em;
+    }
+  }
+
   &-image{
     float: left;
     width: auto;
@@ -13,6 +22,7 @@ $list-group-image-size: 80px !default;
     max-width: $list-group-image-size;
     margin-right: 20px;
   }
+
 
   &-icon{
     position: absolute;
@@ -23,5 +33,33 @@ $list-group-image-size: 80px !default;
 
   &-desc{
 
+  }
+
+  &-actions{
+    margin: 0.5em 0;
+    padding: 0;
+    display: flex;
+    justify-content: start;
+    li{
+      list-style: none;
+      padding: 0 0.5em;
+      border-left: 1px solid #eee;
+      font-size: 0.85em;
+      &:first-child{
+        border-left: none;
+      }
+    }
+    a{
+      display: inline-block;
+      padding: 0.25em;
+      &:link, &:visited{
+        color: $info;
+        text-decoration: underline;
+      }
+      &:hover, &:active{
+        color: $danger;
+        text-decoration: none;
+      }
+    }
   }
 }
