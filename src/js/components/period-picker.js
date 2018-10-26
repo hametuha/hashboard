@@ -13,7 +13,7 @@ Vue.component( 'HbPeriodPicker', {
   data: function() {
     return {
       customLabel: HbComponentsPeriodPicker.custom,
-      customizing: false,
+      customizing: false
     };
   },
 
@@ -24,12 +24,12 @@ Vue.component( 'HbPeriodPicker', {
     },
     allowCustom: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
 
   template: `
-      <div class="hb-date-range">
+      <div class="hb-period">
         <span v-for="button, index in buttons" class="hb-radio hb-radio-sm">
             <input type="radio" :id="'hb-date-range-' + id + '-' +index" :name="'hb-date-range-' + id" 
                 :value="button.value" v-model="mode" @change="changeHandler" />
@@ -44,53 +44,63 @@ Vue.component( 'HbPeriodPicker', {
                 <i class="material-icons">check</i> {{customLabel}}
             </label>
         </span>
-        <div v-if="customizing && allowCustom">
+        <div class="hb-period-dates" :style="style">
             <hb-date-range @date-changed="datePickerHandler"></hb-date-range>
-        </div>
+        </divc>
       </div>
   `,
 
   computed: {
-    buttons(){
+    buttons() {
       return HbComponentsPeriodPicker.default;
     },
-    id(){
+    id() {
       return this._uid;
+    },
+    style() {
+      return {
+        opacity: this.customizing && this.allowCustom ? 1 : 0
+      };
     }
+  },
+
+  mounted() {
+    const now = this.calculate( 7 );
+    this.$emit( 'date-start', now[0], now[1]);
   },
 
   methods: {
 
-    calculate(days){
+    calculate( days ) {
       let start;
       let now = new Date();
-      switch(days){
+      switch ( days ) {
         case 'qtr':
           const month = Math.floor( now.getMonth() / 3 ) * 3 + 1;
-          start = moment([now.getFullYear(), `0${month}`.slice(-2), '01'].join('-')).toDate();
+          start = moment([ now.getFullYear(), `0${month}`.slice( -2 ), '01' ].join( '-' ) ).toDate();
           break;
         default:
-          start = moment().subtract(days, 'days').toDate();
+          start = moment().subtract( days, 'days' ).toDate();
           break;
       }
-      return [start, now];
+      return [ start, now ];
     },
 
-    changeHandler(){
-      switch(this.mode){
+    changeHandler() {
+      switch ( this.mode ) {
         case 'custom':
           this.customizing = true;
           break;
         default:
           this.customizing = false;
-          const calculated = this.calculate(this.mode);
-          this.$emit('date-changed', calculated[0], calculated[1] );
+          const calculated = this.calculate( this.mode );
+          this.$emit( 'date-changed', calculated[0], calculated[1]);
           break;
       }
     },
 
-    datePickerHandler(start, end){
-      this.$emit('date-changed', start, end );
+    datePickerHandler( start, end ) {
+      this.$emit( 'date-changed', start, end );
     }
   }
 

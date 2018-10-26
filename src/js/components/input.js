@@ -68,7 +68,7 @@
       },
       rows: {
         type: String,
-        default: "3"
+        default: '3'
       },
       type: {
         type: String,
@@ -82,7 +82,7 @@
       }
     },
     computed: {
-      forId: function(){
+      forId: function() {
         return this.id + '::for';
       },
       editingLabel: function() {
@@ -112,14 +112,14 @@
     methods: {
       checkboxHandler: function() {
         if ( ! this.editing ) {
+
           // Enter edit mode
           this.current = this.original;
         } else if ( this.current !== this.original ) {
           this.$emit( 'data-changed', this.current, this.id );
         }
-      },
+      }
     }
   });
-
 
 }( jQuery ) );

@@ -9,38 +9,38 @@
 /*global HbComponentsDateRange: false*/
 
 import Datepicker from 'vuejs-datepicker';
-import * as languages from "vuejs-datepicker/src/locale";
+import * as languages from 'vuejs-datepicker/src/locale';
 
 const now = new Date();
 
 Vue.component( 'HbDateRange', {
 
-  data: function(){
+  data: function() {
     return {
-      bootstrap: true,
+      bootstrap: true
     };
   },
 
   props: {
     status: {
       type: String,
-      default: 'default',
+      default: 'default'
     },
     separator: {
       type: String,
-      default: '〜',
+      default: '〜'
     },
     format: {
       type: String,
-      default: 'yyyy-MM-dd',
+      default: 'yyyy-MM-dd'
     },
     start: {
       type: Date,
-      default: now,
+      default: now
     },
     end: {
       type: Date,
-      default: now,
+      default: now
     },
     language: {
       type: String,
@@ -53,13 +53,13 @@ Vue.component( 'HbDateRange', {
         <div class="col-1 text-right">
             <i :class="statusClass">{{statusLabel}}</i>
         </div>
-        <div class="col-5">
+        <div class="col-5 hb-date-range-start">
             <datepicker :language="lang" :format="format" :bootstrap-styling="bootstrap" v-model="start" @input="testDate"></datepicker>
         </div>
         <div class="col-1 text-center">
             <span class="hb-date-range-separator">{{separator}}</span>
         </div>
-        <div class="col-5">
+        <div class="col-5 hb-date-range-end">
             <datepicker :language="lang" :format="format" :bootstrap-styling="bootstrap" v-model="end" @input="testDate"></datepicker>
         </div>
     </div>
@@ -71,17 +71,17 @@ Vue.component( 'HbDateRange', {
 
   computed: {
 
-    lang(){
+    lang() {
       return languages[this.language];
     },
 
-    statusLabel(){
+    statusLabel() {
       return this.getLabel( this.status );
     },
 
-    statusClass(){
+    statusClass() {
       return this.getClass( this.status );
-    },
+    }
 
   },
 
@@ -91,12 +91,12 @@ Vue.component( 'HbDateRange', {
       return {
         error: 'error',
         success: 'done_all',
-        default: 'error_outline',
+        default: 'error_outline'
       }[status];
     },
 
     getClass( status ) {
-      const classes = ['material-icons'];
+      const classes = [ 'material-icons' ];
       switch ( status ) {
         case 'error':
           classes.push( 'text-danger' );
@@ -111,20 +111,20 @@ Vue.component( 'HbDateRange', {
       return classes;
     },
 
-    testDate(){
+    testDate() {
       if ( this.start && this.end ) {
-        if(this.start <= this.end){
+        if ( this.start <= this.end ) {
           this.status = 'success';
-        }else{
+        } else {
           this.status = 'error';
         }
       } else {
         this.status = 'default';
       }
-      if ('success' === this.status) {
-        this.$emit('date-changed', this.start, this.end);
+      if ( 'success' === this.status ) {
+        this.$emit( 'date-changed', this.start, this.end );
       }
-    },
-  },
+    }
+  }
 
-} );
+});

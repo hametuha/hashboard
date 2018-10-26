@@ -120,7 +120,8 @@
     },
     methods: {
       paginated: function( number ) {
-        this.$emit( 'pageChanged', number );
+        alert(number);
+        this.$emit( 'page-changed', number );
       }
     }
   });

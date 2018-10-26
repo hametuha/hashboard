@@ -103,7 +103,7 @@
         let self = this;
         this.loading = true;
         let query = {
-          per_page: this.number( 'max' )
+          'per_page': this.number( 'max' )
         };
         let author = this.number( 'author' );
         if ( author ) {
