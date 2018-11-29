@@ -59,6 +59,26 @@
         }
         Hashboard.toast( '<i class="material-icons error">close</i>' + msg, 4000 );
       };
+    },
+
+    /**
+     * Get object property in any depth.
+     *
+     * @param {Object} obj            Object.
+     * @param {String} key            Property name of object.
+     * @param {*}      undefinedValue Default value.
+     * @returns {*}
+     */
+    hbValues: function( obj, key, undefinedValue ) {
+      const k = key.split('.');
+      let v = obj;
+      for ( let i = 0; i < k.length; i++ ) {
+        if ( ! ( k [ i ] in v ) ) {
+          return undefinedValue;
+        }
+        v = v[ k[ i ]] ;
+      }
+      return v;
     }
   });
 }( jQuery ) );

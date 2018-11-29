@@ -4,17 +4,16 @@
 
 /* global Vue: false*/
 /* global HbFiltersMoment: false*/
+/* global moment: false */
 
-( function() {
+export const momentize = ( value, format = 'lll', locale = false ) => {
+  if ( ! locale ) {
+    locale = HbFiltersMoment.locale;
+  }
+  moment.locale( locale );
+  return moment( value ).format( format );
+};
 
-  'use strict';
-
-  Vue.filter( 'moment', function( value, format = 'lll', locale = false ) {
-    if ( ! locale ) {
-      locale = HbFiltersMoment.locale;
-    }
-    moment.locale( locale );
-    return moment( value ).format( format );
-  });
-
-}() );
+if ( window.Vue ) {
+  Vue.filter( 'moment', momentize );
+}

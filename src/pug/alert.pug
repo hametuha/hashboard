@@ -1,0 +1,50 @@
+extends _layout
+
+block vars
+    - var title='Alerts';
+
+block content
+    -
+        var alerts = {
+            default: 'Default',
+            primary: 'Primary',
+            secondary: 'Secondary',
+            success: 'Success',
+            info: 'Info',
+            warning: 'Warning',
+            danger: 'Danger',
+            light: 'Light',
+            dark: 'Dark',
+        };
+
+    p.text-muted Belows are the list of alert box.
+
+    hr
+
+    h2 Normal
+
+    each label, className in alerts
+        div(class=`alert alert-${className}`, role='alert')
+            | This is a simple alert with an example link. Give it a click if you like. Link is&nbsp;
+            a.alert-link(href='#') here
+            | .&nbsp;
+            strong=label
+            |  styles is applied.
+
+    h2 Header and Footer
+
+    each label, className in alerts
+        div(class=`alert alert-${className}`, role='alert')
+            button.close(type="button" data-dismiss="alert" aria-label="Close")
+                span(aria-hidden="true") &times;
+            h4.alert-heading
+                label
+                | Style
+            p
+                | This is a simple alert with an example link. Give it a click if you like. Link is&nbsp;
+                a.alert-link(href='#') here
+                | .&nbsp;
+                strong=label
+                |  styles is applied.
+            hr
+            p.mb-0 This footer is just hr and p.

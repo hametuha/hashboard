@@ -5,19 +5,20 @@
 /* global Vue: false*/
 
 export const numberFormat = ( number, withDecimal = true ) => {
-  number = ('' + number ).split( '.' );
+  number = ( '' + number ).split( '.' );
   const out = [];
   let integer = '';
   for ( let i = 1; i <= number[0].length; i++ ) {
     integer = number[0].substr( -1 * ( i ), 1 ) + integer;
-    if ( i % 3 === 0 && number[0].length > i ) {
+    if ( 0 === i % 3 && number[0].length > i ) {
       integer = ',' + integer;
     }
   }
   out.push( integer );
   if ( 1 < number.length && withDecimal ) {
+
     // No comma for decimal.
-    out.push( number[1] );
+    out.push( number[1]);
   }
   return out.join( '.' );
 };
@@ -56,7 +57,7 @@ export const moneyFormat = ( number, currency = 'usd', prefix = '' ) => {
 
 // Register filters.
 if ( window.Vue ) {
-  Vue.filter( 'numberFormat', numberFormat);
-  Vue.filter( 'moneyFormat', moneyFormat);
+  Vue.filter( 'numberFormat', numberFormat );
+  Vue.filter( 'moneyFormat', moneyFormat );
 }
 

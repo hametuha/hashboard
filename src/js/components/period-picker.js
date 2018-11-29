@@ -13,12 +13,12 @@ Vue.component( 'HbPeriodPicker', {
   data: function() {
     return {
       customLabel: HbComponentsPeriodPicker.custom,
-      customizing: false
+      mode: 7,
     };
   },
 
   props: {
-    mode: {
+    defaultMode: {
       type: String,
       default: 7
     },
@@ -31,15 +31,15 @@ Vue.component( 'HbPeriodPicker', {
   template: `
       <div class="hb-period">
         <span v-for="button, index in buttons" class="hb-radio hb-radio-sm">
-            <input type="radio" :id="'hb-date-range-' + id + '-' +index" :name="'hb-date-range-' + id" 
-                :value="button.value" v-model="mode" @change="changeHandler" />
-            <label class="hb-radio-label" :for="'hb-date-range-' + id + '-' +index">
+            <input type="radio" :id="'hb-date-range-' + id + '-' + index" :name="'hb-date-range-' + id" 
+                :value="button.value" v-model="mode" />
+            <label class="hb-radio-label" :for="'hb-date-range-' + id + '-' + index">
                 <i class="material-icons">check</i> {{button.label}}
             </label>
         </span>
         <span v-if="allowCustom" class="hb-radio hb-radio-sm">
             <input type="radio" :id="'hb-date-range-' + id + '-custom'" :name="'hb-date-range-' + id" 
-                value="custom" v-model="mode" @change="changeHandler" />
+                value="custom" v-model="mode" />
             <label class="hb-radio-label" :for="'hb-date-range-' + id + '-custom'">
                 <i class="material-icons">check</i> {{customLabel}}
             </label>
@@ -65,11 +65,16 @@ Vue.component( 'HbPeriodPicker', {
   },
 
   mounted() {
-    const now = this.calculate( 7 );
-    this.$emit( 'date-start', now[0], now[1]);
+    this.mode = this.defaultMode;
+    this.notify();
   },
 
   methods: {
+
+    notify() {
+      const now = this.calculate(this.mode);
+      this.$emit('date-start', now[0], now[1]);
+    },
 
     calculate( days ) {
       let start;
@@ -86,21 +91,22 @@ Vue.component( 'HbPeriodPicker', {
       return [ start, now ];
     },
 
-    changeHandler() {
-      switch ( this.mode ) {
+    datePickerHandler( start, end ) {
+      this.$emit( 'date-changed', start, end );
+    }
+  },
+
+  watch: {
+    mode(newValue, oldValue) {
+      switch ( newValue ) {
         case 'custom':
           this.customizing = true;
           break;
         default:
           this.customizing = false;
-          const calculated = this.calculate( this.mode );
-          this.$emit( 'date-changed', calculated[0], calculated[1]);
+          this.notify();
           break;
       }
-    },
-
-    datePickerHandler( start, end ) {
-      this.$emit( 'date-changed', start, end );
     }
   }
 

@@ -1,8 +1,10 @@
 $medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
 
-[ng-cloak]{
+[ng-cloak],
+[v-cloak]{
   display: none;
 }
+
 
 %clearfix{
   &:after{
