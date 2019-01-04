@@ -51,12 +51,15 @@
       args.url = url;
       return $.ajax( args );
     },
+
+    /**
+     * Returns error handler.
+     *
+     * @returns {Function}
+     */
     hbRestError: function() {
       return function( response ) {
-        let msg = HashRest.error;
-        if ( response.responseJSON && response.responseJSON.message ) {
-          msg = response.responseJSON.message;
-        }
+        const msg = $.hbValues( response, 'responseJSON.message', HashRest.error );
         Hashboard.toast( '<i class="material-icons error">close</i>' + msg, 4000 );
       };
     },

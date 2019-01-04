@@ -225,7 +225,10 @@ class Hashboard extends Singleton {
 		// Chart JS
 		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.2', true );
 		// Moment
-		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.22.2', true );
+		if ( wp_script_is( 'moment', 'registered' ) ) {
+			wp_deregister_script( 'moment' );
+		}
+		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.23.0', true );
 		// Vue.js.
 		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.17', true );
 		$vue_helper = <<<JS

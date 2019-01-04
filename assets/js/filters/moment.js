@@ -2,5 +2,5 @@
 /*!
  * wpdeps=vue-js,moment
  */
-var r=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"lll",n=arguments.length>2&&void 0!==arguments[2]&&arguments[2];return n||(n=HbFiltersMoment.locale),moment.locale(n),moment(e).format(t)};window.Vue&&Vue.filter("moment",r)}});
+var r=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"LLL",n=arguments.length>2&&void 0!==arguments[2]&&arguments[2];return n||(n=HbFiltersMoment.locale),moment.locale(n),moment(e).format(t)};window.Vue&&Vue.filter("moment",r)}});
 //# sourceMappingURL=moment.js.map

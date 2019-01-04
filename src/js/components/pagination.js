@@ -120,7 +120,6 @@
     },
     methods: {
       paginated: function( number ) {
-        alert( number );
         this.$emit( 'page-changed', number );
       }
     }

@@ -6,7 +6,8 @@
 /* global HbFiltersMoment: false*/
 /* global moment: false */
 
-export const momentize = ( value, format = 'lll', locale = false ) => {
+export const momentize = ( value, format = 'LLL', locale = false ) => {
+
   if ( ! locale ) {
     locale = HbFiltersMoment.locale;
   }

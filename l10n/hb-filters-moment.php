@@ -1,4 +1,4 @@
 <?php
 return [
-	'locale' => current( explode( '_', get_locale() ) ),
+	'locale' => current( explode( '_', get_user_locale() ) ),
 ];
