@@ -45,11 +45,30 @@ class Profile extends Screen {
 		if ( wp_get_user_contact_methods() ) {
 			$page[ 'contacts' ] = __( 'Contacts', 'hashboard' );
 		}
+		/**
+		 * hashboard_user_can_change_language
+		 *
+		 * Add interface for change user languages.
+		 */
+		$allow_user_can_change_lang = apply_filters( 'hashboard_user_can_change_language', false );
+		if ( $allow_user_can_change_lang ) {
+			$page['language'] = __( 'Language', 'hashboard' );
+		}
 		return $page;
 	}
-
+	
 	public function description( $page = '' ) {
-		return __( 'Your public profile.', 'hashboard' );
+		switch ( $page ) {
+			case 'contacts':
+				return __( 'These contacts are your external profile.', 'hashboard' );
+				break;
+			case 'language':
+				return __( 'You can choose language to be displayed.', 'hashboard' );
+				break;
+			default:
+				return __( 'Your public profile.', 'hashboard' );
+				break;
+		}
 	}
 
 
@@ -78,6 +97,27 @@ class Profile extends Screen {
 					];
 				}
 				return $groups;
+				break;
+			case 'language':
+				$locales = apply_filters( 'hashboard_locale_selector', [
+					'' => sprintf( __( 'Site Default(%s)', 'hashboard' ), get_locale() ),
+				] );
+				return [
+					'languages' => [
+						'label' => __( 'Language Setting', 'hashboard' ),
+						'action' => rest_url( 'hashboard/v1/user/language' ),
+						'method' => 'POST',
+						'submit' => __( 'Update', 'hashboard' ),
+						'fields' => [
+							'locale' => [
+								'label' => __( 'Language', 'hashboard' ),
+								'type'  => 'select',
+								'value' => $user->locale,
+								'options' => $locales,
+							],
+						]
+					],
+				];
 				break;
 			default:
 				ob_start();
