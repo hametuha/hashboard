@@ -86,7 +86,7 @@ $user = wp_get_current_user();
 
                 <div class="hb-header-dropdown btn-group">
                     <button class="dropdown hb-header-dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<?php echo get_avatar( get_current_user_id(), 96, $user->display_name, $user->display_name, [
+						<?php echo get_avatar( get_current_user_id(), 96, '', $user->display_name, [
 							'class' => 'circle responsive-img hb-header-avatar',
 						] ) ?>
                     </button>
