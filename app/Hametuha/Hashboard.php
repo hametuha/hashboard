@@ -8,6 +8,7 @@ use Hametuha\Hashboard\Pattern\Screen;
 use Hametuha\Hashboard\Screens\Dashboard;
 use Hametuha\Hashboard\Screens\Profile;
 use Hametuha\Hashboard\Screens\Account;
+use Hametuha\Hashboard\Utility\Favicon;
 use Hametuha\Pattern\RestApi;
 use Hametuha\Pattern\Singleton;
 use Hametuha\WpEnqueueManager;
@@ -88,6 +89,8 @@ class Hashboard extends Singleton {
 
 		// Enable avatar
 		Avatar::get_instance();
+		// Enable Favicon
+		Favicon::get_instance();
 	}
 
 	/**
@@ -457,5 +460,4 @@ JS;
 		$base_url = str_replace( ABSPATH, $base_url[ 0 ], self::dir() );
 		return untrailingslashit( $base_url ) . $path;
 	}
-
 }

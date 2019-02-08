@@ -11,6 +11,7 @@ $user = wp_get_current_user();
 	<title><?php echo esc_html( $label ) ?> | <?php bloginfo( 'name' ) ?></title>
 	<?php
 	$editor->head();
+	do_action( 'hashboard_head', $editor );
 	wp_styles()->do_items( false );
 	?>
 </head>
