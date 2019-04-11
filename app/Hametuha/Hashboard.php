@@ -52,6 +52,8 @@ class Hashboard extends Singleton {
 		add_filter( 'query_vars', [ $this, 'query_vars' ] );
 		add_filter( 'rewrite_rules_array', [ $this, 'rewrite_rules' ] );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_action( 'hashboard_head', [ $this, 'enqueue_screen_styles' ], 11 );
+		add_action( 'hashboard_footer', [ $this, 'enqueue_screen_scripts' ], 11 );
 		add_action( 'init', function () {
 			/**
 			 * hashboard_screens
@@ -86,6 +88,7 @@ class Hashboard extends Singleton {
 				call_user_func( [ $class_name, 'get_instance' ] );
 			}
 		}
+		// Render screen.
 
 		// Enable avatar
 		Avatar::get_instance();
@@ -459,5 +462,19 @@ JS;
 		$base_url = explode( 'wp-content/themes', get_stylesheet_directory_uri() );
 		$base_url = str_replace( ABSPATH, $base_url[ 0 ], self::dir() );
 		return untrailingslashit( $base_url ) . $path;
+	}
+
+	/**
+	 * Enqueue screen css.
+	 */
+	public function enqueue_screen_styles() {
+		wp_styles()->do_items( false );
+	}
+
+	/**
+	 * Enqueue screen scripts.
+	 */
+	public function enqueue_screen_scripts() {
+		wp_scripts()->do_footer_items();
 	}
 }

@@ -13,7 +13,6 @@ $user = wp_get_current_user();
     <?php
         $page->head();
         do_action( 'hashboard_head', $page );
-        wp_styles()->do_items( false );
     ?>
 </head>
 <body>
@@ -149,6 +148,5 @@ $user = wp_get_current_user();
 </main>
 <?php $page->footer() ?>
 <?php do_action( 'hashboard_footer', $page ) ?>
-<?php wp_scripts()->do_footer_items() ?>
 </body>
 </html>
