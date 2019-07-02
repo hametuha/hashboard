@@ -120,9 +120,10 @@ $sidenav-very-sm: 300px + 30px + 20px !default;
       height: auto;
       overflow: auto;
     }
-    li > a {
+
+    li > a.hb-submenu-link {
       font-size: 14px;
-      padding-left: $sidenav-link-pad * 2 + 28;
+      padding-left: $sidenav-link-pad + 14 + 16;
       &:hover{
         background: $sidenav-link-child-bg;
       }

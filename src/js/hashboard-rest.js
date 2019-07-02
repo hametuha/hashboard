@@ -60,8 +60,48 @@
     hbRestError: function() {
       return function( response ) {
         const msg = $.hbValues( response, 'responseJSON.message', HashRest.error );
-        Hashboard.toast( '<i class="material-icons error">close</i>' + msg, 4000 );
+        $.hbErrorMessage( msg );
       };
+    },
+
+    /**
+     * Display error message.
+     *
+     * @param {String} msg
+     */
+    hbErrorMessage: function( msg ) {
+      $.hbMessage( msg, 'error', 'close' );
+    },
+
+    /**
+     * Display success message.
+     *
+     * @param {String} msg
+     * @param {String} icon  Default, info.
+     * @param {String} color Default, error.
+     * @param {Number} duration Milliseconds to disappear. Default 4000.
+     */
+    hbMessage: function( msg, color, icon, duration ) {
+      if ( ! color ) {
+        color = 'info';
+      }
+      if ( ! icon ) {
+        switch ( color ) {
+          case 'success':
+            icon = 'check_circle';
+            break;
+          case 'error':
+            icon = 'close';
+            break;
+          default:
+            icon = 'info';
+            break;
+        }
+      }
+      if ( ! duration ) {
+        duration = 4000;
+      }
+      Hashboard.toast( '<i class="material-icons ' + color + '">' + icon + '</i>' + msg, duration );
     },
 
     /**
@@ -73,7 +113,7 @@
      * @returns {*}
      */
     hbValues: function( obj, key, undefinedValue ) {
-      const k = key.split('.');
+      const k = key.split( '.' );
       let v = obj;
       for ( let i = 0; i < k.length; i++ ) {
         if ( ! ( k [ i ] in v ) ) {

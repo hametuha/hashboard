@@ -46,8 +46,8 @@ $user = wp_get_current_user();
                 </a>
                 <ul class="hb-submenu-list">
                     <?php foreach ( $instance->get_children() as $key => $label ) : ?>
-                        <li>
-                            <a href="<?php echo esc_url( $hashboard->get_url( $instance, $key == $instance->slug() ? '' : $key ) ) ?>">
+                        <li class="hb-submenu-item">
+                            <a class="hb-submenu-link" href="<?php echo esc_url( $hashboard->get_url( $instance, $key == $instance->slug() ? '' : $key ) ) ?>">
                                 <?php echo esc_html( $label ) ?>
                             </a>
                         </li>
