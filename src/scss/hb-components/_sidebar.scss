@@ -1,0 +1,265 @@
+$sidenav-bg-color: #fff !default;
+$sidenav-border: 1px solid #eee !default;
+$sidenav-divider-color: #eee !default;
+$sidenav-zindex: 9999 !default;
+$sidenav-toggle-button-color: #fff !default;
+$sidenav-link-pad: 10px;
+$sidenav-link-active-bg: #f9f9f9 !default;
+$sidenav-link-child-bg: #ddd !default;
+$sidenav-link-icon-color: #888 !default;
+$sidenav-very-sm: 300px + 30px + 20px !default;
+
+.with-side-nav{
+  padding-left: 300px;
+}
+
+.hb-sidebar-backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $sidenav-zindex - 1;
+  background: rgba( 0, 0, 0, .4);
+
+  .side-nav-toggle{
+    cursor: pointer;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    color: $sidenav-toggle-button-color;
+    background-color: transparent;
+    border: 2px solid $sidenav-toggle-button-color;
+    border-radius: 50%;
+    z-index: $sidenav-zindex +1;
+    transition: color .3s linear, background-color .3s linear, border-color .3s linear;
+    &:hover{
+      color: #fff;
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+  }
+}
+
+
+.hb-sidebar{
+  background: $sidenav-bg-color;
+  border-right: $sidenav-border;
+  overflow-y: scroll;
+  top: $navbar-height;
+  left: 0;
+  &.initialized{
+    transition: transform .3s ease-in-out, opacity .3s linear;
+
+  }
+  &.open{
+    transform: translateX(0);
+    opacity: 1;
+  }
+  // For tiny screens.
+  @include media-breakpoint-down(sm) {
+    transform: translateX(-100%);
+    opacity: 0;
+    z-index: $sidenav-zindex;
+  }
+  @media only screen and (max-width: $sidenav-very-sm) {
+    width: 270px;
+  }
+
+}
+
+.hb-site{
+  &-info{
+    padding: 20px 20px 40px;
+  }
+
+  &-icon{
+    max-width: $site-icon-max-width;
+    width: auto;
+    height: auto;
+    margin: 0 auto 10px;
+    display: block;
+  }
+  &-name{
+    display: block;
+    text-align: center;
+    color: $site-title-color;
+  }
+}
+
+.hb-submenu{
+  &-trigger{
+    i.material-icons.right {
+      margin-right: 0 !important;
+      margin-left: 1rem !important;
+      &.open {
+        display: inline-block;
+        .toggle &{
+          display: none !important;
+        }
+      }
+      &.close {
+        display: none;
+        .toggle &{
+          display: inline-block !important;
+        }
+      }
+    }
+  }
+  &-list{
+    height: 0;
+    overflow: hidden;
+    transition: height .3s linear;
+    .toggle &{
+      height: auto;
+      overflow: auto;
+    }
+
+    li > a.hb-submenu-link {
+      font-size: 14px;
+      padding-left: $sidenav-link-pad + 14 + 16;
+      &:hover{
+        background: $sidenav-link-child-bg;
+      }
+    }
+  }
+}
+
+
+.side-nav {
+  padding: $navbar-height 0 40px;
+  margin: 0;
+  font-size: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 300px;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-right: 1px solid $border-color;
+  ul{
+    padding: 0;
+    li{
+      padding: 0;
+    }
+  }
+  li{
+    list-style: none;
+    &.toggle,
+    &.active{
+      background: $sidenav-link-active-bg;
+    }
+    &.divider{
+      height: 1px;
+      background: $sidenav-divider-color;
+    }
+    & > a{
+      display: block;
+      height: 24px + $sidenav-link-pad * 2;
+      line-height: 24px;
+      padding: $sidenav-link-pad;
+      &:link, &:visited{
+        text-decoration: none;
+        color: $body-color;
+      }
+      &:hover, &:active{
+        text-decoration: none;
+        color: $body-color;
+        background: $sidenav-link-active-bg;
+      }
+      .material-icons:first-child{
+        margin-right: $sidenav-link-pad;
+        vertical-align: middle;
+        color: $sidenav-link-icon-color;
+      }
+      .material-icons.right{
+        @extend .close;
+      }
+    }
+  }
+
+  img.img-circle{
+    margin: 0 auto;
+  }
+
+  .user-view{
+    .background {
+    }
+  }
+  .user-view{
+    position: relative;
+    border-bottom: 1px solid $border-color;
+    padding: 40px 10px $sidenav-link-pad;
+    .white-text{
+      text-shadow: 0 0 5px rgba(0, 0, 0, .8);
+    }
+    .img-circle{
+      display: block;
+      margin: 0 auto;
+      width: auto;
+      height: auto;
+      max-width: 120px;
+      position: relative;
+      z-index: 11;
+      border-radius: 50%;
+    }
+    &-link{
+      position: relative;
+      z-index: 11;
+      display: block;
+      margin-top: $sidenav-link-pad;
+      &:link, &:visited{
+        color: #fff;
+        text-decoration: underline;
+      }
+      &:hover, &:active{
+        color: #fff;
+        text-decoration: none;
+      }
+
+    }
+  }
+  .background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    overflow: hidden;
+    img {
+      position: absolute;
+      width: auto;
+      height: auto;
+      min-height: 100%;
+      min-width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &:after{
+      position: absolute;
+      content: "";
+      display: block;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, .4);
+    }
+  }
+  &-visible{
+    transform: translateX(0) !important;
+  }
+  &-pad {
+    padding-top: $navbar-height;
+  }
+}

@@ -1,0 +1,19 @@
+extends _layout
+
+block vars
+    - var title = 'Index';
+
+block content
+
+    -
+        var links = {
+          'buttons.html': 'Buttons',
+          'editor.html': 'Editor',
+          'alert.html': 'Alert',
+        };
+    ul.list-group
+        each label, href in links
+            li.list-group-item.list-group-item-action
+                a.btn.btn-circle.btn-secondary.list-group-icon(href=href)
+                    i.material-icons chevron_right
+                strong.title.text-dark= label

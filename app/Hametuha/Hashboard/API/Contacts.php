@@ -24,7 +24,7 @@ class Contacts extends Api {
 					switch ( $field['type'] ) {
 						case 'url':
 							$callback = function( $var ) {
-								return preg_match( '#^[a-z]+://#u', $var ) ?: new \WP_Error( 'malformat', __( 'Should be URL format.', 'hashboard' ) );
+								return empty( $var ) || preg_match( '#^[a-z]+://#u', $var ) ?: new \WP_Error( 'malformat', __( 'Should be URL format.', 'hashboard' ) );
 							};
 							break;
 						case 'email':

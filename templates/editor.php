@@ -2,8 +2,8 @@
 /** @var \Hametuha\Hashboard\Pattern\Editor $editor */
 /** @var string $label */
 /** @var string $back_url */
+/** @var string $child */
 $user = wp_get_current_user();
-
 ?><!doctype html>
 <html>
 <head>
@@ -11,7 +11,7 @@ $user = wp_get_current_user();
 	<title><?php echo esc_html( $label ) ?> | <?php bloginfo( 'name' ) ?></title>
 	<?php
 	$editor->head();
-	wp_styles()->do_items( false );
+	do_action( 'hashboard_head', $editor );
 	?>
 </head>
 <body>
@@ -20,12 +20,12 @@ $user = wp_get_current_user();
 	<nav class="top-nav top-nav-over">
 		<div class="hb-container">
 			<div class="nav-wrapper hb-nav-wrapper">
-                <span class="hb-main-title page-title">
+                <span class="hb-header-title">
                     <?php echo esc_html( $label ) ?>
                 </span>
-				<a title="<?php esc_attr_e( 'Return', 'hashboard' ) ?>" class="btn-floating waves-effect waves-dark grey lighten-4"
+				<a title="<?php esc_attr_e( 'Return', 'hashboard' ) ?>" class="btn btn-circle btn-sm btn-link btn-floating waves-effect"
 					href="<?= esc_url( $back_url ) ?>">
-					<i class="material-icons grey-text text-darken-2">chevron_left</i>
+					<i class="material-icons">chevron_left</i>
 				</a>
 			</div>
 		</div>
@@ -42,7 +42,7 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $page
 				 * @param string $child
 				 */
-				do_action( 'hashboard_before_main', $page, $child );
+				do_action( 'hashboard_before_main', $editor, $child );
 
 				$editor->content();
 				
@@ -54,7 +54,7 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $page
 				 * @param string $child
 				 */
-				do_action( 'hashboard_after_main', $page, $child );
+				do_action( 'hashboard_after_main', $editor	, $child );
 				?>
 
 			</div>
@@ -63,6 +63,6 @@ $user = wp_get_current_user();
 
 </section>
 <?php $editor->footer() ?>
-<?php wp_scripts()->do_footer_items() ?>
+<?php do_action( 'hashboard_footer', $page ) ?>
 </body>
 </html>

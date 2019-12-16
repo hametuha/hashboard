@@ -7,12 +7,12 @@
 /*global moment: false*/
 /*global Vue: false*/
 
-(function ($) {
+( function( $ ) {
 
   'use strict';
 
 
-  Vue.component('hb-post-list', {
+  Vue.component( 'hb-post-list', {
     template: `
       <div class="hb-post-list">
         <p class="hb-post-list-title" v-if="title">{{title}}</p>
@@ -29,10 +29,10 @@
         <hb-loading :loading="loading"></hb-loading>
       </div>
     `,
-    data: function(){
+    data: function() {
       return {
         loading: true,
-        posts: [],
+        posts: []
       };
     },
     props: {
@@ -54,20 +54,20 @@
       },
       new: {
         type: String,
-        default: "0"
+        default: '0'
       },
       max: {
         type: String,
-        default: "3"
+        default: '3'
       },
       author: {
         type: String,
         default: '0'
       }
     },
-    mounted: function(){
+    mounted: function() {
       this.fetch();
-      console.log(this.isNew('2017-08-16T19:00:00', ''));
+      console.log( this.isNew( '2017-08-16T19:00:00', '' ) );
     },
 
     computed: {
@@ -82,44 +82,43 @@
        * @param {String} timezone
        * @returns {boolean}
        */
-      isNew: function(date, timezone='Z'){
-        const days = parseInt(this.new, 10);
-        if(isNaN(days) || days < 1){
+      isNew: function( date, timezone = 'Z' ) {
+        const days = parseInt( this.new, 10 );
+        if ( isNaN( days ) || 1 > days ) {
           return false;
         }
-        const limit = moment().subtract(days, 'days').toDate();
-        const compare = moment(date+timezone).toDate();
+        const limit = moment().subtract( days, 'days' ).toDate();
+        const compare = moment( date + timezone ).toDate();
         return compare > limit;
       },
 
-      number: function( key ){
-        if( 'Number' === this[key] ){
+      number: function( key ) {
+        if ( 'Number' === this[key]) {
           return this[key];
-        }else{
-          return parseInt(this[key], 10);
+        } else {
+          return parseInt( this[key], 10 );
         }
       },
-      fetch: function(){
+      fetch: function() {
         let self = this;
         this.loading = true;
         let query = {
-          per_page: this.number('max'),
+          'per_page': this.number( 'max' )
         };
-        let author = this.number('author');
-        if(author){
+        let author = this.number( 'author' );
+        if ( author ) {
           query['author[]'] = author;
         }
 
-        $.hbRest('GET', 'wp/v2/' + this.postType, query).done((res)=>{
+        $.hbRest( 'GET', 'wp/v2/' + this.postType, query ).done( ( res )=>{
           self.posts = res;
-        }).fail($.hbRestError()).always(()=>{
-          self.$emit('post-list-updated');
+        }).fail( $.hbRestError() ).always( ()=>{
+          self.$emit( 'post-list-updated' );
           self.loading = false;
         });
-      },
+      }
     }
-  } );
+  });
 
 
-
-})(jQuery);
+}( jQuery ) );

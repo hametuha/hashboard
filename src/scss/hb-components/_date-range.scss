@@ -1,0 +1,52 @@
+.hb-date-range{
+
+  .col-1{
+    position: relative;
+  }
+
+  .material-icons,
+  &-separator{
+  }
+
+  .material-icons{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY( -50% );
+    font-size: 1.2rem;
+  }
+
+  &-separator{
+    color: $gray-600;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+
+  &-start{
+    .form-control{
+      text-align: right;
+    }
+  }
+
+  .form-control{
+    background-color: transparent;
+    border-color: transparent;
+    cursor: pointer;
+    transition: background-color .3s linear;
+    &:hover{
+      background-color: $gray-100;
+      border-color: $gray-400;
+    }
+  }
+
+}
+
+.hb-period{
+
+  &-dates{
+    transition: opacity .2s linear;
+  }
+
+}

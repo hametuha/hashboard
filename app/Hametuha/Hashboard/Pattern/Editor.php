@@ -19,6 +19,17 @@ abstract class Editor extends Singleton {
 	 * @var mixed
 	 */
 	protected $object = null;
+
+	protected function init() {
+		add_action( 'hashboard_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+	}
+	
+	/**
+	 * Enqueue assets
+	 */
+	public function enqueue_scripts() {
+		// Do nothing.
+	}
 	
 	/**
 	 * Get slug.
@@ -93,7 +104,6 @@ abstract class Editor extends Singleton {
 			throw new \Exception( __( 'You have no permission to edit this data.', 'hashboard' ), 403 );
 		}
 		// Enqueueu many things.
-		Hashboard::get_instance()->register_assets();
 		wp_enqueue_style( 'bootstrap' );
 		wp_enqueue_script( 'hashboard' );
 		do_action( 'hashboard_enqueue_scripts' );
@@ -102,6 +112,7 @@ abstract class Editor extends Singleton {
 			'object'   => $this->object,
 			'label'    => $this->get_label(),
 			'back_url' => $this->get_back_link(),
+			'child'    => get_query_var( 'hashboard-child' ),
 		] );
 	}
 

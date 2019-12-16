@@ -1,0 +1,112 @@
+extends _layout
+
+block vars
+    - var title='Buttons';
+
+block content
+    -
+        var buttons = {
+            primary: 'Primary',
+            secondary: 'Secondary',
+            success: 'Success',
+            info: 'Info',
+            warning: 'Warning',
+            danger: 'Danger',
+            link: 'Link'
+        };
+        var sized = {
+          lg: 'Large',
+          sm: 'Small'
+        };
+        var radios = {
+          Select1: '10',
+          Select2: '20',
+          Select3: '30'
+        };
+
+    p.text-muted Belows are the list of customized buttons.
+
+    hr
+
+    h2 Normal Buttons
+
+    h3 Variations
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-${className}`)= label
+
+    h3 With Icons
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-${className}`)
+                i.material-icons settings
+                | &nbsp;
+                =label
+
+    h2 Button Size
+        p
+            button.btn.btn-primary Default
+            each label, size in sized
+                button(class=`btn btn-${size} btn-primary`)= label
+
+    hr
+
+    h2 Rounded Buttons
+
+    h3 Variations
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-circle btn-${className}`)
+                i.material-icons settings
+
+
+    h3 Button Size
+    p
+        button.btn.btn-circle
+            i.material-icons settings
+        button.btn.btn-circle.btn-lg
+            i.material-icons settings
+        button.btn.btn-circle.btn-sm
+            i.material-icons settings
+
+    H3 Outlined
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-circle btn-outline-${className}`)
+                i.material-icons settings
+
+    h3 Floating
+
+    p
+        each label, className in buttons
+            button(class=`btn btn-circle btn-floating btn-rotate btn-${className}`)
+                i.material-icons settings
+
+    h3 Radio Buttons
+
+    each size in ['', '-lg', '-sm']
+        p
+            each value, label in radios
+                span(class=`hb-radio hb-radio${size}`)
+                    input(id=`hb-radio${size}-${value}`, type='radio', value=value, name='radio-sample')
+                    label.hb-radio-label(for=`hb-radio${size}-${value}`)
+                        i.material-icons check
+                        span.hb-radio-string=label
+
+    h3 Date Range
+
+    .hb-date-range.row
+        .col-1.text-right
+            i.material-icons.text-muted error_outline
+        .col-5
+            .input-group
+                input.form-control(type="text", readonly="readonly" value='2018-09-10')
+        .col-1.text-center
+            .hb-date-range-separator 〜
+        .col-5
+            .input-group
+                input.form-control( type="text" readonly="readonly" )

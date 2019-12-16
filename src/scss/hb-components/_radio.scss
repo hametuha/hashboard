@@ -1,0 +1,57 @@
+.hb-radio{
+
+  & + & {
+    margin-left: 0.25em;
+  }
+
+  display: inline-block;
+  position: relative;
+
+  input{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    opacity: 0;
+    z-index: 1;
+  }
+
+  &-label{
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    padding: 0.5em;
+    line-height: 1;
+    vertical-align: text-bottom;
+    font-size: 1rem;
+    .hb-radio-lg &{
+      font-size: 1.2rem;
+    }
+    .hb-radio-sm &{
+      font-size: 0.85rem;
+    }
+    color: $gray-500;
+    transition: background-color .2s linear, color .2s linear;
+    &:hover{
+      background-color: $gray-100;
+      border-radius: $btn-border-radius;
+    }
+    i{
+      vertical-align: middle;
+      transition: opacity .2s linear, color .2s linear;
+      opacity: 0;
+    }
+    input:checked + &{
+      color: $gray-800;
+      i{
+        color: $success;
+        opacity: 1;
+      }
+    }
+  }
+
+  &-string{
+    margin-left: 0.125em;
+  }
+}

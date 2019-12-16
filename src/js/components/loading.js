@@ -7,11 +7,11 @@
 /*global Vue: false*/
 /*global HbComponentsLoading: false*/
 
-(function () {
+( function() {
 
   'use strict';
 
-  Vue.component('hb-loading', {
+  Vue.component( 'hb-loading', {
     template: `
       <transition name="vanish">
         <div class="hb-loading-indicator" v-if="loading" :title="title">
@@ -27,14 +27,14 @@
         default: HbComponentsLoading.title
       }
     },
-    mounted: function(){
-      this.$parent.$el.setAttribute('data-loading-wrapper', 'true');
+    mounted: function() {
+      this.$parent.$el.setAttribute( 'data-loading-wrapper', 'true' );
     },
     computed: {
-      src: function(){
+      src: function() {
         return HbComponentsLoading.img;
       }
     }
   });
 
-})(jQuery);
+}( jQuery ) );

@@ -8,6 +8,7 @@ use Hametuha\Hashboard\Pattern\Screen;
 use Hametuha\Hashboard\Screens\Dashboard;
 use Hametuha\Hashboard\Screens\Profile;
 use Hametuha\Hashboard\Screens\Account;
+use Hametuha\Hashboard\Utility\Favicon;
 use Hametuha\Pattern\RestApi;
 use Hametuha\Pattern\Singleton;
 use Hametuha\WpEnqueueManager;
@@ -51,6 +52,8 @@ class Hashboard extends Singleton {
 		add_filter( 'query_vars', [ $this, 'query_vars' ] );
 		add_filter( 'rewrite_rules_array', [ $this, 'rewrite_rules' ] );
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
+		add_action( 'hashboard_head', [ $this, 'enqueue_screen_styles' ], 11 );
+		add_action( 'hashboard_footer', [ $this, 'enqueue_screen_scripts' ], 11 );
 		add_action( 'init', function () {
 			/**
 			 * hashboard_screens
@@ -63,6 +66,8 @@ class Hashboard extends Singleton {
 				'account' => Account::class,
 			] );
 		}, 1 );
+		// Register assets globally.
+		add_action( 'init', [ $this, 'register_assets' ], 11 );
 		// Register all API.
 		foreach ( [
 					  'API' => RestApi::class,
@@ -83,9 +88,12 @@ class Hashboard extends Singleton {
 				call_user_func( [ $class_name, 'get_instance' ] );
 			}
 		}
+		// Render screen.
 
 		// Enable avatar
 		Avatar::get_instance();
+		// Enable Favicon
+		Favicon::get_instance();
 	}
 
 	/**
@@ -188,13 +196,7 @@ class Hashboard extends Singleton {
 	 * @return array
 	 */
 	public function user_actions() {
-		$links = [
-			[
-				'label' => __( 'Log out', 'hashboard' ),
-				'url' => wp_logout_url(),
-				'class' => '',
-			],
-		];
+		$links = [];
 		if ( current_user_can( self::get_wp_accessible_capability() ) ) {
 			array_unshift( $links, [
 				'label' => __( 'WP Admin', 'hashboard' ),
@@ -202,6 +204,11 @@ class Hashboard extends Singleton {
 				'class' => '',
 			] );
 		}
+		$links['logout'] = [
+			'label' => __( 'Log out', 'hashboard' ),
+			'url' => wp_logout_url(),
+			'class' => '',
+		];
 		/**
 		 * hashboar_user_actions
 		 *
@@ -216,14 +223,26 @@ class Hashboard extends Singleton {
 	public function register_assets() {
 		// Material Design Icons
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', [], null );
-		wp_register_style( 'bootstrap', self::url( '/assets/css/style.css' ), [ 'material-design-icon' ], self::version() );
+		wp_register_style( 'bootstrap', self::url( '/assets/css/hashboard.css' ), [ 'material-design-icon' ], self::version() );
 		// Bootstrap
-		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.12.9', true );
-		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.0.0', true );
+		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.14.4', true );
+		// Popper
+		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.1.3', true );
 		// Chart JS
-		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.1', true );
+		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.2', true );
 		// Moment
-		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.19.2', true );
+		if ( wp_script_is( 'moment', 'registered' ) ) {
+			wp_deregister_script( 'moment' );
+		}
+		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.23.0', true );
+		// Vue.js.
+		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.17', true );
+		$vue_helper = <<<JS
+			window.bus = new Vue({});
+JS;
+		wp_add_inline_script( 'vue-js', $vue_helper );
+		// Chart JS vue.
+		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.4.0', true );
 		// Hash Rest
 		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), [ 'jquery', 'hb-plugins-toast' ], self::version(), true );
 		wp_localize_script( 'hashboard-rest', 'HashRest', [
@@ -235,10 +254,6 @@ class Hashboard extends Singleton {
 		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [
 			'bootstrap', 'hashboard-rest', 'hb-plugins-toast', 'hb-plugins-fitrows'
 		], self::version(), true );
-		// Vue.js.
-		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.4', true );
-		// Chart JS vue.
-		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.0.2', true );
 		// Register scripts.
 		foreach ( [ 'components', 'filters', 'plugins' ] as $group ) {
 			$base_dir = self::dir() . "/assets/js/{$group}";
@@ -300,8 +315,7 @@ class Hashboard extends Singleton {
 					if ( !$screen->has_children( $child ) ) {
 						$child = '';
 					}
-					// Register assets.
-					$this->register_assets();
+					global $wp_styles;
 					wp_enqueue_style( 'bootstrap' );
 					wp_enqueue_script( 'hashboard' );
 					/**
@@ -311,7 +325,7 @@ class Hashboard extends Singleton {
 					 *
 					 * @param bool $is_head
 					 */
-					do_action( 'hashboard_enqueue_scripts' );
+					do_action( 'hashboard_enqueue_scripts', $screen, $child );
 					self::load_template( 'body.php', [
 						'page' => $screen,
 						'hashboard' => self::get_instance(),
@@ -450,4 +464,17 @@ class Hashboard extends Singleton {
 		return untrailingslashit( $base_url ) . $path;
 	}
 
+	/**
+	 * Enqueue screen css.
+	 */
+	public function enqueue_screen_styles() {
+		wp_styles()->do_items( false );
+	}
+
+	/**
+	 * Enqueue screen scripts.
+	 */
+	public function enqueue_screen_scripts() {
+		wp_scripts()->do_footer_items();
+	}
 }

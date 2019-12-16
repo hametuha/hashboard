@@ -1,0 +1,36 @@
+$toast-padding: 1em !default;
+$toast-color: #fff !default;
+$toast-bg: $gray-900 !default;
+$toast-bottom-padding: 20px;
+$toast-box-shadow: 0 0 5px 3px rgba(0, 0, 0, .2) !default;
+
+.toast{
+  position: fixed;
+  left: 50%;
+  max-width: 80%;
+  transform: translateX(-50%);
+  opacity: 0;
+  bottom: 0;
+  padding: $toast-padding;
+  transition: opacity .5s linear, bottom .5s ease-in-out;
+  background: $toast-bg;
+  color: $toast-color;
+  box-shadow: $toast-box-shadow;
+  &.init{
+    opacity: 1;
+    bottom: $toast-bottom-padding;
+  }
+  .material-icons{
+    vertical-align:middle;
+    margin-right: 10px;
+  }
+  .success{
+    color: $success-color;
+  }
+  .info{
+    color: $secondary-color;
+  }
+  .error{
+    color: $error-color;
+  }
+}

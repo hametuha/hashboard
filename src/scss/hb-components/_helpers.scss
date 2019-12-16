@@ -1,0 +1,83 @@
+//
+// Typography
+//
+strong{
+  font-weight: 700;
+}
+.text-success{
+  color: $success-color;
+}
+.text-error{
+  color: $error-color;
+}
+
+.img-circle{
+  border-radius: 50%;
+}
+
+//
+// Text align
+//
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+
+//
+// Table
+//
+thead{
+  th{
+    text-align: center;
+  }
+}
+tfoot{
+  th, td{
+    border-top: 3px double $separator-color;
+  }
+  i.material-icons{
+    vertical-align: middle;
+  }
+}
+
+
+@for $n from 1 through 10 {
+  .cell-#{$n}{
+    width: #{$n+1}em;
+  }
+}
+
+
+//
+// Margin, padding
+//
+@for $i from 1 through 10 {
+  @each $prop in (
+    m margin,
+    p padding
+  ) {
+    $size: $i * 10;
+    $m: nth($prop, 1);
+    $name: nth($prop, 2);
+    .#{$m}#{$size}{
+      #{$name}: 10px * $i;
+    }
+    @each $direction in (
+      t top,
+      b bottom,
+      r right,
+      l left
+    ){
+      $d: nth($direction, 1);
+      $p: nth($direction, 2);
+      .#{$m}#{$d}#{$size}{
+        #{$name}-#{$p}: 10px * $i;
+      }
+    }
+  }
+}

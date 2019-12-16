@@ -7,17 +7,17 @@
 /*global Vue: false*/
 /*global VueChartJs: false*/
 
-(function ($) {
+( function( $ ) {
 
   'use strict';
 
-  Vue.component('hb-line-chart', {
+  Vue.component( 'hb-line-chart', {
     extends: VueChartJs.Line,
-    mixins: [VueChartJs.mixins.reactiveProp],
-    props: ['chartData', 'options'],
-    mounted: function () {
-      this.renderChart( this.chartData, this.options);
+    mixins: [ VueChartJs.mixins.reactiveProp ],
+    props: [ 'chartData', 'options' ],
+    mounted: function() {
+      this.renderChart( this.chartData, this.options );
     }
   });
 
-})(jQuery);
+}( jQuery ) );

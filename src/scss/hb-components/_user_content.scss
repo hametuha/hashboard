@@ -1,0 +1,53 @@
+.hb-user-content{
+
+  line-height: 1.8;
+  font-size: 16px;
+
+  &:after{
+    content: "";
+    clear: both;
+    display: block;
+    height: 0;
+  }
+
+  img{
+    max-width: 100%;
+    width: auto;
+    height: auto;
+  }
+
+  $align-gap: 1em;
+
+  .alignright{
+    float: right;
+    margin: $align-gap 0 $align-gap $align-gap;
+  }
+
+  .alignleft{
+    float: left;
+    margin: $align-gap $align-gap $align-gap 0;
+  }
+
+  .aligncenter{
+    display: block;
+    margin: $align-gap auto;
+  }
+
+  .wp-caption{
+    max-width: 100%;
+    font-size: .8em;
+    @extend .text-muted;
+  }
+
+  table{
+    @extend .table;
+  }
+
+  blockquote{
+    @extend .blockquote;
+  }
+  blockquote cite{
+    @extend .blockquote-footer;
+    @extend .text-muted;
+  }
+}
