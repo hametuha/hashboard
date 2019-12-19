@@ -4,7 +4,11 @@
 /.phpcs.xml.dist export-ignore
 /phpunit.xml.dist export-ignore
 /.github export-ignore
+/.git export-ignore
+/.gitignore export-ignore
+/.gitignore export-ignore
 /bin export-ignore
+/tests export-ignore
 /WordPress/Tests export-ignore
 
 #
