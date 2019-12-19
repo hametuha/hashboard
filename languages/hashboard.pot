@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: HashBoard\n"
-"POT-Creation-Date: 2017-12-11 01:23+0900\n"
+"POT-Creation-Date: 2019-12-19 16:56+0900\n"
 "PO-Revision-Date: 2017-11-08 19:31+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: hashboard.php\n"
@@ -24,28 +24,19 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
 "X-Poedit-SearchPathExcluded-3: src\n"
 
-#: app/Hametuha/Hashboard.php:178
-msgid "Log out"
-msgstr ""
-
-#: app/Hametuha/Hashboard.php:185
+#: app/Hametuha/Hashboard.php:202
 msgid "WP Admin"
 msgstr ""
 
-#: app/Hametuha/Hashboard.php:216
+#: app/Hametuha/Hashboard.php:208
+msgid "Log out"
+msgstr ""
+
+#: app/Hametuha/Hashboard.php:251
 msgid "Server returns error. Please try again later"
 msgstr ""
 
-#: app/Hametuha/Hashboard.php:268
-msgctxt "year_suffix"
-msgid ""
-msgstr ""
-
-#: app/Hametuha/Hashboard.php:270 app/Hametuha/Hashboard/Screens/Profile.php:76
-msgid "Update"
-msgstr ""
-
-#: app/Hametuha/Hashboard.php:403
+#: app/Hametuha/Hashboard.php:429
 #, php-format
 msgid "Template %s doesn't exist."
 msgstr ""
@@ -118,6 +109,10 @@ msgstr ""
 msgid "Your contact information is successfully updated."
 msgstr ""
 
+#: app/Hametuha/Hashboard/API/Language.php:81
+msgid "Your language setting is updated."
+msgstr ""
+
 #: app/Hametuha/Hashboard/API/Password.php:64
 msgid "Your password successfully changed."
 msgstr ""
@@ -151,11 +146,19 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
+#: app/Hametuha/Hashboard/Pattern/Editor.php:104
+msgid "You have no permission to edit this data."
+msgstr ""
+
 #: app/Hametuha/Hashboard/Pattern/Screen.php:123
 msgid "Save"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Pattern/Screen.php:284
+#: app/Hametuha/Hashboard/Pattern/Screen.php:249
+msgid "(Optional)"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Pattern/Screen.php:301
 msgid "Select"
 msgstr ""
 
@@ -207,8 +210,8 @@ msgstr ""
 msgid ""
 "You are now requesting <code>%1$s</code> as new email. Please check your "
 "mail box and finish confirmation. Otherwise, <a href=\"%2$s\" class=\"hb-"
-"mail-resend\">resend</a> or <a href=\"%2$s\" class=\"hb-mail-cancel\">cancel "
-"request</a>."
+"mail-resend alert-link\">resend</a> or <a href=\"%2$s\" class=\"hb-mail-"
+"cancel alert-link\">cancel request</a>."
 msgstr ""
 
 #: app/Hametuha/Hashboard/Screens/Account.php:130
@@ -228,8 +231,14 @@ msgid "Dashboard"
 msgstr ""
 
 #: app/Hametuha/Hashboard/Screens/Dashboard.php:21
+#: app/Hametuha/Hashboard/Screens/Dashboard.php:41
 #, php-format
 msgid "Welcome to %s!"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Dashboard.php:30
+#, php-format
+msgid "Welcom to %s dashboard!"
 msgstr ""
 
 #: app/Hametuha/Hashboard/Screens/Profile.php:33
@@ -238,55 +247,83 @@ msgid "Profile"
 msgstr ""
 
 #: app/Hametuha/Hashboard/Screens/Profile.php:46
-#: app/Hametuha/Hashboard/Screens/Profile.php:73
+#: app/Hametuha/Hashboard/Screens/Profile.php:92
 msgid "Contacts"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:52
+#: app/Hametuha/Hashboard/Screens/Profile.php:55
+#: app/Hametuha/Hashboard/Screens/Profile.php:113
+msgid "Language"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:63
+msgid "These contacts are your external profile."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:66
+msgid "You can choose language to be displayed."
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:69
 msgid "Your public profile."
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:89
+#: app/Hametuha/Hashboard/Screens/Profile.php:95
+#: app/Hametuha/Hashboard/Screens/Profile.php:110
+#: l10n/hb-components-month-selector.php:10
+msgid "Update"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:103
+#, php-format
+msgid "Site Default(%s)"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:107
+msgid "Language Setting"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Screens/Profile.php:129
 msgid "Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:92
+#: app/Hametuha/Hashboard/Screens/Profile.php:132
 msgid "Update Profile"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:95
+#: app/Hametuha/Hashboard/Screens/Profile.php:135
 msgid "Display Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:102
+#: app/Hametuha/Hashboard/Screens/Profile.php:142
 msgid "Nickname"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:109
+#: app/Hametuha/Hashboard/Screens/Profile.php:149
 msgid "First Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:116
+#: app/Hametuha/Hashboard/Screens/Profile.php:156
 msgid "Last Name"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:123
+#: app/Hametuha/Hashboard/Screens/Profile.php:163
 msgid "Your Profile"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:130
+#: app/Hametuha/Hashboard/Screens/Profile.php:170
 msgid "Profile Picture"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:133
+#: app/Hametuha/Hashboard/Screens/Profile.php:173
 msgid "Upload"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:141
+#: app/Hametuha/Hashboard/Screens/Profile.php:181
 msgid "Select Photo"
 msgstr ""
 
-#: app/Hametuha/Hashboard/Screens/Profile.php:145
+#: app/Hametuha/Hashboard/Screens/Profile.php:185
 msgid "You can alternatively upload image file."
 msgstr ""
 
@@ -352,12 +389,61 @@ msgstr ""
 msgid "File must be image. Allowed type is Jpeg, GIF and PNG."
 msgstr ""
 
-#: templates/body.php:58
+#: app/Hametuha/Hashboard/Utility/UserContent.php:32
+msgid "User Content"
+msgstr ""
+
+#: app/Hametuha/Hashboard/Utility/UserContent.php:46
+msgid "Position"
+msgstr ""
+
+#: l10n/hb-components-input.php:9
+msgid "Editing"
+msgstr ""
+
+#: l10n/hb-components-input.php:10
+msgid "Edit"
+msgstr ""
+
+#: l10n/hb-components-loading.php:8
+msgid "Loading..."
+msgstr ""
+
+#: l10n/hb-components-loading.php:9
+msgid "No value"
+msgstr ""
+
+#: l10n/hb-components-month-selector.php:8
+msgctxt "year_suffix"
+msgid ""
+msgstr ""
+
+#: l10n/hb-components-period-picker.php:10
+msgid "Custom"
+msgstr ""
+
+#: l10n/hb-components-period-picker.php:13
+msgid "Last 7d"
+msgstr ""
+
+#: l10n/hb-components-period-picker.php:17
+msgid "Last 30d"
+msgstr ""
+
+#: l10n/hb-components-period-picker.php:21
+msgid "Current QTR"
+msgstr ""
+
+#: templates/body.php:68
 msgid "Return to Site"
 msgstr ""
 
-#: templates/body.php:107
+#: templates/body.php:117 templates/editor.php:33
 msgid "Please wait..."
+msgstr ""
+
+#: templates/editor.php:26
+msgid "Return"
 msgstr ""
 
 #: templates/gianism.php:44
