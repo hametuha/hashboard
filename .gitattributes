@@ -3,6 +3,7 @@
 #
 /.phpcs.xml.dist export-ignore
 /phpunit.xml.dist export-ignore
+/hashboard.php export-ignore
 /.github export-ignore
 /.git export-ignore
 /.gitignore export-ignore

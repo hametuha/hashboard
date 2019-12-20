@@ -4,7 +4,7 @@ Contributors: Takahashi_Fumiki, hametuha
 Tags: sns, login
 Requires at least: 5.0  
 Tested up to: 5.3.1  
-Stable tag: 0.8.3  
+Stable tag: 0.8.5  
 Requires PHP: 5.6  
 License: GPL 3.0 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -13,24 +13,29 @@ Hashboard gives you an user-oriented and extensible dashboard.
 
 ## Description
 
-W.I.P
+This is WordPress dashboard build library.
 
 ## Installation
 
-1. Download from [Github](https://github.com/hametuha/hashboard) and follow the build instruction below.
-2. Install via composer `comopser require hametuha/hashboard`
-3. Install from WordPress.org repo(W.I.P)
-
+```
+composer require hametuha/hashboard
+```
 
 ## Frequently Asked Questions 
 
 W.I.P
 
-## Screenshots
-
-W.I.P
-
 ## Changelog
 
-W.I.P
+See [releases](https://github.com/hametuha/hashboard/releases).
+
+---
+
+<p align="center">
+<img alt="hametuha.com" src="https://hametuha.co.jp/identities/hametuha-logo.svg" width="300" height="auto" /><br />
+<strong>Go Forward While Looking Backward!</strong><br />
+https://hametuha.com
+<p>
+
+
 
