@@ -8,7 +8,9 @@
     "amd": true
   },
   "globals": {
-    "Vue": false
+    "Vue": false,
+    "wp": false,
+    "jQuery": false
   },
   "extends": [
     "plugin:@wordpress/eslint-plugin/esnext"

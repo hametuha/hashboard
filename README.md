@@ -4,7 +4,7 @@ Contributors: Takahashi_Fumiki, hametuha
 Tags: sns, login
 Requires at least: 5.0  
 Tested up to: 5.3.1  
-Stable tag: 0.8.3  
+Stable tag: 0.8.6  
 Requires PHP: 5.6  
 License: GPL 3.0 or later  
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
