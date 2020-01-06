@@ -12,7 +12,7 @@ use Hametuha\Pattern\Singleton;
  * @package hashboard
  */
 abstract class Editor extends Singleton {
-	
+
 	/**
 	 * Object to edit.
 	 *
@@ -23,14 +23,14 @@ abstract class Editor extends Singleton {
 	protected function init() {
 		add_action( 'hashboard_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
-	
+
 	/**
 	 * Enqueue assets
 	 */
 	public function enqueue_scripts() {
 		// Do nothing.
 	}
-	
+
 	/**
 	 * Get slug.
 	 *
@@ -109,6 +109,7 @@ abstract class Editor extends Singleton {
 		do_action( 'hashboard_enqueue_scripts' );
 		Hashboard::load_template( 'editor.php', [
 			'editor'   => $this,
+			'page'     => $this->get_slug(),
 			'object'   => $this->object,
 			'label'    => $this->get_label(),
 			'back_url' => $this->get_back_link(),

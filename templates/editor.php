@@ -16,7 +16,7 @@ $user = wp_get_current_user();
 </head>
 <body>
 
-<section>
+<div>
 	<nav class="top-nav top-nav-over">
 		<div class="hb-container">
 			<div class="nav-wrapper hb-nav-wrapper">
@@ -30,7 +30,7 @@ $user = wp_get_current_user();
 			</div>
 		</div>
 	</nav>
-	<div class="hb-main" data-text="<?php esc_attr_e( 'Please wait...', 'hashboard' ) ?>">
+	<div class="hb-main hb-main-editor" data-text="<?php esc_attr_e( 'Please wait...', 'hashboard' ) ?>">
 		<div class="hb-container">
 			<div class="hb-main-inner">
 				<?php
@@ -45,7 +45,7 @@ $user = wp_get_current_user();
 				do_action( 'hashboard_before_main', $editor, $child );
 
 				$editor->content();
-				
+
 				/**
 				 * hashboard_after_main
 				 *
@@ -61,7 +61,7 @@ $user = wp_get_current_user();
 		</div>
 	</div>
 
-</section>
+</div>
 <?php $editor->footer() ?>
 <?php do_action( 'hashboard_footer', $page ) ?>
 </body>
