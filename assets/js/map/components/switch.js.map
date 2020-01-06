@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/switch.js"],"names":["$","jQuery"],"mappings":"AAAA;;;CAMA,SAAWA,KAKRC","file":"../../components/switch.js","sourcesContent":["/*!\n * wpdeps=vue-js\n */\n\n/*global Vue: false*/\n\n(function ($) {\n\n  'use strict';\n\n\n})(jQuery);\n"]}
