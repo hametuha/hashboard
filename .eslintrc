@@ -4,7 +4,16 @@
     "sourceType": "module"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "amd": true
   },
-  "extends": "wordpress"
+  "globals": {
+    "Vue": false
+  },
+  "extends": [
+    "plugin:@wordpress/eslint-plugin/esnext"
+  ],
+  "rules": {
+    "object-shorthand": "off"
+  }
 }

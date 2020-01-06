@@ -4,5 +4,5 @@
  *
  * wpdeps=chart-js-vue,bootstrap
  */
-!function(e){"use strict";Vue.component("hb-line-chart",{extends:VueChartJs.Line,mixins:[VueChartJs.mixins.reactiveProp],props:["chartData","options"],mounted:function(){this.renderChart(this.chartData,this.options)}})}(jQuery)}});
+Vue.component("hb-line-chart",{extends:VueChartJs.Line,mixins:[VueChartJs.mixins.reactiveProp],props:["chartData","options"],mounted:function(){this.renderChart(this.chartData,this.options)}})}});
 //# sourceMappingURL=line-chart.js.map
