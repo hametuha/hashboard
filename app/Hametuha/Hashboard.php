@@ -27,14 +27,14 @@ class Hashboard extends Singleton {
 	 * @var array
 	 */
 	public $screens = [];
-	
+
 	/**
 	 * List of editors.
 	 *
 	 * @var array
 	 */
 	protected $editors = [];
-	
+
 	/**
 	 * @var string
 	 */
@@ -216,7 +216,7 @@ class Hashboard extends Singleton {
 		 */
 		return apply_filters( 'hashboar_user_actions', $links );
 	}
-	
+
 	/**
 	 * Register assets.
 	 */
@@ -225,24 +225,24 @@ class Hashboard extends Singleton {
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', [], null );
 		wp_register_style( 'bootstrap', self::url( '/assets/css/hashboard.css' ), [ 'material-design-icon' ], self::version() );
 		// Bootstrap
-		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.14.4', true );
+		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.16.0', true );
 		// Popper
-		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.1.3', true );
+		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.4.1', true );
 		// Chart JS
-		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.7.2', true );
+		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.9.3', true );
 		// Moment
 		if ( wp_script_is( 'moment', 'registered' ) ) {
 			wp_deregister_script( 'moment' );
 		}
-		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.23.0', true );
+		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.24.0', true );
 		// Vue.js.
-		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.5.17', true );
+		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.6.11', true );
 		$vue_helper = <<<JS
 			window.bus = new Vue({});
 JS;
 		wp_add_inline_script( 'vue-js', $vue_helper );
 		// Chart JS vue.
-		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.4.0', true );
+		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.5.0', true );
 		// Hash Rest
 		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), [ 'jquery', 'hb-plugins-toast' ], self::version(), true );
 		wp_localize_script( 'hashboard-rest', 'HashRest', [
@@ -386,7 +386,7 @@ JS;
 	public static function dir() {
 		return dirname( dirname( __DIR__ ) );
 	}
-	
+
 	/**
 	 * Get editor URL
 	 *

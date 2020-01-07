@@ -4,7 +4,7 @@
  * Plugin URI: https://hametuha.com
  * Description: Dashboard
  * Author: Hametuha INC.
- * Version: 0.8.6
+ * Version: 0.8.7
  * Author URI: https://hametuha.co.jp
  * Text Domain: hashboard
  */

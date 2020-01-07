@@ -102,9 +102,9 @@ Vue.component( 'hb-post-list', {
 	template: `
       <div class="hb-post-list">
         <p class="hb-post-list-title" v-if="title">{{title}}</p>
-        <hb-list-table :loading="loading" items="posts" :total-page="0">
+        <hb-list-table :loading="loading" :items="posts" :total-page="0">
           <template slot="item" v-slot:item="{ item }">
-			<a :href="post.link" class="hb-post-list-link">
+			<a :href="item.link" class="hb-post-list-link">
 				<span class="hb-post-list-title">{{ item.title.rendered }}</span>
 				<span class="hb-post-list-date">{{ item.date | moment('ll')}}</span>
 				<span v-if="isNew( item.date_gmt, 'Z')" class="hb-post-list-new material-icons">fiber_new</span>
