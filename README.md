@@ -11,9 +11,11 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Hashboard gives you an user-oriented and extensible dashboard.
 
+![Hashboard Test](https://github.com/hametuha/hashboard/workflows/Hashboard%20Test/badge.svg?branch=master)
+
 ## Description
 
-This is WordPress dashboard build library.
+Dashboard library for WordPress.
 
 ## Installation
 
