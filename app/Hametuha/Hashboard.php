@@ -21,6 +21,8 @@ use WP_CLI\Iterators\Exception;
  */
 class Hashboard extends Singleton {
 
+	private static $version = '0.8.8';
+
 	/**
 	 * List of instances.
 	 *
@@ -180,14 +182,7 @@ class Hashboard extends Singleton {
 	 * @return string
 	 */
 	public static function version() {
-		static $version = null;
-		if ( is_null( $version ) ) {
-			$data = get_file_data( self::dir() . '/hashboard.php', [
-				'version' => 'Version',
-			] );
-			$version = $data[ 'version' ];
-		}
-		return $version;
+		return self::$version;
 	}
 
 	/**
