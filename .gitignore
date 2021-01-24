@@ -3,3 +3,4 @@ node_modules/
 package-lock.json
 assets/*.html
 composer.lock
+/wordpress/
