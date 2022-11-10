@@ -22,7 +22,8 @@
     "require-dev": {
         "phpunit/phpunit": "~5.7",
         "squizlabs/php_codesniffer": "~2.8",
-        "wp-coding-standards/wpcs": "~0.11"
+        "wp-coding-standards/wpcs": "~0.11",
+        "yoast/phpunit-polyfills": "^1.0"
     },
     "autoload": {
         "psr-0": {
