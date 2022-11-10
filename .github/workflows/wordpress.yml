@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ ubuntu-16.04 ]  # OS. ubuntu-18.04 is also available.
+        operating-system: [ ubuntu-18.04 ]  # OS. ubuntu-18.04 is also available.
         php: [ '5.6', '7.1', '7.2', '7.3' ] # PHP versions to check.
         wp: [ 'latest', '5.0' ]      # WordPress version to check.
     services:
@@ -28,10 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Setup PHP
-        uses: nanasess/setup-php@master
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          tools: composer:v2.2
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -48,10 +49,15 @@ jobs:
       - name: Run test suite
         run: composer test
 
+  assets:
+    name: Assets Test
+    steps:
+      - uses: actions/checkout@master
+
       - name: Install NPM
         uses: actions/setup-node@v1
         with:
-          node-version: '10'
+          node-version: '14'
 
       - name: Run NPM install
         run: npm install
@@ -59,11 +65,12 @@ jobs:
       - name: Run Jest
         run: npm test
 
+
   release:
     name: Build Plugin
-    needs: test
+    needs: [ test, assets ]
     if: contains(github.ref, 'tags/')
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         zip: [ 'hashboard' ] # Zip name.
@@ -72,6 +79,9 @@ jobs:
 
       - name: Build package.
         run: bash bin/cleanup.sh
+
+      - name: Create Zip
+        run: zip -r ${{ matrix.zip }}.zip ./
 
       - name: Deploy Release
         id: create_release
@@ -85,9 +95,6 @@ jobs:
             Release ${{ github.ref }}
           draft: false
           prerelease: false
-
-      - name: Create Zip
-        run: zip -r ${{ matrix.zip }}.zip ./
 
       - name: Upload Release Zip
         id: upload-release-asset
