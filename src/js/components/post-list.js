@@ -86,7 +86,7 @@ Vue.component( 'hb-post-list', {
 			if ( author ) {
 				query[ 'author[]' ] = author;
 			}
-			const path = `wp/v2${ this.postType }?` + $.params( query );
+			const path = `wp/v2/${ this.postType }?` + $.param( query );
 			this.loading = true;
 			wp.apiFetch( {
 				path: path,
