@@ -23,7 +23,7 @@ class Media extends Singleton {
 	 * @return string
 	 */
 	public static function get_mime( $src ) {
-		if( ! file_exists( $src ) || ! ( $info = getimagesize( $src ) ) ) {
+		if ( ! file_exists( $src ) || ! ( $info = getimagesize( $src ) ) ) {
 			return '';
 		} else {
 			return $info['mime'];
@@ -38,7 +38,7 @@ class Media extends Singleton {
 	 */
 	public static function is_image( $src ) {
 		$mime = self::get_mime( $src );
-		return $mime && preg_match("/^image\/(jpeg|png|gif)$/", $mime );
+		return $mime && preg_match( '/^image\/(jpeg|png|gif)$/', $mime );
 	}
 
 	/**
@@ -50,11 +50,10 @@ class Media extends Singleton {
 	 * @param string $desc
 	 * @return int|\WP_Error
 	 */
-	public static function upload( array $file, $post_id = 0, $args = [], $desc = '' ) {
+	public static function upload( array $file, $post_id = 0, $args = array(), $desc = '' ) {
 		self::load_lib();
 		// Include all required files
 		$attachment_id = media_handle_sideload( $file, $post_id, $desc, $args );
 		return $attachment_id;
 	}
-
 }

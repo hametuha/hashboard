@@ -21,7 +21,7 @@ abstract class Editor extends Singleton {
 	protected $object = null;
 
 	protected function init() {
-		add_action( 'hashboard_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'hashboard_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -107,14 +107,14 @@ abstract class Editor extends Singleton {
 		wp_enqueue_style( 'bootstrap' );
 		wp_enqueue_script( 'hashboard' );
 		do_action( 'hashboard_enqueue_scripts' );
-		Hashboard::load_template( 'editor.php', [
+		Hashboard::load_template( 'editor.php', array(
 			'editor'   => $this,
 			'page'     => $this->get_slug(),
 			'object'   => $this->object,
 			'label'    => $this->get_label(),
 			'back_url' => $this->get_back_link(),
 			'child'    => get_query_var( 'hashboard-child' ),
-		] );
+		) );
 	}
 
 	/**
@@ -128,9 +128,9 @@ abstract class Editor extends Singleton {
 	 * Register editor.
 	 */
 	public static function register() {
-		$slug = static::get_instance()->get_slug();
+		$slug       = static::get_instance()->get_slug();
 		$class_name = get_called_class();
-		add_filter( 'hashboard_editors', function( $editors ) use ( $slug, $class_name ) {
+		add_filter( 'hashboard_editors', function ( $editors ) use ( $slug, $class_name ) {
 			if ( ! isset( $editors[ $slug ] ) ) {
 				$editors[ $slug ] = $class_name;
 			}

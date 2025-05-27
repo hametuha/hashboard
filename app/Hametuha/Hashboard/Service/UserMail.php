@@ -12,11 +12,11 @@ use Hametuha\Pattern\Singleton;
  */
 class UserMail extends Singleton {
 
-	const NEW_MAIL_KEY     = 'hashboard_new_mail';
+	const NEW_MAIL_KEY = 'hashboard_new_mail';
 
-	const MAIL_HASH_KEY    = 'hashboard_mail_hash';
+	const MAIL_HASH_KEY = 'hashboard_mail_hash';
 
-	const MAIL_HASH_LIMIT  = 'hashboard_mail_hash_expires';
+	const MAIL_HASH_LIMIT = 'hashboard_mail_hash_expires';
 
 	/**
 	 * Detect if mail has queue
@@ -24,7 +24,7 @@ class UserMail extends Singleton {
 	 * @param int $user_id
 	 * @return bool
 	 */
-	public function has_queue( $user_id )  {
+	public function has_queue( $user_id ) {
 		$new_mail = get_user_meta( $user_id, self::NEW_MAIL_KEY, true );
 		if ( ! $new_mail ) {
 			return false;
@@ -100,22 +100,22 @@ SQL;
 	public function update_user_mail( $hash ) {
 		$user_id = $this->get_user_id_by_hash( $hash );
 		if ( ! $user_id ) {
-			return new \WP_Error( 404, __( 'Hash key is not valid and user not found.', 'hashboard' ), [ 'status' => 404 ] );
+			return new \WP_Error( 404, __( 'Hash key is not valid and user not found.', 'hashboard' ), array( 'status' => 404 ) );
 		}
 		if ( ! $this->is_in_time( $user_id ) ) {
-			return new \WP_Error( 405, __( 'Email change request is expired. Please make another request at your account page.', 'hashboard' ), [ 'status' => 405 ] );
+			return new \WP_Error( 405, __( 'Email change request is expired. Please make another request at your account page.', 'hashboard' ), array( 'status' => 405 ) );
 		}
 		$mail = get_user_meta( $user_id, self::NEW_MAIL_KEY, true );
 		if ( ! $mail ) {
-			return new \WP_Error( 500, __( 'You new mail address is not found. Please try again or contact to site administrator.', 'hashboard' ), [ 'status' => 500 ] );
+			return new \WP_Error( 500, __( 'You new mail address is not found. Please try again or contact to site administrator.', 'hashboard' ), array( 'status' => 500 ) );
 		}
 		if ( email_exists( $mail ) ) {
-			return new \WP_Error( 500, __( 'This email is used by other user. Please try another one.', 'hashboard' ), [ 'status' => 500 ] );
+			return new \WP_Error( 500, __( 'This email is used by other user. Please try another one.', 'hashboard' ), array( 'status' => 500 ) );
 		}
-		$result = wp_update_user( [
-			'ID' => $user_id,
+		$result = wp_update_user( array(
+			'ID'         => $user_id,
 			'user_email' => $mail,
-		] );
+		) );
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
@@ -161,12 +161,12 @@ SQL;
 	public function notify( $user_id ) {
 		$hash = get_user_meta( $user_id, self::MAIL_HASH_KEY, true );
 		if ( ! $hash ) {
-			return new \WP_Error( 404, __( 'Specified user doesn\'t seem on requesting mail change.', 'hashboard' ), [ 'status' => 404 ] );
+			return new \WP_Error( 404, __( 'Specified user doesn\'t seem on requesting mail change.', 'hashboard' ), array( 'status' => 404 ) );
 		}
 		$mail = get_user_meta( $user_id, self::NEW_MAIL_KEY, true );
-		$url = add_query_arg( [
+		$url  = add_query_arg( array(
 			'hash' => $hash,
-		], rest_url( 'hashboard/v1/user/account' ) );
+		), rest_url( 'hashboard/v1/user/account' ) );
 		/**
 		 * hashboard_mail_request_subject
 		 *
@@ -207,7 +207,7 @@ To check your current email address, please go to dashboard.
 		if ( $subject && $body ) {
 			return wp_mail( $mail, $subject, $body );
 		} else {
-			return new \WP_Error( 500, __( 'Failed to send confirmation mail. Please try again later or contact to site administrator.', 'hashboard' ), [ 'status' => 500] );
+			return new \WP_Error( 500, __( 'Failed to send confirmation mail. Please try again later or contact to site administrator.', 'hashboard' ), array( 'status' => 500 ) );
 		}
 	}
 }

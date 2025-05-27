@@ -23,23 +23,23 @@ class Password extends Api {
 	protected function get_args( $http_method ) {
 		switch ( $http_method ) {
 			case 'POST':
-				return [
-					'user_pass' => [
-						'required' => true,
-						'validate_callback' => function( $var ) {
+				return array(
+					'user_pass'  => array(
+						'required'          => true,
+						'validate_callback' => function ( $var ) {
 							return 8 <= strlen( $var );
 						},
-					],
-					'user_pass2' => [
-						'required' => true,
-						'validate_callback' => function( $var, \WP_REST_Request $request ) {
+					),
+					'user_pass2' => array(
+						'required'          => true,
+						'validate_callback' => function ( $var, \WP_REST_Request $request ) {
 							return $var === $request->get_param( 'user_pass' );
 						},
-					],
-				];
+					),
+				);
 				break;
 			default:
-				return [];
+				return array();
 				break;
 		}
 	}
@@ -52,18 +52,17 @@ class Password extends Api {
 	 * @throws \Exception
 	 */
 	protected function handle_post( \WP_REST_Request $request ) {
-		$result = wp_update_user( [
-			'ID' => get_current_user_id(),
+		$result = wp_update_user( array(
+			'ID'        => get_current_user_id(),
 			'user_pass' => $request['user_pass'],
-		] );
+		) );
 		if ( is_wp_error( $result ) ) {
 			return $request;
 		} else {
-			return [
+			return array(
 				'success' => true,
 				'message' => __( 'Your password successfully changed.', 'hashboard' ),
-			];
+			);
 		}
 	}
-
 }

@@ -17,23 +17,23 @@ class Contacts extends Api {
 	 * @return array
 	 */
 	protected function get_args( $http_method ) {
-		$args = [];
+		$args = array();
 		switch ( $http_method ) {
 			case 'POST':
 				foreach ( UserContacts::get_instance()->get_user_contact_methods() as $key => $field ) {
 					switch ( $field['type'] ) {
 						case 'url':
-							$callback = function( $var ) {
+							$callback = function ( $var ) {
 								return empty( $var ) || preg_match( '#^[a-z]+://#u', $var ) ?: new \WP_Error( 'malformat', __( 'Should be URL format.', 'hashboard' ) );
 							};
 							break;
 						case 'email':
-							$callback = function( $var ) {
+							$callback = function ( $var ) {
 								return is_email( $var ) ?: new \WP_Error( 'malformat', __( 'Should be mail format.', 'hashboard' ) );
 							};
 							break;
 						case 'number':
-							$callback = function( $var ) {
+							$callback = function ( $var ) {
 								return is_numeric( $var ) ?: new \WP_Error( 'malformat', __( 'Should be numeric.', 'hashboard' ) );
 							};
 							break;
@@ -41,9 +41,9 @@ class Contacts extends Api {
 							$callback = null;
 							break;
 					}
-					$arg = [
+					$arg = array(
 						'description' => isset( $field['description'] ) ? $field['description'] : $field['label'],
-					];
+					);
 					if ( isset( $field['default'] ) ) {
 						$arg['default'] = $field['default'];
 					}
@@ -77,10 +77,10 @@ class Contacts extends Api {
 		foreach ( UserContacts::get_instance()->get_user_contact_methods() as $key => $fields ) {
 			switch ( $key ) {
 				case 'url':
-					$result = wp_update_user( [
+					$result = wp_update_user( array(
 						'ID'       => get_current_user_id(),
 						'user_url' => $request['url'],
-					] );
+					) );
 					if ( is_wp_error( $result ) ) {
 						$error = $result;
 					}
@@ -90,10 +90,9 @@ class Contacts extends Api {
 					break;
 			}
 		}
-		return is_wp_error( $error ) ? $error : [
+		return is_wp_error( $error ) ? $error : array(
 			'success' => true,
 			'message' => __( 'Your contact information is successfully updated.', 'hashboard' ),
-		];
+		);
 	}
-
 }

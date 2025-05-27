@@ -14,13 +14,13 @@ class Profile extends Api {
 
 	protected $route = 'user/profile';
 
-	protected $values = [
+	protected $values = array(
 		'display_name' => true,
 		'nickname'     => true,
 		'first_name'   => false,
 		'last_name'    => false,
 		'description'  => false,
-	];
+	);
 
 	/**
 	 * Should return arguments.
@@ -31,20 +31,20 @@ class Profile extends Api {
 	protected function get_args( $http_method ) {
 		switch ( $http_method ) {
 			case 'POST':
-				$args = [];
+				$args = array();
 				foreach ( $this->values as $key => $not_empty ) {
-					$arg = [
+					$arg = array(
 						'required' => false,
-					];
+					);
 					if ( $not_empty ) {
-						$args['validate_callback'] = [ $this, 'is_not_empty' ];
+						$args['validate_callback'] = array( $this, 'is_not_empty' );
 					}
 					$args[ $key ] = $arg;
 				}
 				return $args;
 				break;
 			default:
-				return [];
+				return array();
 				break;
 		}
 	}
@@ -65,10 +65,10 @@ class Profile extends Api {
 			}
 			switch ( $key ) {
 				case 'display_name':
-					$result = wp_update_user( [
-						'ID' => get_current_user_id(),
+					$result = wp_update_user( array(
+						'ID'           => get_current_user_id(),
 						'display_name' => $param,
-					] );
+					) );
 					if ( is_wp_error( $result ) ) {
 						$errors->add( $result->get_error_code(), $result->get_error_message() );
 					}
@@ -81,11 +81,10 @@ class Profile extends Api {
 		if ( $errors->get_error_messages() ) {
 			return $errors;
 		} else {
-			return [
+			return array(
 				'success' => true,
 				'message' => __( 'Your profile has been updated.', 'hashboard' ),
-			];
+			);
 		}
 	}
-
 }

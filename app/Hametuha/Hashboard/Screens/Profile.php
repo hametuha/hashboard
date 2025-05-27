@@ -39,11 +39,11 @@ class Profile extends Screen {
 	 * @return array
 	 */
 	protected function default_children() {
-		$page = [
-			'profile'  => __( 'Profile', 'hashboard' ),
-		];
+		$page = array(
+			'profile' => __( 'Profile', 'hashboard' ),
+		);
 		if ( wp_get_user_contact_methods() ) {
-			$page[ 'contacts' ] = __( 'Contacts', 'hashboard' );
+			$page['contacts'] = __( 'Contacts', 'hashboard' );
 		}
 		/**
 		 * hashboard_user_can_change_language
@@ -56,7 +56,7 @@ class Profile extends Screen {
 		}
 		return $page;
 	}
-	
+
 	public function description( $page = '' ) {
 		switch ( $page ) {
 			case 'contacts':
@@ -85,110 +85,109 @@ class Profile extends Screen {
 		}
 		switch ( $page ) {
 			case 'contacts':
-				$groups = [];
+				$groups  = array();
 				$methods = UserContacts::get_instance()->get_user_contact_methods( $user );
 				if ( $methods ) {
-					$groups[ 'contacts' ] = [
-						'label' => __( 'Contacts', 'hashboard' ),
+					$groups['contacts'] = array(
+						'label'  => __( 'Contacts', 'hashboard' ),
 						'action' => rest_url( 'hashboard/v1/user/contacts' ),
 						'method' => 'POST',
 						'submit' => __( 'Update', 'hashboard' ),
 						'fields' => $methods,
-					];
+					);
 				}
 				return $groups;
 				break;
 			case 'language':
-				$locales = apply_filters( 'hashboard_locale_selector', [
+				$locales = apply_filters( 'hashboard_locale_selector', array(
 					'' => sprintf( __( 'Site Default(%s)', 'hashboard' ), get_locale() ),
-				] );
-				return [
-					'languages' => [
-						'label' => __( 'Language Setting', 'hashboard' ),
+				) );
+				return array(
+					'languages' => array(
+						'label'  => __( 'Language Setting', 'hashboard' ),
 						'action' => rest_url( 'hashboard/v1/user/language' ),
 						'method' => 'POST',
 						'submit' => __( 'Update', 'hashboard' ),
-						'fields' => [
-							'locale' => [
-								'label' => __( 'Language', 'hashboard' ),
-								'type'  => 'select',
-								'value' => $user->locale,
+						'fields' => array(
+							'locale' => array(
+								'label'   => __( 'Language', 'hashboard' ),
+								'type'    => 'select',
+								'value'   => $user->locale,
 								'options' => $locales,
-							],
-						]
-					],
-				];
+							),
+						),
+					),
+				);
 				break;
 			default:
 				ob_start();
-				Hashboard::load_template( 'gravatar.php', [ 'user' => $user ] );
+				Hashboard::load_template( 'gravatar.php', array( 'user' => $user ) );
 				$avatar = ob_get_contents();
 				ob_end_clean();
-				return [
-					'names' => [
-						'label' => __( 'Name', 'hashboard' ),
+				return array(
+					'names'   => array(
+						'label'  => __( 'Name', 'hashboard' ),
 						'action' => rest_url( 'hashboard/v1/user/profile' ),
 						'method' => 'POST',
 						'submit' => __( 'Update Profile', 'hashboard' ),
-						'fields' => [
-							'display_name' => [
+						'fields' => array(
+							'display_name' => array(
 								'label' => __( 'Display Name', 'hashboard' ),
-								'type' => 'text',
+								'type'  => 'text',
 								'value' => $user->display_name,
 								'group' => 'open',
-								'col' => 2,
-							],
-							'nickname' => [
+								'col'   => 2,
+							),
+							'nickname'     => array(
 								'label' => __( 'Nickname', 'hashboard' ),
-								'type' => 'text',
-								'src' => 'nickname',
+								'type'  => 'text',
+								'src'   => 'nickname',
 								'group' => 'close',
-								'col' => 2,
-							],
-							'first_name' => [
+								'col'   => 2,
+							),
+							'first_name'   => array(
 								'label' => __( 'First Name', 'hashboard' ),
-								'src'  => 'first_name',
-								'type' => 'text',
+								'src'   => 'first_name',
+								'type'  => 'text',
 								'group' => 'open',
-								'col' => 2,
-							],
-							'last_name' => [
+								'col'   => 2,
+							),
+							'last_name'    => array(
 								'label' => __( 'Last Name', 'hashboard' ),
-								'src'  => 'last_name',
-								'type' => 'text',
+								'src'   => 'last_name',
+								'type'  => 'text',
 								'group' => 'close',
-								'col' => 2,
-							],
-							'description' => [
+								'col'   => 2,
+							),
+							'description'  => array(
 								'label' => __( 'Your Profile', 'hashboard' ),
-								'type' => 'textarea',
-								'src' => 'description',
-							],
-						]
-					],
-					'picture' => [
-						'label' => __( 'Profile Picture', 'hashboard' ),
+								'type'  => 'textarea',
+								'src'   => 'description',
+							),
+						),
+					),
+					'picture' => array(
+						'label'  => __( 'Profile Picture', 'hashboard' ),
 						'method' => 'POST',
 						'action' => rest_url( '/hashboard/v1/user/avatar' ),
 						'submit' => __( 'Upload', 'hashboard' ),
-						'fields' => [
-							'gravatar' => [
+						'fields' => array(
+							'gravatar'  => array(
 								'html'  => $avatar,
 								'group' => 'open',
 								'col'   => 2,
-							],
-							'local_img' => [
-								'label' => __( 'Select Photo', 'hashboard' ),
-								'type'  => 'file',
-								'group' => 'close',
-								'col'   => 2,
+							),
+							'local_img' => array(
+								'label'       => __( 'Select Photo', 'hashboard' ),
+								'type'        => 'file',
+								'group'       => 'close',
+								'col'         => 2,
 								'description' => __( 'You can alternatively upload image file.', 'hashboard' ),
-							],
-						],
-					],
-				];
+							),
+						),
+					),
+				);
 				break;
 		}
 	}
-
 }

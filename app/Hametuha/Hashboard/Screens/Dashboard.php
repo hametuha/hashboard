@@ -22,25 +22,25 @@ class Dashboard extends Screen {
 	}
 
 	/**
-     * Get dashboard blocks.
-     *
+	 * Get dashboard blocks.
+	 *
 	 * @return array
 	 */
 	protected function get_blocks() {
-	    $message = sprintf( esc_html__( 'Welcom to %s dashboard!', 'hashboard' ), get_bloginfo( 'name' ) );
-		$welcome = <<<HTML
+		$message  = sprintf( esc_html__( 'Welcom to %s dashboard!', 'hashboard' ), get_bloginfo( 'name' ) );
+		$welcome  = <<<HTML
             <div class="card">
                 <div class="card-content">
                     <p>{$message}</p>
                 </div>
             </div>
 HTML;
-		$blocks[] = [
-			'id'   => 'welcome',
-            'html' => $welcome,
-            'title' => sprintf( __( 'Welcome to %s!', 'hashboard' ), get_bloginfo( 'name' ) ),
-            'size' => 3,
-		];
+		$blocks[] = array(
+			'id'    => 'welcome',
+			'html'  => $welcome,
+			'title' => sprintf( __( 'Welcome to %s!', 'hashboard' ), get_bloginfo( 'name' ) ),
+			'size'  => 3,
+		);
 		/**
 		 * hashboard_dashboard_blocks
 		 *
@@ -58,25 +58,26 @@ HTML;
 	public function render( $page = '' ) {
 		?>
 		<div class="hb-masonry" id="hb-dashboard-masonry">
-            <div class="hb-masonry-sizer"></div>
-			<?php foreach ( (array) $this->get_blocks() as $block ) :
-                $block = wp_parse_args( $block, [
-                    'id' => '',
-                    'html' => '',
-                    'size' => 1,
-                    'title' => '',
-                ] );
-			    $size = max( min( $block['size'], 3), 1 );
-                ?>
-				<div class="hb-masonry-block" id="<?= esc_attr( $block['id'] ) ?>" data-size="<?= esc_attr( $size ) ?>">
-                    <div class="hb-masonry-inner">
-						<?php if ( $block[ 'title' ] ) : ?>
-                            <h3 class="hb-masonry-title"><?= wp_kses( $block[ 'title' ], [ 'a' => [ 'href' => true, 'target' => [ '_self', '_blank' ] ], 'strong' => true, 'i' => [ 'class' => true ] ] ) ?></h3>
+			<div class="hb-masonry-sizer"></div>
+			<?php
+			foreach ( (array) $this->get_blocks() as $block ) :
+				$block = wp_parse_args( $block, array(
+					'id'    => '',
+					'html'  => '',
+					'size'  => 1,
+					'title' => '',
+				) );
+				$size  = max( min( $block['size'], 3 ), 1 );
+				?>
+				<div class="hb-masonry-block" id="<?php echo esc_attr( $block['id'] ); ?>" data-size="<?php echo esc_attr( $size ); ?>">
+					<div class="hb-masonry-inner">
+						<?php if ( $block['title'] ) : ?>
+							<h3 class="hb-masonry-title"><?php echo wp_kses( $block['title'], array( 'a' => array( 'href' => true, 'target' => array( '_self', '_blank' ) ), 'strong' => true, 'i' => array( 'class' => true ) ) ); ?></h3>
 						<?php endif; ?>
-                        <div class="hb-masonry-content">
-							<?php echo $block[ 'html' ]; ?>
-                        </div>
-                    </div>
+						<div class="hb-masonry-content">
+							<?php echo $block['html']; ?>
+						</div>
+					</div>
 				</div>
 			<?php endforeach; ?>
 		</div>
@@ -89,6 +90,4 @@ HTML;
 	public function footer() {
 		wp_enqueue_script( 'hb-components-dashboard' );
 	}
-
-
 }

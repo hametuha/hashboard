@@ -17,9 +17,9 @@ class Account extends Screen {
 	protected $icon = 'lock_outline';
 
 	protected function default_children() {
-		$children = [
+		$children = array(
 			'account' => __( 'Your Account', 'hashboard' ),
-		];
+		);
 		return $children;
 	}
 
@@ -40,7 +40,7 @@ class Account extends Screen {
 	 */
 	protected function init() {
 		parent::init();
-		add_action( 'hashboard_after_field_rendered', [ $this, 'after_field_rendered' ], 10, 3 );
+		add_action( 'hashboard_after_field_rendered', array( $this, 'after_field_rendered' ), 10, 3 );
 	}
 
 	/**
@@ -56,79 +56,81 @@ class Account extends Screen {
 		}
 		switch ( $page ) {
 			case '':
-				return [
-					'account' => [
-						'label' => __( 'Account', 'hashboard' ),
+				return array(
+					'account'  => array(
+						'label'       => __( 'Account', 'hashboard' ),
 						'description' => $this->get_mail_description( $user ),
-						'submit' => __( 'Change Email', 'hashboard' ),
-						'action' => rest_url( '/hashboard/v1/user/account/' ),
-						'method' => 'POST',
-						'fields' => [
-							'user_email' => [
-								'label' => __( 'Enter new email here', 'hashboard' ),
-								'type'  => 'email',
-								'value'   => '',
+						'submit'      => __( 'Change Email', 'hashboard' ),
+						'action'      => rest_url( '/hashboard/v1/user/account/' ),
+						'method'      => 'POST',
+						'fields'      => array(
+							'user_email' => array(
+								'label'       => __( 'Enter new email here', 'hashboard' ),
+								'type'        => 'email',
+								'value'       => '',
 								'placeholder' => '',
-                                'icon' => 'mail_outline',
-							],
-						],
-					],
-					'password' => [
-						'label' => __( 'Password', 'hashboard' ),
+								'icon'        => 'mail_outline',
+							),
+						),
+					),
+					'password' => array(
+						'label'       => __( 'Password', 'hashboard' ),
 						'description' => __( 'To change password, enter new password here. If you leave blank, nothing will be changed.', 'hashboard' ),
-                        'action' => rest_url( '/hashboard/v1/user/password' ),
-                        'method' => 'POST',
-                        'submit' => __( 'Save New Password', 'hashboard' ),
-						'fields' => [
-							'user_pass' => [
+						'action'      => rest_url( '/hashboard/v1/user/password' ),
+						'method'      => 'POST',
+						'submit'      => __( 'Save New Password', 'hashboard' ),
+						'fields'      => array(
+							'user_pass'  => array(
 								'label'       => __( 'New Password', 'hashboard' ),
 								'type'        => 'password',
 								'description' => wp_get_password_hint(),
-                                'icon' => 'vpn_key',
-							],
-							'user_pass2' => [
+								'icon'        => 'vpn_key',
+							),
+							'user_pass2' => array(
 								'label'       => __( 'Enter password again', 'hashboard' ),
 								'type'        => 'password',
 								'description' => __( 'For confirmation, enter same password as above.', 'hashboard' ),
-                                'icon' => 'replay',
-							],
-						],
-					],
-				];
+								'icon'        => 'replay',
+							),
+						),
+					),
+				);
 				break;
 			default:
-				return [];
+				return array();
 				break;
 		}
 	}
 
 	/**
-     * Render email notice
-     *
+	 * Render email notice
+	 *
 	 * @param string   $key
 	 * @param array    $fields
 	 * @param \WP_User $user
 	 */
-	public function after_field_rendered( $key, $fields, $user  ) {
+	public function after_field_rendered( $key, $fields, $user ) {
 		if ( 'user_email' == $key ) {
 			$controller = UserMail::get_instance();
 			if ( $controller->has_queue( $user->ID ) ) {
 				?>
 				<div class="alert alert-warning hb-warning">
-                    <?php printf(
-                        // translators:
-                        wp_kses_post( __( 'You are now requesting <code>%1$s</code> as new email. Please check your mail box and finish confirmation. Otherwise, <a href="%2$s" class="hb-mail-resend alert-link">resend</a> or <a href="%2$s" class="hb-mail-cancel alert-link">cancel request</a>.', 'hashboard' ) ),
-                        esc_html( get_user_meta( $user->ID, $controller::NEW_MAIL_KEY, true ) ),
-                        rest_url( 'hashboard/v1/user/account' )
-                    ) ?>
+					<?php
+					printf(
+						// translators:
+						wp_kses_post( __( 'You are now requesting <code>%1$s</code> as new email. Please check your mail box and finish confirmation. Otherwise, <a href="%2$s" class="hb-mail-resend alert-link">resend</a> or <a href="%2$s" class="hb-mail-cancel alert-link">cancel request</a>.', 'hashboard' ) ),
+						esc_html( get_user_meta( $user->ID, $controller::NEW_MAIL_KEY, true ) ),
+						rest_url( 'hashboard/v1/user/account' )
+					)
+					?>
 				</div>
 				<?php
 			}
 		}
 		if ( 'user_pass2' == $key ) {
-		    $black_lists = [ $user->user_login, current( explode( '@', $user->user_email ) ), $user->first_name, $user->last_name ];
-            printf( '<div id="hb-password-strength" data-blacklists="%s">%s<span></span></div>', esc_attr( implode(',', $black_lists) ), esc_html__( 'Password Strength: ', 'hashboard' ) );
-        }
+			$black_lists = array( $user->user_login, current( explode( '@', $user->user_email ) ), $user->first_name, $user->last_name );
+			printf( '<div id="hb-password-strength" data-blacklists="%s">%s<span></span></div>', esc_attr( implode( ',', $black_lists ) ), esc_html__( 'Password Strength: ', 'hashboard' ) );
+		}
 	}
 
 	/**
@@ -146,6 +148,6 @@ class Account extends Screen {
 	 * Footer action
 	 */
 	public function footer() {
-	    wp_enqueue_script( 'hb-components-password' );
+		wp_enqueue_script( 'hb-components-password' );
 	}
 }

@@ -22,20 +22,20 @@ class UserContacts extends Singleton {
 		if ( is_null( $user ) ) {
 			$user = wp_get_current_user();
 		}
-		$methods = [
-			'url' => [
-				'label' => 'URL',
-				'type' => 'url',
-				'value' => $user->user_url,
+		$methods = array(
+			'url' => array(
+				'label'       => 'URL',
+				'type'        => 'url',
+				'value'       => $user->user_url,
 				'placeholder' => 'https://example.com',
-			],
-		];
+			),
+		);
 		foreach ( wp_get_user_contact_methods() as $key => $label ) {
-			$methods[ $key ] = [
+			$methods[ $key ] = array(
 				'label' => $label,
-				'type' => 'text',
-				'src' => $key,
-			];
+				'type'  => 'text',
+				'src'   => $key,
+			);
 		}
 		/**
 		 * hashboard_contact_fields
@@ -46,5 +46,4 @@ class UserContacts extends Singleton {
 		$methods = apply_filters( 'hashboard_contact_fields', $methods, $user );
 		return $methods;
 	}
-
 }

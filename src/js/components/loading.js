@@ -19,7 +19,7 @@ Vue.component( 'hb-loading', {
 		loading: false,
 		title: {
 			type: String,
-			default: HbComponentsLoading.title
+			default: HbComponentsLoading.title,
 		},
 	},
 	mounted: function() {

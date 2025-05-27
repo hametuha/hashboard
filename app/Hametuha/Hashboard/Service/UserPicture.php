@@ -45,9 +45,9 @@ class UserPicture extends Singleton {
 	 */
 	protected function init() {
 		// Filter avatars
-		add_filter( 'pre_get_avatar_data', [ $this, 'pre_get_avatar_data' ], 10, 2 );
+		add_filter( 'pre_get_avatar_data', array( $this, 'pre_get_avatar_data' ), 10, 2 );
 		// Remove avatar's srcset
-		add_filter( 'get_avatar', [ $this, 'get_avatar' ], 11 );
+		add_filter( 'get_avatar', array( $this, 'get_avatar' ), 11 );
 	}
 
 	/**
@@ -122,9 +122,9 @@ class UserPicture extends Singleton {
 			throw new \Exception( __( 'File must be image. Allowed type is Jpeg, GIF and PNG.', 'hashboard' ), 500 );
 		}
 		// Include all required files
-		$attachment_id = Media::upload( $file, 0, [
+		$attachment_id = Media::upload( $file, 0, array(
 			'post_author' => $user_id,
-		], '' );
+		), '' );
 		if ( is_wp_error( $attachment_id ) ) {
 			throw new \Exception( $attachment_id->get_error_message(), 500 );
 		}
@@ -141,32 +141,32 @@ class UserPicture extends Singleton {
 	 *
 	 * @return array
 	 */
-	public function get_profile_pic( $user_id, $size = 'pinky', array $args = [] ) {
-		$pictures = [];
-		$query    = new \WP_Query( wp_parse_args( $args, [
+	public function get_profile_pic( $user_id, $size = 'pinky', array $args = array() ) {
+		$pictures = array();
+		$query    = new \WP_Query( wp_parse_args( $args, array(
 			'post_type'      => 'attachment',
 			'author'         => $user_id,
 			'post_mime_type' => 'image',
 			'posts_per_page' => - 1,
 			'post_status'    => 'inherit',
-			'meta_query'     => [
-				[
+			'meta_query'     => array(
+				array(
 					'key'   => $this->post_meta_key,
-					'value' => 1
-				]
-			],
-		] ) );
+					'value' => 1,
+				),
+			),
+		) ) );
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				$img        = wp_get_attachment_image( get_the_ID(), $size );
 				$guid       = get_the_guid();
-				$pictures[] = [
+				$pictures[] = array(
 					'attachment_id' => get_the_ID(),
 					'guid'          => $guid,
 					'img'           => $img,
 					'src'           => preg_match( '/src="([^"]+)"/u', $img, $match ) ? $match[1] : $guid,
-				];
+				);
 			}
 			wp_reset_postdata();
 		}

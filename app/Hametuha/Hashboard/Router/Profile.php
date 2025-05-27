@@ -12,9 +12,9 @@ use Hametuha\Pattern\Singleton;
  * @package hashboard
  */
 class Profile extends Singleton {
-	
-	private $allowed_roles = [ 'administrator' ];
-	
+
+	private $allowed_roles = array( 'administrator' );
+
 	/**
 	 * URL to be redirected.
 	 *
@@ -32,15 +32,15 @@ class Profile extends Singleton {
 		 */
 		return apply_filters( 'hashboard_profile_url', $url );
 	}
-	
+
 	/**
 	 * Handle profile
 	 */
 	protected function init() {
 		// Redirect user to hashboard profile.
-		add_action( 'admin_init', [ $this, 'redirect_admin_profile' ] );
+		add_action( 'admin_init', array( $this, 'redirect_admin_profile' ) );
 	}
-	
+
 	/**
 	 * Redirect user to hashboard page.
 	 */
@@ -54,16 +54,16 @@ class Profile extends Singleton {
 		wp_redirect( $this->get_profile_url() );
 		exit;
 	}
-	
+
 	/**
 	 *
 	 * @param array $roles
 	 */
-	public function set_roles( $roles = [] ) {
-		$roles = (array) $roles;
+	public function set_roles( $roles = array() ) {
+		$roles               = (array) $roles;
 		$this->allowed_roles = $roles;
 	}
-	
+
 	/**
 	 * Get user capability.
 	 *
@@ -90,5 +90,4 @@ class Profile extends Singleton {
 		}
 		return false;
 	}
-	
 }

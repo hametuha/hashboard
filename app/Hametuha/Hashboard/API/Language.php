@@ -13,7 +13,7 @@ use Hametuha\Hashboard\Pattern\Api;
 class Language extends Api {
 
 	protected $route = 'user/language';
-	
+
 	/**
 	 * Check locale format.
 	 *
@@ -39,15 +39,15 @@ class Language extends Api {
 	 * @return array
 	 */
 	protected function get_args( $http_method ) {
-		$args = [];
+		$args = array();
 		switch ( $http_method ) {
 			case 'POST':
-				$args['locale'] = [
-					'required' => true,
-					'validate_callback' => function( $var ) {
+				$args['locale'] = array(
+					'required'          => true,
+					'validate_callback' => function ( $var ) {
 						return self::is_valid_locale( $var );
-					}
-				];
+					},
+				);
 				break;
 			default:
 				// Do nothing.
@@ -69,17 +69,16 @@ class Language extends Api {
 	 * @return \WP_Error|array
 	 */
 	public function handle_post( $request ) {
-		$error = new \WP_Error();
+		$error  = new \WP_Error();
 		$locale = $request->get_param( 'locale' );
-		$error = apply_filters( 'hashboard_update_user_language_error', $error, $request );
+		$error  = apply_filters( 'hashboard_update_user_language_error', $error, $request );
 		if ( $error->get_error_messages() ) {
 			return $error;
 		}
 		update_user_meta( get_current_user_id(), 'locale', $locale );
-		return [
+		return array(
 			'success' => true,
 			'message' => __( 'Your language setting is updated.', 'hashboard' ),
-		];
+		);
 	}
-
 }

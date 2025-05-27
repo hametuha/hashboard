@@ -25,31 +25,31 @@ class Account extends Api {
 	protected function get_args( $http_method ) {
 		switch ( $http_method ) {
 			case 'POST': // Register email
-				return [
-					'user_email' => [
-						'required' => true,
-						'validate_callback' => function( $mail ) {
+				return array(
+					'user_email' => array(
+						'required'          => true,
+						'validate_callback' => function ( $mail ) {
 							return preg_match( '#^.*@.*[^.]$#u', $mail );
 						},
-					],
-				];
+					),
+				);
 				break;
 			case 'PUSH': // Send email again
-				return [];
+				return array();
 				break;
 			case 'GET':  // Activate
-				return [
-					'hash' => [
-						'required' => true,
-						'validate_callback' => [ $this, 'is_not_empty' ],
-					],
-				];
+				return array(
+					'hash' => array(
+						'required'          => true,
+						'validate_callback' => array( $this, 'is_not_empty' ),
+					),
+				);
 				break;
 			case 'DELETE': // Cancel mail change
-				return [];
+				return array();
 				break;
 			default:
-				return [];
+				return array();
 				break;
 		}
 	}
@@ -76,10 +76,10 @@ class Account extends Api {
 			} elseif ( ! $result ) {
 				throw new \Exception( __( 'Failed to send confirmation mail. Please check if mail address is valid.', 'hashboard' ), 500 );
 			}
-			return [
+			return array(
 				'success' => true,
 				'message' => $this->get_notification_message(),
-			];
+			);
 		}
 	}
 
@@ -99,10 +99,10 @@ class Account extends Api {
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		} else {
-			return [
+			return array(
 				'success' => true,
 				'message' => $this->get_notification_message(),
-			];
+			);
 		}
 	}
 
@@ -114,10 +114,10 @@ class Account extends Api {
 	 */
 	public function handle_delete( \WP_REST_Request $request ) {
 		$result = UserMail::get_instance()->expire_user_hash( get_current_user_id() );
-		return [
+		return array(
 			'success' => true,
 			'message' => __( 'Your request has been canceled.', 'hashboard' ),
-		];
+		);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Account extends Api {
 	 */
 	public function handle_get( \WP_REST_Request $request ) {
 		try {
-			$result = UserMail::get_instance()->update_user_mail( $request[ 'hash' ] );
+			$result = UserMail::get_instance()->update_user_mail( $request['hash'] );
 			if ( is_wp_error( $result ) ) {
 				$code = $result->get_error_code();
 				if ( ! is_numeric( $code ) ) {
@@ -146,9 +146,9 @@ class Account extends Api {
 				Hashboard::get_instance()->get_url(),
 				get_bloginfo( 'name' )
 			) );
-			wp_die( $message, get_status_header_desc( $e->getCode() ), [
+			wp_die( $message, get_status_header_desc( $e->getCode() ), array(
 				'response' => $e->getCode(),
-			] );
+			) );
 		}
 	}
 
@@ -162,7 +162,7 @@ class Account extends Api {
 	public function permission_callback( \WP_REST_Request $request ) {
 		if ( 'GET' == $request->get_method() ) {
 			return true;
-		} elseif( in_array( $request->get_method(), [ 'PUT', 'DELETE' ] ) ) {
+		} elseif ( in_array( $request->get_method(), array( 'PUT', 'DELETE' ) ) ) {
 			return UserMail::get_instance()->has_queue( get_current_user_id() );
 		} else {
 			return parent::permission_callback( $request );
@@ -182,5 +182,4 @@ class Account extends Api {
 		 */
 		return apply_filters( 'hashboard_mail_request_message', __( 'A confirmation mail has been sent to your new mail address. Please open it and click confirmation link.', 'hashboard' ) );
 	}
-
 }

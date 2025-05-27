@@ -15,7 +15,7 @@ abstract class Screen extends Singleton {
 	/**
 	 * @var array
 	 */
-	protected $children = [];
+	protected $children = array();
 
 	/**
 	 * Should return unique URL slug.
@@ -63,39 +63,39 @@ abstract class Screen extends Singleton {
 	 * Set children.
 	 */
 	protected function default_children() {
-	    return [];
-    }
+		return array();
+	}
 
 	/**
-     * Get children menu
-     *
+	 * Get children menu
+	 *
 	 * @return array
 	 */
 	public function get_children() {
 		return $this->children;
-    }
+	}
 
 	/**
-     * Render title
-     *
+	 * Render title
+	 *
 	 * @param string $title
 	 */
-    protected function render_title( $title ) {
+	protected function render_title( $title ) {
 		printf(
 			'<div class="row"><div class="col col-sm-12"><h2 class="hb-section-title">%s</h2></div></div>',
 			wp_kses_post( $title )
 		);
-    }
+	}
 
 	/**
-     * Get children
-     *
+	 * Get children
+	 *
 	 * @param string $key
 	 * @return bool
 	 */
 	public function has_children( $key ) {
-	    return isset( $this->children[ $key ] );
-    }
+		return isset( $this->children[ $key ] );
+	}
 
 	/**
 	 * Get meta description
@@ -109,19 +109,19 @@ abstract class Screen extends Singleton {
 
 	/**
 	 * Render HTML
-     *
-     * @param string $page
+	 *
+	 * @param string $page
 	 */
 	public function render( $page = '' ) {
 		foreach ( $this->get_field_group_filtered( wp_get_current_user(), $page ) as $name => $settings ) {
-			$settings = wp_parse_args( $settings, [
-				'label' => '',
+			$settings = wp_parse_args( $settings, array(
+				'label'       => '',
 				'description' => '',
-				'fields' => [],
-				'action' => '',
-				'method' => 'get',
-				'submit' => __( 'Save', 'hashboard' ),
-			] );
+				'fields'      => array(),
+				'action'      => '',
+				'method'      => 'get',
+				'submit'      => __( 'Save', 'hashboard' ),
+			) );
 			if ( $settings['submit'] ) {
 				printf( '<form class="hb-form" id="form-%s" action="%s" method="%s">', esc_attr( $name ), esc_url( $settings['action'] ), esc_attr( $settings['method'] ) );
 			}
@@ -142,7 +142,7 @@ abstract class Screen extends Singleton {
 				$this->render_field( wp_get_current_user(), $key, $field );
 			}
 			if ( $settings['submit'] ) {
-				printf( '<div class="form-row"><div class="col-12"><button class="btn btn-outline-primary ripple" type="submit">%s</button></div></div>', esc_html( $settings[ 'submit' ] ) );
+				printf( '<div class="form-row"><div class="col-12"><button class="btn btn-outline-primary ripple" type="submit">%s</button></div></div>', esc_html( $settings['submit'] ) );
 			}
 			/**
 			 * hashboard_after_fields_rendered
@@ -161,16 +161,16 @@ abstract class Screen extends Singleton {
 	 * Get field group
 	 *
 	 * @param null|\WP_User $user
-     * @param string        $page
+	 * @param string        $page
 	 * @return array
 	 */
 	public function get_field_groups( $user = null, $page = '' ) {
-		return [];
+		return array();
 	}
 
 	/**
-     * Get field group filtered.
-     *
+	 * Get field group filtered.
+	 *
 	 * @param null $user
 	 * @param string $page
 	 * @return array
@@ -190,36 +190,36 @@ abstract class Screen extends Singleton {
 
 
 	/**
-     * Render field for user.
-     *
+	 * Render field for user.
+	 *
 	 * @param \WP_User $user
 	 * @param string   $key
 	 * @param array    $fields
 	 */
 	protected function render_field( $user, $key, $fields ) {
-		$fields = shortcode_atts( [
-			'label' => '',
-			'type'  => 'text',
-			'name'  => '',
-			'value' => '',
-			'src'   => '',
-			'group' => '',
-			'col'   => 1,
-			'icon'  => '',
+		$fields = shortcode_atts( array(
+			'label'       => '',
+			'type'        => 'text',
+			'name'        => '',
+			'value'       => '',
+			'src'         => '',
+			'group'       => '',
+			'col'         => 1,
+			'icon'        => '',
 			'html'        => false,
 			'placeholder' => '',
-            'description' => '',
+			'description' => '',
 			'media_type'  => 'image',
-			'default' => '',
-			'options' => [],
-			'rows' => 3,
-			'optional' => false,
-		], $fields );
+			'default'     => '',
+			'options'     => array(),
+			'rows'        => 3,
+			'optional'    => false,
+		), $fields );
 		if ( ! $fields['name'] ) {
 			$fields['name'] = $key;
 		}
 		$out = '';
-        ob_start();
+		ob_start();
 		/**
 		 * hashboard_before_field_rendered
 		 *
@@ -232,20 +232,20 @@ abstract class Screen extends Singleton {
 		if ( $fields['html'] ) {
 			echo $fields['html'];
 		} else {
-			if ( $fields[ 'src' ] ) {
-				$fields[ 'value' ] = get_user_meta( $user->ID, $fields['src'], true );
+			if ( $fields['src'] ) {
+				$fields['value'] = get_user_meta( $user->ID, $fields['src'], true );
 			}
 			if ( $fields['icon'] ) {
 				$fields['label'] = sprintf(
-                    '<i class="material-icons prefix">%s</i>',
-                    esc_html( $fields['icon'] )
-                ) . $fields['label'];
-            }
-			if ( ! in_array( $fields['type'], [ 'hidden', 'media', 'file', 'separator' ] ) ) {
+					'<i class="material-icons prefix">%s</i>',
+					esc_html( $fields['icon'] )
+				) . $fields['label'];
+			}
+			if ( ! in_array( $fields['type'], array( 'hidden', 'media', 'file', 'separator' ) ) ) {
 				printf(
 					'<label for="%s">%s %s</label>',
 					esc_attr( $key ),
-					wp_kses( $fields['label'],[ 'i' => [ 'class' => true ] ] ),
+					wp_kses( $fields['label'], array( 'i' => array( 'class' => true ) ) ),
 					$fields['optional'] ? sprintf( '<small class="text-muted">%s</small>', esc_html__( '(Optional)', 'hashboard' ) ) : ''
 				);
 			}
@@ -279,7 +279,7 @@ abstract class Screen extends Singleton {
 					break;
 				case 'url':
 				case 'password':
-                case 'email':
+				case 'email':
 				case 'text':
 				case 'number':
 				case 'hidden':
@@ -312,25 +312,25 @@ abstract class Screen extends Singleton {
     				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $lang ), esc_attr( $fields['name'] ) );
 					break;
 			}
-            if ( $fields['description'] ) {
-                printf( '<p class="form-text hb-input-description">%s</p>', wp_kses_post( $fields['description'] ) );
-            }
+			if ( $fields['description'] ) {
+				printf( '<p class="form-text hb-input-description">%s</p>', wp_kses_post( $fields['description'] ) );
+			}
 		}
 		/**
-         * hashboard_after_field_rendered
-         *
+		 * hashboard_after_field_rendered
+		 *
 		 * @param string   $key    of field.
-         * @param array    $fields
-         * @param \WP_User $user
+		 * @param array    $fields
+		 * @param \WP_User $user
 		 */
 		do_action( 'hashboard_after_field_rendered', $key, $fields, $user );
-        $out = ob_get_contents();
-        ob_end_clean();
+		$out = ob_get_contents();
+		ob_end_clean();
 		// Wrap fields.
-		if ( ! in_array( $fields['type'], [ 'separator' ] ) ) {
+		if ( ! in_array( $fields['type'], array( 'separator' ) ) ) {
 			$out = sprintf(
 				'<div class="%s col-12 col-md-%d">%s</div>',
-				'file' == $fields['type'] ? 'file-field' : '' ,
+				'file' == $fields['type'] ? 'file-field' : '',
 				( is_numeric( $fields['col'] ) && $fields['col'] ) ? ceil( 12 / $fields['col'] ) : 12,
 			$out );
 		}
@@ -347,14 +347,14 @@ abstract class Screen extends Singleton {
 	/**
 	 * Head action
 	 */
-	public function head(){
+	public function head() {
 		// Do something.
 	}
 
 	/**
 	 * Footer action
 	 */
-	public function footer(){
+	public function footer() {
 		// Do somehting.
 	}
 }

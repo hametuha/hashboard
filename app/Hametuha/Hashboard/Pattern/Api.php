@@ -14,7 +14,7 @@ abstract class Api extends RestApi {
 
 	protected $namespace = 'hashboard';
 
-	protected $version   = '1';
+	protected $version = '1';
 
 	/**
 	 * Default permission callback

@@ -8,6 +8,6 @@
 defined( 'ABSPATH' ) || die();
 
 
-return [
-	'language' => explode( '_', get_user_locale() )[0]
-];
+return array(
+	'language' => explode( '_', get_user_locale() )[0],
+);

@@ -5,7 +5,7 @@
 
 defined( 'ABSPATH' ) || die();
 
-return [
+return array(
 	'editing' => __( 'Editing', 'hashboard' ),
 	'edit'    => __( 'Edit', 'hashboard' ),
-];
+);

@@ -28,14 +28,14 @@ class Hashboard extends Singleton {
 	 *
 	 * @var array
 	 */
-	public $screens = [];
+	public $screens = array();
 
 	/**
 	 * List of editors.
 	 *
 	 * @var array
 	 */
-	protected $editors = [];
+	protected $editors = array();
 
 	/**
 	 * @var string
@@ -50,44 +50,44 @@ class Hashboard extends Singleton {
 		/**
 		 * Register editors.
 		 */
-		$this->editors = apply_filters( 'hashboard_editors', [] );
-		add_filter( 'query_vars', [ $this, 'query_vars' ] );
-		add_filter( 'rewrite_rules_array', [ $this, 'rewrite_rules' ] );
-		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
-		add_action( 'hashboard_head', [ $this, 'enqueue_screen_styles' ], 11 );
-		add_action( 'hashboard_footer', [ $this, 'enqueue_screen_scripts' ], 11 );
+		$this->editors = apply_filters( 'hashboard_editors', array() );
+		add_filter( 'query_vars', array( $this, 'query_vars' ) );
+		add_filter( 'rewrite_rules_array', array( $this, 'rewrite_rules' ) );
+		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+		add_action( 'hashboard_head', array( $this, 'enqueue_screen_styles' ), 11 );
+		add_action( 'hashboard_footer', array( $this, 'enqueue_screen_scripts' ), 11 );
 		add_action( 'init', function () {
 			/**
 			 * hashboard_screens
 			 *
 			 * @param array $screens Associative array of Hametuha\Hashboard\Pattern\Screen
 			 */
-			$this->screens = apply_filters( 'hashboard_screens', [
+			$this->screens = apply_filters( 'hashboard_screens', array(
 				'dashboard' => Dashboard::class,
-				'profile' => Profile::class,
-				'account' => Account::class,
-			] );
+				'profile'   => Profile::class,
+				'account'   => Account::class,
+			) );
 		}, 1 );
 		// Register assets globally.
-		add_action( 'init', [ $this, 'register_assets' ], 11 );
+		add_action( 'init', array( $this, 'register_assets' ), 11 );
 		// Register all API.
-		foreach ( [
-					  'API' => RestApi::class,
-					  'Bridge' => Singleton::class,
-				  ] as $name => $subclass ) {
+		foreach ( array(
+			'API'    => RestApi::class,
+			'Bridge' => Singleton::class,
+		) as $name => $subclass ) {
 			foreach ( scandir( __DIR__ . '/Hashboard/' . $name ) as $file ) {
-				if ( !preg_match( '#^([^._].*)\.php$#u', $file, $matches ) ) {
+				if ( ! preg_match( '#^([^._].*)\.php$#u', $file, $matches ) ) {
 					continue;
 				}
 				$class_name = "Hametuha\\Hashboard\\{$name}\\{$matches[1]}";
-				if ( !class_exists( $class_name ) ) {
+				if ( ! class_exists( $class_name ) ) {
 					continue;
 				}
 				$reflection = new \ReflectionClass( $class_name );
-				if ( !$reflection->isSubclassOf( $subclass ) || $reflection->isAbstract() ) {
+				if ( ! $reflection->isSubclassOf( $subclass ) || $reflection->isAbstract() ) {
 					continue;
 				}
-				call_user_func( [ $class_name, 'get_instance' ] );
+				call_user_func( array( $class_name, 'get_instance' ) );
 			}
 		}
 		// Render screen.
@@ -168,12 +168,12 @@ class Hashboard extends Singleton {
 	 */
 	public function rewrite_rules( $rules ) {
 		$prefix = $this->get_prefix();
-		return array_merge( [
-			"^{$prefix}/?$" => 'index.php?hashboard=dashboard',
+		return array_merge( array(
+			"^{$prefix}/?$"                      => 'index.php?hashboard=dashboard',
 			"^{$prefix}/editor/([^/]+)/(\d+)/?$" => 'index.php?hashboard=editor&hashboard-child=$matches[1]&p=$matches[2]',
-			"^{$prefix}/([^/]+)/?$" => 'index.php?hashboard=$matches[1]',
-			"^{$prefix}/([^/]+)/([^/]+)/?$" => 'index.php?hashboard=$matches[1]&hashboard-child=$matches[2]',
-		], $rules );
+			"^{$prefix}/([^/]+)/?$"              => 'index.php?hashboard=$matches[1]',
+			"^{$prefix}/([^/]+)/([^/]+)/?$"      => 'index.php?hashboard=$matches[1]&hashboard-child=$matches[2]',
+		), $rules );
 	}
 
 	/**
@@ -191,19 +191,19 @@ class Hashboard extends Singleton {
 	 * @return array
 	 */
 	public function user_actions() {
-		$links = [];
+		$links = array();
 		if ( current_user_can( self::get_wp_accessible_capability() ) ) {
-			array_unshift( $links, [
+			array_unshift( $links, array(
 				'label' => __( 'WP Admin', 'hashboard' ),
-				'url' => admin_url(),
+				'url'   => admin_url(),
 				'class' => '',
-			] );
+			) );
 		}
-		$links['logout'] = [
+		$links['logout'] = array(
 			'label' => __( 'Log out', 'hashboard' ),
-			'url' => wp_logout_url(),
+			'url'   => wp_logout_url(),
 			'class' => '',
-		];
+		);
 		/**
 		 * hashboar_user_actions
 		 *
@@ -217,40 +217,43 @@ class Hashboard extends Singleton {
 	 */
 	public function register_assets() {
 		// Material Design Icons
-		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', [], null );
-		wp_register_style( 'bootstrap', self::url( '/assets/css/hashboard.css' ), [ 'material-design-icon' ], self::version() );
+		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null );
+		wp_register_style( 'bootstrap', self::url( '/assets/css/hashboard.css' ), array( 'material-design-icon' ), self::version() );
 		// Bootstrap
-		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), [], '1.16.0', true );
+		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), array(), '1.16.0', true );
 		// Popper
-		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), [ 'jquery', 'popper' ], '4.4.1', true );
+		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), array( 'jquery', 'popper' ), '4.4.1', true );
 		// Chart JS
-		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), [], '2.9.3', true );
+		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), array(), '2.9.3', true );
 		// Moment
 		if ( wp_script_is( 'moment', 'registered' ) ) {
 			wp_deregister_script( 'moment' );
 		}
-		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), [], '2.24.0', true );
+		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), array(), '2.24.0', true );
 		// Vue.js.
-		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), [], '2.6.11', true );
+		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), array(), '2.6.11', true );
 		$vue_helper = <<<JS
 			window.bus = new Vue({});
 JS;
 		wp_add_inline_script( 'vue-js', $vue_helper );
 		// Chart JS vue.
-		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), [ 'chart-js', 'vue-js' ], '3.5.0', true );
+		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), array( 'chart-js', 'vue-js' ), '3.5.0', true );
 		// Hash Rest
-		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), [ 'jquery', 'hb-plugins-toast' ], self::version(), true );
-		wp_localize_script( 'hashboard-rest', 'HashRest', [
-			'root' => rest_url( '/' ),
+		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), array( 'jquery', 'hb-plugins-toast' ), self::version(), true );
+		wp_localize_script( 'hashboard-rest', 'HashRest', array(
+			'root'  => rest_url( '/' ),
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 			'error' => __( 'Server returns error. Please try again later', 'hashboard' ),
-		] );
+		) );
 		// Hashboard Utility.
-		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), [
-			'bootstrap', 'hashboard-rest', 'hb-plugins-toast', 'hb-plugins-fitrows'
-		], self::version(), true );
+		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), array(
+			'bootstrap',
+			'hashboard-rest',
+			'hb-plugins-toast',
+			'hb-plugins-fitrows',
+		), self::version(), true );
 		// Register scripts.
-		foreach ( [ 'components', 'filters', 'plugins' ] as $group ) {
+		foreach ( array( 'components', 'filters', 'plugins' ) as $group ) {
 			$base_dir = self::dir() . "/assets/js/{$group}";
 			if ( ! is_dir( $base_dir ) ) {
 				continue;
@@ -307,7 +310,7 @@ JS;
 					$screen = $class_name::get_instance();
 					// Is there children?
 					$child = $wp_query->get( 'hashboard-child' );
-					if ( !$screen->has_children( $child ) ) {
+					if ( ! $screen->has_children( $child ) ) {
 						$child = '';
 					}
 					global $wp_styles;
@@ -321,11 +324,11 @@ JS;
 					 * @param bool $is_head
 					 */
 					do_action( 'hashboard_enqueue_scripts', $screen, $child );
-					self::load_template( 'body.php', [
-						'page' => $screen,
+					self::load_template( 'body.php', array(
+						'page'      => $screen,
 						'hashboard' => self::get_instance(),
-						'child' => $child,
-					] );
+						'child'     => $child,
+					) );
 					exit;
 				} else {
 					throw new Exception( 'no editor', 404 );
@@ -334,10 +337,10 @@ JS;
 				if ( 404 == $e->getCode() ) {
 					$wp_query->set_404();
 				} else {
-					wp_die( $e->getMessage(), get_status_header_desc( $e->getCode() ), [
+					wp_die( $e->getMessage(), get_status_header_desc( $e->getCode() ), array(
 						'back_link' => true,
 						'response'  => $e->getCode(),
-					] );
+					) );
 				}
 			}
 		}
@@ -355,7 +358,7 @@ JS;
 		 * @param string $read Default 'read'
 		 * @return string
 		 */
-		return apply_filters( 'hashboard_default_cap ', 'read' );
+		return apply_filters( 'hashboard_default_cap', 'read' );
 	}
 
 	/**
@@ -379,7 +382,7 @@ JS;
 	 * @return string
 	 */
 	public static function dir() {
-		return dirname( dirname( __DIR__ ) );
+		return dirname( __DIR__, 2 );
 	}
 
 	/**
@@ -400,13 +403,13 @@ JS;
 	 * @param string $template
 	 * @param array $args
 	 */
-	public static function load_template( $template, $args = [] ) {
+	public static function load_template( $template, $args = array() ) {
 		$located = '';
-		foreach ( [
-					  self::dir() . '/templates',
-					  get_template_directory() . '/template-parts/hashboard',
-					  get_stylesheet_directory() . '/template-parts/hashboard',
-				  ] as $dir ) {
+		foreach ( array(
+			self::dir() . '/templates',
+			get_template_directory() . '/template-parts/hashboard',
+			get_stylesheet_directory() . '/template-parts/hashboard',
+		) as $dir ) {
 			$path = $dir . '/' . $template;
 			if ( file_exists( $path ) ) {
 				$located = $path;
@@ -420,7 +423,7 @@ JS;
 		 * @param array $args Past parameters.
 		 */
 		$located = apply_filters( 'hashboard_template', $located, $template, $args );
-		if ( !$located || !file_exists( $located ) ) {
+		if ( ! $located || ! file_exists( $located ) ) {
 			trigger_error( sprintf( __( 'Template %s doesn\'t exist.', 'hashboard' ), $located ), E_USER_WARNING );
 		} else {
 			if ( $args ) {
@@ -455,7 +458,7 @@ JS;
 			$path = '/' . ltrim( $path, '/' );
 		}
 		$base_url = explode( 'wp-content/themes', get_stylesheet_directory_uri() );
-		$base_url = str_replace( ABSPATH, $base_url[ 0 ], self::dir() );
+		$base_url = str_replace( ABSPATH, $base_url[0], self::dir() );
 		return untrailingslashit( $base_url ) . $path;
 	}
 

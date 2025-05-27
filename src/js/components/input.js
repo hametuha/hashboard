@@ -8,11 +8,10 @@
 /*global HbComponentsInput: false*/
 
 ( function( $ ) {
+	'use strict';
 
-  'use strict';
-
-  Vue.component( 'hb-input', {
-    template: `
+	Vue.component( 'hb-input', {
+		template: `
       <div class="hb-input-field">
         <div class="form-row">
             <div class="form-group col-sm-10">
@@ -49,77 +48,75 @@
         </div>
       </div>
     `,
-    props: {
-      id: {
-        type: String,
-        required: true
-      },
-      original: {
-        type: String,
-        default: ''
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      description: {
-        type: String,
-        default: ''
-      },
-      rows: {
-        type: String,
-        default: '3'
-      },
-      type: {
-        type: String,
-        default: 'text',
-        validator: function( value ) {
-          return -1 < [
-            'text', 'password', 'email', 'number', 'url',
-            'textarea', 'tel'
-          ].indexOf( value );
-        }
-      }
-    },
-    computed: {
-      forId: function() {
-        return this.id + '::for';
-      },
-      editingLabel: function() {
-        return HbComponentsInput.editing;
-      },
-      isTextArea: function() {
-        return 'textarea' === this.type;
-      },
-      originalLines: function() {
-        return this.original.split( '\n' );
-      }
-    },
-    data: function() {
-      return {
-        editing: false,
-        current: '',
-        editingLabel: HbComponentsInput.editing,
-        editLabel: HbComponentsInput.edit,
-        noValue: HbComponentsInput.noValue
-      };
-    },
+		props: {
+			id: {
+				type: String,
+				required: true,
+			},
+			original: {
+				type: String,
+				default: '',
+			},
+			title: {
+				type: String,
+				required: true,
+			},
+			description: {
+				type: String,
+				default: '',
+			},
+			rows: {
+				type: String,
+				default: '3',
+			},
+			type: {
+				type: String,
+				default: 'text',
+				validator: function( value ) {
+					return -1 < [
+						'text', 'password', 'email', 'number', 'url',
+						'textarea', 'tel',
+					].indexOf( value );
+				},
+			},
+		},
+		computed: {
+			forId: function() {
+				return this.id + '::for';
+			},
+			editingLabel: function() {
+				return HbComponentsInput.editing;
+			},
+			isTextArea: function() {
+				return 'textarea' === this.type;
+			},
+			originalLines: function() {
+				return this.original.split( '\n' );
+			},
+		},
+		data: function() {
+			return {
+				editing: false,
+				current: '',
+				editingLabel: HbComponentsInput.editing,
+				editLabel: HbComponentsInput.edit,
+				noValue: HbComponentsInput.noValue,
+			};
+		},
 
-    mounted: function() {
-      $( `label[for="${this.id}"] .tooltipped` ).tooltip({delay: 50});
-    },
+		mounted: function() {
+			$( `label[for="${ this.id }"] .tooltipped` ).tooltip( { delay: 50 } );
+		},
 
-    methods: {
-      checkboxHandler: function() {
-        if ( ! this.editing ) {
-
-          // Enter edit mode
-          this.current = this.original;
-        } else if ( this.current !== this.original ) {
-          this.$emit( 'data-changed', this.current, this.id );
-        }
-      }
-    }
-  });
-
+		methods: {
+			checkboxHandler: function() {
+				if ( ! this.editing ) {
+					// Enter edit mode
+					this.current = this.original;
+				} else if ( this.current !== this.original ) {
+					this.$emit( 'data-changed', this.current, this.id );
+				}
+			},
+		},
+	} );
 }( jQuery ) );

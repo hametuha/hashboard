@@ -7,8 +7,8 @@ $user = wp_get_current_user();
 ?><!doctype html>
 <html>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ) ?>"/>
-	<title><?php echo esc_html( $label ) ?> | <?php bloginfo( 'name' ) ?></title>
+	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
+	<title><?php echo esc_html( $label ); ?> | <?php bloginfo( 'name' ); ?></title>
 	<?php
 	$editor->head();
 	do_action( 'hashboard_head', $editor );
@@ -20,17 +20,17 @@ $user = wp_get_current_user();
 	<nav class="top-nav top-nav-over">
 		<div class="hb-container">
 			<div class="nav-wrapper hb-nav-wrapper">
-                <span class="hb-header-title">
-                    <?php echo esc_html( $label ) ?>
-                </span>
-				<a title="<?php esc_attr_e( 'Return', 'hashboard' ) ?>" class="btn btn-circle btn-sm btn-link btn-floating waves-effect"
-					href="<?= esc_url( $back_url ) ?>">
+				<span class="hb-header-title">
+					<?php echo esc_html( $label ); ?>
+				</span>
+				<a title="<?php esc_attr_e( 'Return', 'hashboard' ); ?>" class="btn btn-circle btn-sm btn-link btn-floating waves-effect"
+					href="<?php echo esc_url( $back_url ); ?>">
 					<i class="material-icons">chevron_left</i>
 				</a>
 			</div>
 		</div>
 	</nav>
-	<div class="hb-main hb-main-editor" data-text="<?php esc_attr_e( 'Please wait...', 'hashboard' ) ?>">
+	<div class="hb-main hb-main-editor" data-text="<?php esc_attr_e( 'Please wait...', 'hashboard' ); ?>">
 		<div class="hb-container">
 			<div class="hb-main-inner">
 				<?php
@@ -54,7 +54,7 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $page
 				 * @param string $child
 				 */
-				do_action( 'hashboard_after_main', $editor	, $child );
+				do_action( 'hashboard_after_main', $editor, $child );
 				?>
 
 			</div>
@@ -62,7 +62,7 @@ $user = wp_get_current_user();
 	</div>
 
 </div>
-<?php $editor->footer() ?>
-<?php do_action( 'hashboard_footer', $page ) ?>
+<?php $editor->footer(); ?>
+<?php do_action( 'hashboard_footer', $page ); ?>
 </body>
 </html>
