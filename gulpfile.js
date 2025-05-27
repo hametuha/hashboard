@@ -8,6 +8,7 @@ const webpack = require( 'webpack-stream' );
 const webpackBundle = require( 'webpack' );
 const named = require( 'vinyl-named' );
 const browserSync = require( 'browser-sync' ).create();
+const sass = require( 'gulp-sass' ); //( require( 'sass' ) );
 
 // Sassのタスク
 gulp.task( 'sass', function() {
@@ -19,7 +20,7 @@ gulp.task( 'sass', function() {
 		} ) )
 		.pipe( $.sourcemaps.init( { loadMaps: true } ) )
 		.pipe( $.sassGlob() )
-		.pipe( $.sass( {
+		.pipe( sass( {
 			errLogToConsole: true,
 			outputStyle: 'compressed',
 			includePaths: [
