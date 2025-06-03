@@ -1,5 +1,5 @@
 /*!
- * wpdeps=jquery
+ * @deps jquery
  */
 
 ( function( $ ) {

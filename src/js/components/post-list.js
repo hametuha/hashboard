@@ -1,7 +1,7 @@
 /*!
  * List of posts.
  *
- * wpdeps=vue-js,hb-components-loading,hashboard, hb-filters-moment, hb-components-list-table
+ * @deps vue-js,hb-components-loading,hashboard, hb-filters-moment, hb-components-list-table
  */
 
 /*global moment: false*/

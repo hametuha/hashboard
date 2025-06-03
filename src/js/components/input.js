@@ -1,7 +1,7 @@
 /*!
  * Description
  *
- * wpdeps=vue-js
+ * @deps vue-js
  */
 
 /*global Vue: false*/
@@ -15,7 +15,7 @@
       <div class="hb-input-field">
         <div class="form-row">
             <div class="form-group col-sm-10">
-                
+
                 <label class="hb-input-field-label" :for="id">
                     {{title}}
                     <a v-if="description" class="hb-input-field-tooltip tooltipped"
@@ -23,19 +23,19 @@
                       <i class="material-icons">help</i>
                     </a>
                 </label>
-                
+
                 <input v-if="!isTextArea && editing" :id="id" :type="type" v-model="current" class="validate form-control" />
-                
+
                 <textarea v-if="isTextArea && editing" :id="id" v-model="current" :rows="rows" class="validate form-control"></textarea>
-                
+
                 <div class="hb-input-field-value" v-if="original && !editing">
                     <div v-for="line in originalLines">{{line}}</div>
                 </div>
-                
+
                 <p class="hb-input-field-no-value" v-if="!original && !editing">{{noValue}}</p>
                 <p class="hb-input-field-helper"></p>
             </div>
-            
+
             <div class="form-group col-sm-2 text-right">
               <div class="switch">
                 <input class="switch-input sr-only" :id="forId" type="checkbox" v-model="editing" @click="checkboxHandler">

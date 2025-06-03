@@ -1,7 +1,7 @@
 /*!
  * List table with pagination and search.
  *
- * wpdeps=vue-js,hb-components-loading,hashboard, hb-components-pagination, hb-filters-moment
+ * @deps vue-js,hb-components-loading,hashboard, hb-components-pagination, hb-filters-moment
  */
 
 Vue.component( 'hb-list-table', {

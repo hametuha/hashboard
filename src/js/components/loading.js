@@ -1,7 +1,7 @@
 /*!
  * Loading indicator
  *
- * wpdeps=vue-js
+ * @deps vue-js
  */
 
 /*global HbComponentsLoading: false*/

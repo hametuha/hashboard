@@ -1,5 +1,5 @@
 /*!
- * wpdeps=vue-js,moment
+ * @deps vue-js,moment
  */
 
 /* global HbFiltersMoment: false*/

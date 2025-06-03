@@ -1,7 +1,7 @@
 /*!
  * Pagination for Vue.JS
  *
- * wpdeps=vue-js,bootstrap
+ * @deps vue-js,bootstrap
  */
 
 Vue.component( 'hb-pagination-button', {

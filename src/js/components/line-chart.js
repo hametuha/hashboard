@@ -1,7 +1,7 @@
 /*!
  * Line chart component
  *
- * wpdeps=chart-js-vue,bootstrap
+ * @deps chart-js-vue,bootstrap
  */
 
 /*global VueChartJs: false*/

@@ -1,5 +1,5 @@
 /*!
- * wpdeps=vue-js
+ * @deps vue-js
  */
 
 /* global Vue: false*/

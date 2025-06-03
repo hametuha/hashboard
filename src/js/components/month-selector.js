@@ -1,7 +1,7 @@
 /*!
  * Month selector
  *
- * wpdeps=vue-js,bootstrap
+ * @deps vue-js,bootstrap
  */
 
 /*global Vue: true*/

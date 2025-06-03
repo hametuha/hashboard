@@ -1,6 +1,6 @@
 /*!
  * Dashboard widgets
- * wpdeps=masonry,jquery
+ * @deps masonry,jquery
  */
 
 /*global Hashboard: true*/

@@ -1,7 +1,7 @@
 /*!
  * Date range picker
  *
- * wpdeps=hb-components-date-range,moment
+ * @deps hb-components-date-range,moment
  */
 
 /*global Vue: false*/
@@ -31,14 +31,14 @@ Vue.component( 'HbPeriodPicker', {
 	template: `
       <div class="hb-period">
         <span v-for="button, index in buttons" class="hb-radio hb-radio-sm">
-            <input type="radio" :id="'hb-date-range-' + id + '-' + index" :name="'hb-date-range-' + id" 
+            <input type="radio" :id="'hb-date-range-' + id + '-' + index" :name="'hb-date-range-' + id"
                 :value="button.value" v-model="mode" />
             <label class="hb-radio-label" :for="'hb-date-range-' + id + '-' + index">
                 <i class="material-icons">check</i> {{button.label}}
             </label>
         </span>
         <span v-if="allowCustom" class="hb-radio hb-radio-sm">
-            <input type="radio" :id="'hb-date-range-' + id + '-custom'" :name="'hb-date-range-' + id" 
+            <input type="radio" :id="'hb-date-range-' + id + '-custom'" :name="'hb-date-range-' + id"
                 value="custom" v-model="mode" />
             <label class="hb-radio-label" :for="'hb-date-range-' + id + '-custom'">
                 <i class="material-icons">check</i> {{customLabel}}
