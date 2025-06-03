@@ -1,0 +1,90 @@
+[
+	{
+		"handle": "hashboard-rest",
+		"path": "assets/js/hashboard-rest.js",
+		"ext": "js",
+		"hash": "975e65a976a1f66751b5cc09161d4b32",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hashboard-helper",
+		"path": "assets/js/hashboard-helper.js",
+		"ext": "js",
+		"hash": "a453e34eaf45e384a3e95b9098bfeae7",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "toast",
+		"path": "assets/js/plugins/toast.js",
+		"ext": "js",
+		"hash": "08239ce3050a167de075501526561666",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "fitrows",
+		"path": "assets/js/plugins/fitrows.js",
+		"ext": "js",
+		"hash": "14b6f6e720c8aae7f3059126696522f7",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "date",
+		"path": "assets/js/plugins/date.js",
+		"ext": "js",
+		"hash": "fd78246bb607ccc5ae8f049800854607",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "numbers",
+		"path": "assets/js/filters/numbers.js",
+		"ext": "js",
+		"hash": "51542eb313000964c632874c5e0dc74b",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "moment",
+		"path": "assets/js/filters/moment.js",
+		"ext": "js",
+		"hash": "1954bd11055e15297414ee0c032389ad",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hashboard",
+		"path": "assets/css/hashboard.css",
+		"ext": "css",
+		"hash": "e30349ecef0e893cd6b58138dea02e66",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	}
+]
