@@ -1,7 +1,7 @@
 $top-nav-bg: $gray-300 !default;
 $top-nav-height: 50px !default;
 $top-nav-avatar-size: 36px !default;
-$top-nav-button-pos: ( $top-nav-height - $top-nav-avatar-size ) / 2 !default;
+$top-nav-button-pos: calc(( $top-nav-height - $top-nav-avatar-size ) / 2) !default;
 $top-nav-menu-bg: transparent !default;
 $top-nav-menu-bg-active: $gray-400 !default;
 $top-nav-menu-color: $gray-500 !default;
@@ -98,7 +98,7 @@ $top-nav-menu-transition: color .3s linear, background-color .3s linear !default
   right: 0;
   z-index: 1000;
   & + .hb-main{
-    padding-top: $navbar-height + 40;
+    padding-top: calc($navbar-height + 40px);
   }
   & .hb-container{
     position: relative;
@@ -110,4 +110,3 @@ $top-nav-menu-transition: color .3s linear, background-color .3s linear !default
     top: 10px;
   }
 }
-

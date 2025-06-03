@@ -3,10 +3,10 @@
 }
 
 @each $var in (
-  success $success-color,
-  info    $secondary-color,
-  warning $warning-color,
-  error   $error-color
+  success $success,
+  info    $secondary,
+  warning $warning,
+  error   $danger
 ){
   $class-name: nth($var, 1);
   $color: nth($var, 2);
@@ -15,4 +15,3 @@
     border-left-color: $color;
   }
 }
-

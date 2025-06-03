@@ -1,1 +1,0 @@
-!function(){"use strict";window.Vue&&Vue.filter("moment",((e,t="LLL",o=!1)=>(o||(o=HbFiltersMoment.locale),moment.locale(o),moment(e).format(t))))}();

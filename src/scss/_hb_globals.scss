@@ -1,4 +1,5 @@
-$medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
+// Bootstrap 5のブレークポイント変数を使用
+$medium-and-down: "(max-width: 768px)";
 
 [ng-cloak],
 [v-cloak]{
@@ -20,9 +21,9 @@ $medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
   $row-pad: -1.5rem;
   margin-right: $row-pad;
   margin-left: $row-pad;
-  @media only screen and (max-width: map-get($grid-breakpoints, md)) {
-    margin-right:  $row-pad / 2;
-    margin-left:  $row-pad / 2;
+  @media only screen and (max-width: 768px) {
+    margin-right: calc($row-pad / 2);
+    margin-left: calc($row-pad / 2);
   }
 }
 
@@ -45,14 +46,14 @@ $medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
 
 .hb-info{
   @extend %alert-box;
-  color: $secondary-color;
-  border-color: $secondary-color;
+  color: $secondary;
+  border-color: $secondary;
 }
 
 .hb-error{
   @extend %alert-box;
-  color: $error-color;
-  border-color: $error-color;
+  color: $danger;
+  border-color: $danger;
 }
 
 .hb-warning{
@@ -61,11 +62,11 @@ $medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
 
 a.link{
   &:link, &:visited {
-    color: $primary-color;
+    color: $primary;
     text-decoration: underline;
   }
   &:hover, &:active {
-    color: $warning-color;
+    color: $warning;
     text-decoration: none;
   }
 }

@@ -37,12 +37,12 @@ $sidenav-very-sm: 300px + 30px + 20px !default;
     background-color: transparent;
     border: 2px solid $sidenav-toggle-button-color;
     border-radius: 50%;
-    z-index: $sidenav-zindex +1;
+    z-index: $sidenav-zindex + 1;
     transition: color .3s linear, background-color .3s linear, border-color .3s linear;
     &:hover{
       color: #fff;
-      background-color: $primary-color;
-      border-color: $primary-color;
+      background-color: $primary;
+      border-color: $primary;
     }
   }
 }

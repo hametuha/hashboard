@@ -19,7 +19,7 @@ $main-background-color: #fff;
   $pad: 1.5rem;
   padding: 0 $pad;
   @media #{$medium-and-down} {
-    padding: 0 $pad / 2;
+    padding: 0 calc($pad / 2);
   }
 
 }
@@ -39,4 +39,3 @@ $main-background-color: #fff;
 .row{
   @extend %clearfix;
 }
-

@@ -21,7 +21,7 @@ $hb-input-title-color: #212529 !default;
       min-height: 3rem;
       line-height: 3rem;
     }
-    padding: $input-padding;
+    padding: $input-padding-y $input-padding-x;
     margin: 0 0 20px 0;
     box-sizing: content-box;
     font-weight: bold;
@@ -72,14 +72,14 @@ $hb-input-title-color: #212529 !default;
     height: 100%;
     line-height: $hb-switch-height;
     border: $hb-switch-border;
-    border-radius: $hb-switch-height / 2;
+    border-radius: calc($hb-switch-height / 2);
     display: inline-block;
-    padding: 0 $hb-switch-height / 2;
+    padding: 0 calc($hb-switch-height / 2);
     width: 100px;
     text-align: center;
   }
   &-on{
-    background-color: $success-color;
+    background-color: $success;
     color: $light;
     text-align: left;
   }

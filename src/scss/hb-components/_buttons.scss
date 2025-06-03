@@ -4,6 +4,7 @@
 $btn-circle-size: 38px !default;
 $btn-circle-size-lg: 48px !default;
 $btn-circle-size-sm: 31px !default;
+$ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
 
 
 
@@ -21,7 +22,7 @@ $btn-circle-size-sm: 31px !default;
   width: $btn-circle-size;
   height: $btn-circle-size;
   line-height: $btn-circle-size;
-  font-size: $btn-circle-size / 2;
+  font-size: calc($btn-circle-size / 2);
   padding: 0;
   .material-icons{
     vertical-align: top;
@@ -37,7 +38,7 @@ $btn-circle-size-sm: 31px !default;
       width: $width;
       height: $width;
       line-height: $width;
-      font-size: $width / 2;
+      font-size: calc($width / 2);
     }
   }
 }

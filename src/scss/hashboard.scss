@@ -5,11 +5,12 @@
  */
 $hb-img-path: '../img' !default;
 
+// Bootstrapのオーバーライド変数を先に読み込む
 @import "hb_bootstrap_override";
 
+// Bootstrapを読み込む
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+// グローバル変数とコンポーネントを読み込む
 @import "hb_globals";
-
 @import "_hb-components";
-

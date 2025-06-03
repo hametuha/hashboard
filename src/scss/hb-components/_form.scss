@@ -65,11 +65,11 @@ $label-icon-color: $gray-500 !default;
     display: block;
     margin: 0 0 0.5em;
     max-width: 160px;
-    @media  only screen and (max-width: map-get($grid-breakpoints, md)) {
-      max-width: 120px;
-    }
     width: auto;
     height: auto;
+    @media  only screen and (max-width: 768px) {
+      max-width: 120px;
+    }
   }
 }
 
@@ -90,29 +90,29 @@ $label-icon-color: $gray-500 !default;
     vertical-align: middle;
   }
   &.weak{
-    color: $error-color;
-    border-color: $error-color;
+    color: $danger;
+    border-color: $danger;
     span:before{
       content: "sentiment_very_dissatisfied";
     }
   }
   &.strong{
-    color: $success-color;
-    border-color: $success-color;
+    color: $success;
+    border-color: $success;
     span:before{
       content: "sentiment_very_satisfied";
     }
   }
   &.good{
-    color: $primary-color;
-    border-color: $primary-color;
+    color: $primary;
+    border-color: $primary;
     span:before{
       content: "sentiment_satisfied";
     }
   }
   &.bad{
-    color: $warning-color;
-    border-color: $warning-color;
+    color: $warning;
+    border-color: $warning;
     span:before{
       content: "sentiment_dissatisfied";
     }
@@ -126,11 +126,11 @@ $label-icon-color: $gray-500 !default;
   margin: 0 0 1em;
   border-radius: 3px;
   &.success{
-    color: $success-color;
-    background: transparentize( $success-color, .9 );
+    color: $success;
+    background: transparentize( $success, .9 );
   }
   &.error{
-    color: $error-color;
-    background: transparentize( $error-color, .9 );
+    color: $danger;
+    background: transparentize( $danger, .9 );
   }
 }

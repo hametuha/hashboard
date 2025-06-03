@@ -1,15 +1,16 @@
-$brand-yellow: #F4B700 !default;
-$brand-brown: #594324 !default;
-$brand-red: #E03A01 !default;
-$brand-blue: #176B86 !default;
-$brand-green: #4D8E26 !default;
+// ブランドカラー
+$yellow: #F4B700 !default;
+$brown: #594324 !default;
+$red: #E03A01 !default;
+$blue: #176B86 !default;
+$green: #4D8E26 !default;
 
-$primary-color: #21759b !default;
-$warning-color: #ff6f00 !default;
-$secondary-color: $brand-blue !default;
-$success: $brand-green !default;
-$success-color: $success !default;
-$error-color: $brand-red !default;
+// テーマカラー
+$primary: #21759b !default;
+$warning: #ff6f00 !default;
+$secondary: $blue !default;
+$success: $green !default;
+$danger: $red !default;
 
 // Specific color
 $link-color: #000 !default;
@@ -34,7 +35,8 @@ $sidenav-padding: 16px !default;
 $animation-duration: .5s !default;
 
 // Form
-$input-padding: 0 !default;
+$input-padding-y: 0 !default;
+$input-padding-x: 0 !default;
 
 // Rotatable buttons.
 $rotatable-buttons: ( cog,  );
