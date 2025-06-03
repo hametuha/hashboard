@@ -1,6 +1,8 @@
-vendor/
-node_modules/
-package-lock.json
+/vendor/
+/node_modules/
+/package-lock.json
 assets/*.html
 composer.lock
 /wordpress/
+/.wp_install_path
+compose.yaml

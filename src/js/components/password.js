@@ -1,7 +1,8 @@
 /*!
  * Password Strength meter.
  *
- * wpdeps=password-strength-meter
+ * @handle hb-password-strength
+ * @deps password-strength-meter
  */
 
 /*global wp:true */

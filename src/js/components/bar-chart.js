@@ -7,7 +7,7 @@
 /*global Vue: false*/
 /*global VueChartJs:false */
 
-( function( $ ) {
+( function() {
 	'use strict';
 
 	Vue.component( 'hb-bar-chart', {

@@ -1,12 +1,15 @@
-@charset "UTF-8";
-
+/*!
+ * Hashboard main stylesheet.
+ *
+ * @handle hashboard
+ */
 $hb-img-path: '../img' !default;
 
 @import "hb_bootstrap_override";
 
-@import "bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 @import "hb_globals";
 
-@import "hb-components/*";
+@import "_hb-components";
 

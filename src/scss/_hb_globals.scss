@@ -20,7 +20,7 @@ $medium-and-down: only screen and (max-width: map-get($grid-breakpoints, md));
   $row-pad: -1.5rem;
   margin-right: $row-pad;
   margin-left: $row-pad;
-  @media #{$medium-and-down} {
+  @media only screen and (max-width: map-get($grid-breakpoints, md)) {
     margin-right:  $row-pad / 2;
     margin-left:  $row-pad / 2;
   }

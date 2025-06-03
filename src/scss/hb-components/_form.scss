@@ -65,7 +65,7 @@ $label-icon-color: $gray-500 !default;
     display: block;
     margin: 0 0 0.5em;
     max-width: 160px;
-    @media #{$medium-and-down} {
+    @media  only screen and (max-width: map-get($grid-breakpoints, md)) {
       max-width: 120px;
     }
     width: auto;

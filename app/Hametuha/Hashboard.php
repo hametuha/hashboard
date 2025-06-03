@@ -11,8 +11,6 @@ use Hametuha\Hashboard\Screens\Account;
 use Hametuha\Hashboard\Utility\Favicon;
 use Hametuha\Pattern\RestApi;
 use Hametuha\Pattern\Singleton;
-use Hametuha\WpEnqueueManager;
-use WP_CLI\Iterators\Exception;
 
 /**
  * Bootstrap instance
@@ -207,7 +205,7 @@ class Hashboard extends Singleton {
 		/**
 		 * hashboar_user_actions
 		 *
-		 * @param array $links
+		 * @param array<string, array{label:string, url:string, class:string}> $links
 		 */
 		return apply_filters( 'hashboar_user_actions', $links );
 	}
@@ -457,9 +455,18 @@ JS;
 		if ( $path ) {
 			$path = '/' . ltrim( $path, '/' );
 		}
-		$base_url = explode( 'wp-content/themes', get_stylesheet_directory_uri() );
-		$base_url = str_replace( ABSPATH, $base_url[0], self::dir() );
-		return untrailingslashit( $base_url ) . $path;
+		$path = self::dir() . $path;
+		if ( str_contains( $path, WP_PLUGIN_DIR ) ) {
+			// This is in plugin directory.
+			return str_replace( WP_PLUGIN_DIR, WP_PLUGIN_URL, $path );
+		} elseif ( str_contains( $path, WPMU_PLUGIN_DIR ) ) {
+			// MU plugin directory.
+			return str_replace( WPMU_PLUGIN_DIR, WPMU_PLUGIN_URL, $path );
+		} elseif ( str_contains( get_theme_root(), $path ) ) {
+			// Theme.
+			return str_replace( get_theme_root(), get_theme_root_uri(), $path );
+		}
+		return str_replace( ABSPATH, home_url( '/' ), $path );
 	}
 
 	/**

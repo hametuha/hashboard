@@ -1,21 +1,20 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
-  },
-  "env": {
-    "browser": true,
-    "amd": true
-  },
-  "globals": {
-    "Vue": false,
-    "wp": false,
-    "jQuery": false
-  },
-  "extends": [
-    "plugin:@wordpress/eslint-plugin/esnext"
-  ],
-  "rules": {
-    "object-shorthand": "off"
-  }
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"env": {
+		"browser": true,
+		"amd": true,
+		"jquery": true
+	},
+	"globals": {
+		"wp": false
+	},
+	"extends": [
+		"plugin:@wordpress/eslint-plugin/recommended-with-formatting"
+	],
+	"rules": {
+		"object-shorthand": "off"
+	}
 }

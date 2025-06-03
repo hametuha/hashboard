@@ -10,9 +10,9 @@
 		 * Short hand for rest API
 		 *
 		 * @scope {jQuery}
-		 * @param {string} method
-		 * @param {string} url
-		 * @param {Object} data
+		 * @param {string}  method
+		 * @param {string}  url
+		 * @param {Object}  data
 		 * @param {boolean} processData
 		 */
 		hbRest: function( method, url, data ) {
@@ -76,8 +76,8 @@
 		 * Display success message.
 		 *
 		 * @param {string} msg
-		 * @param {string} icon  Default, info.
-		 * @param {string} color Default, error.
+		 * @param {string} icon     Default, info.
+		 * @param {string} color    Default, error.
 		 * @param {number} duration Milliseconds to disappear. Default 4000.
 		 */
 		hbMessage: function( msg, color, icon, duration ) {

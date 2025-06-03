@@ -1,5 +1,5 @@
 module.exports = {
 	extends: [
-		'stylelint-config-wordpress/scss',
+		'@wordpress/stylelint-config/scss',
 	],
 };

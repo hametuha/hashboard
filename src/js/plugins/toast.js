@@ -1,7 +1,8 @@
-/**
- * Toast
+/*!
+ * Toast Plugin
  *
- * wpdeps=jquery
+ * @handle hb-toast
+ * @deps jquery
  */
 
 window.Hashboard = window.Hashboard || {};
