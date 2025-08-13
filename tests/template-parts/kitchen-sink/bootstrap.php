@@ -9,19 +9,14 @@
 	<h1>Bootstrap 5 & React コンポーネントテスト</h1>
 	<p class="lead">このページはBootstrap 5コンポーネントとReactコンポーネントのテスト用です。</p>
 
-	<hr class="my-5">
-
-	<!-- Bootstrap 5 コンポーネント -->
-	<h2 class="mb-4">Bootstrap 5 コンポーネント</h2>
-
 	<!-- タイポグラフィ -->
 	<section class="mb-5">
-		<h3>タイポグラフィ</h3>
+		<h2>タイポグラフィ</h2>
 		<div class="card">
 			<div class="card-body">
 				<h1>h1. Bootstrap見出し</h1>
 				<h2>h2. Bootstrap見出し</h2>
-				<h3>h3. Bootstrap見出し</h3>
+				<h2>h3. Bootstrap見出し</h2>
 				<h4>h4. Bootstrap見出し</h4>
 				<h5>h5. Bootstrap見出し</h5>
 				<h6>h6. Bootstrap見出し</h6>
@@ -62,7 +57,7 @@
 
 	<!-- ボタン -->
 	<section class="mb-5">
-		<h3>ボタン</h3>
+		<h2>ボタン</h2>
 		<div class="card">
 			<div class="card-body">
 				<h4>ボタンスタイル</h4>
@@ -108,7 +103,7 @@
 
 	<!-- カード -->
 	<section class="mb-5">
-		<h3>カード</h3>
+		<h2>カード</h2>
 		<div class="row">
 			<div class="col-md-4 mb-4">
 				<div class="card">
@@ -152,7 +147,7 @@
 
 	<!-- フォーム -->
 	<section class="mb-5">
-		<h3>フォーム</h3>
+		<h2>フォーム</h2>
 		<div class="card">
 			<div class="card-body">
 				<form>
@@ -217,7 +212,7 @@
 
 	<!-- ナビゲーション -->
 	<section class="mb-5">
-		<h3>ナビゲーション</h3>
+		<h2>ナビゲーション</h2>
 		<div class="card mb-4">
 			<div class="card-header">
 				ナビゲーションタブ
@@ -277,7 +272,7 @@
 
 	<!-- ページネーション -->
 	<section class="mb-5">
-		<h3>ページネーション</h3>
+		<h2>ページネーション</h2>
 		<div class="card">
 			<div class="card-body">
 				<nav aria-label="Page navigation example">
@@ -319,7 +314,7 @@
 
 	<!-- アラート -->
 	<section class="mb-5">
-		<h3>アラート</h3>
+		<h2>アラート</h2>
 		<div class="card">
 			<div class="card-body">
 				<div class="alert alert-primary" role="alert">
@@ -352,7 +347,7 @@
 
 	<!-- モーダル -->
 	<section class="mb-5">
-		<h3>モーダル</h3>
+		<h2>モーダル</h2>
 		<div class="card">
 			<div class="card-body">
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -384,7 +379,7 @@
 
 	<!-- グリッドシステム -->
 	<section class="mb-5">
-		<h3>グリッドシステム</h3>
+		<h2>グリッドシステム</h2>
 		<div class="card">
 			<div class="card-body">
 				<div class="row mb-3">
@@ -423,58 +418,4 @@
 		</div>
 	</section>
 
-	<hr class="my-5">
-
-	<!-- Reactコンポーネントテスト -->
-	<h2 class="mb-4">Reactコンポーネントテスト</h2>
-
-	<!-- ボタンコンポーネント -->
-	<section class="mb-5">
-		<h3>ボタンコンポーネント</h3>
-		<div class="card">
-			<div class="card-body">
-				<div id="react-button-test" class="d-flex flex-wrap gap-2"></div>
-			</div>
-		</div>
-	</section>
-
-	<!-- ページネーションコンポーネント -->
-	<section class="mb-5">
-		<h3>ページネーションコンポーネント</h3>
-		<div class="card">
-			<div class="card-body">
-				<div id="react-pagination-test"></div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 入力コンポーネント -->
-	<section class="mb-5">
-		<h3>入力コンポーネント</h3>
-		<div class="card">
-			<div class="card-body">
-				<div id="react-input-test"></div>
-			</div>
-		</div>
-	</section>
-
-	<!-- 日付選択コンポーネント -->
-	<section class="mb-5">
-		<h3>日付選択コンポーネント</h3>
-		<div class="card">
-			<div class="card-body">
-				<div id="react-datepicker-test"></div>
-			</div>
-		</div>
-	</section>
-
-	<!-- ローディングコンポーネント -->
-	<section class="mb-5">
-		<h3>ローディングコンポーネント</h3>
-		<div class="card">
-			<div class="card-body">
-				<div id="react-loading-test"></div>
-			</div>
-		</div>
-	</section>
 </div>

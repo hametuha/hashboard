@@ -17,6 +17,13 @@ class KitchenSink extends Screen {
 
 	protected $icon = 'kitchen';
 
+	protected function default_children() {
+		return [
+			'bootstrap'  => 'Bootstrap',
+			'components' => 'Components',
+		];
+	}
+
 	public function description( $page = '' ) {
 		return __( 'This is a kitchen sink screen for testing purposes.', 'hashboard' );
 	}
@@ -30,15 +37,16 @@ class KitchenSink extends Screen {
 	}
 
 	public function render( $page = '' ) {
-		load_template( Hashboard::dir() . '/tests/template-parts/kitchen-sink.php' );
+		load_template( Hashboard::dir() . '/tests/template-parts/kitchen-sink/' . $page . '.php' );
 	}
 
 	public function head() {
 		wp_enqueue_script( 'hashboard-kitchen-sink', Hashboard::url( 'assets/test/kitchen-sink.js' ), [
 			'hb-components-loading',
 			'hb-components-date-range',
+			'hb-components-pagination',
 			'wp-components',
-		], '1.0.0', true );
+		], md5_file( Hashboard::dir() . '/assets/test/kitchen-sink.js' ), true );
 		wp_enqueue_style( 'wp-components' );
 	}
 

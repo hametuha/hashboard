@@ -290,6 +290,7 @@ abstract class Screen extends ScreenPattern {
 				printf( '<p class="form-text hb-input-description">%s</p>', wp_kses_post( $fields['description'] ) );
 			}
 		}
+
 		/**
 		 * hashboard_after_field_rendered
 		 *

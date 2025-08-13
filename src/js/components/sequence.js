@@ -94,7 +94,6 @@ const Sequence = ( props ) => {
 const defaultExport = Sequence;
 export { SequenceItem };
 
-
 // Global registration for src/js/components/sequence.js
 window.hb = window.hb || {};
 window.hb.components = window.hb.components || {};

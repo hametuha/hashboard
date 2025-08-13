@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from '@wordpress/element';
-import { DatePicker } from '@wordpress/components';
+import { DatePicker, Button, Dropdown } from '@wordpress/components';
 
 /**
  * Date Range Component
@@ -66,14 +66,28 @@ const DateRange = ( props ) => {
 		return baseClasses.join( ' ' );
 	};
 
+	// 日付フォーマット関数
+	const formatDate = ( date ) => {
+		if ( ! date ) return '';
+		return date.toLocaleDateString( 'ja-JP', {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit'
+		} );
+	};
+
 	// 開始日変更ハンドラー
 	const handleStartDateChange = ( newDate ) => {
-		setStartDate( newDate );
+		if ( newDate ) {
+			setStartDate( newDate );
+		}
 	};
 
 	// 終了日変更ハンドラー
 	const handleEndDateChange = ( newDate ) => {
-		setEndDate( newDate );
+		if ( newDate ) {
+			setEndDate( newDate );
+		}
 	};
 
 	const statusLabel = getStatusLabel( status );
@@ -85,20 +99,58 @@ const DateRange = ( props ) => {
 				<i className={ statusClass }>{ statusLabel }</i>
 			</div>
 			<div className="col-5 hb-date-range-start">
-				<DatePicker
-					dateOrder="ymd"
-					currentDate={ startDate }
-					onChange={ handleStartDateChange }
+				<Dropdown
+					position="bottom center"
+					renderToggle={ ( { isOpen, onToggle } ) => (
+						<Button
+							variant="secondary"
+							onClick={ onToggle }
+							aria-expanded={ isOpen }
+							className="w-100"
+						>
+							{ formatDate( startDate ) || '開始日を選択' }
+						</Button>
+					) }
+					renderContent={ ( { onClose } ) => (
+						<div style={ { padding: '16px', minWidth: '280px' } }>
+							<DatePicker
+								currentDate={ startDate }
+								onChange={ ( newDate ) => {
+									handleStartDateChange( newDate );
+									onClose();
+								} }
+							/>
+						</div>
+					) }
 				/>
 			</div>
 			<div className="col-1 text-center">
 				<span className="hb-date-range-separator">{ separator }</span>
 			</div>
 			<div className="col-5 hb-date-range-end">
-				<DatePicker
-					dateOrder="ymd"
-					currentDate={ endDate }
-					onChange={ handleEndDateChange }
+				<Dropdown
+					position="bottom center"
+					renderToggle={ ( { isOpen, onToggle } ) => (
+						<Button
+							variant="secondary"
+							onClick={ onToggle }
+							aria-expanded={ isOpen }
+							className="w-100"
+						>
+							{ formatDate( endDate ) || '終了日を選択' }
+						</Button>
+					) }
+					renderContent={ ( { onClose } ) => (
+						<div style={ { padding: '16px', minWidth: '280px' } }>
+							<DatePicker
+								currentDate={ endDate }
+								onChange={ ( newDate ) => {
+									handleEndDateChange( newDate );
+									onClose();
+								} }
+							/>
+						</div>
+					) }
 				/>
 			</div>
 		</div>

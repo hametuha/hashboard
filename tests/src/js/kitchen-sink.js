@@ -8,6 +8,41 @@ const { createRoot, useState } = wp.element;
 const { Button } = wp.components;
 const LoadingIndicator = hb.components.loading;
 const DateRange = hb.components.dateRange;
+const Pagination = hb.components.pagination;
+
+// Button Component
+const ButtonTest = () => {
+	const [ disabled, setDisabled ] = useState( false );
+	return (
+		<>
+			<Button isPrimary disabled={ disabled } onClick={ () => setDisabled( ! disabled ) }>
+				ボタン
+			</Button>
+			<Button isSecondary disabled={ disabled } onClick={ () => setDisabled( ! disabled ) }>
+				ボタン
+			</Button>
+		</>
+	);
+};
+const buttonContainer = document.getElementById( 'react-button-test' );
+if ( buttonContainer ) {
+	createRoot( buttonContainer ).render( <ButtonTest /> );
+}
+
+// Button Component
+const PaginationTest = () => {
+	const [ curPage, setCurPage ] = useState( 1 );
+	return (
+		<Pagination total={ 10 } current={ curPage } onPageChanged={ ( number ) => setCurPage( number ) }>
+		</Pagination>
+	);
+};
+const paginationContainer = document.getElementById( 'react-pagination-test' );
+if ( paginationContainer ) {
+	createRoot( paginationContainer ).render( <PaginationTest /> );
+}
+
+// Inputs
 
 // Datepicker
 const DatepickerTest = () => {
