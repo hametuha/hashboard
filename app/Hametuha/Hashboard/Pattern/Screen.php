@@ -1,14 +1,16 @@
 <?php
 namespace Hametuha\Hashboard\Pattern;
 
-use Hametuha\Pattern\Singleton;
 
 
 /**
- * Screen
+ * Screen pattern
+ *
+ * Override this class to create a new screen.
+ *
  * @package hashboard
  */
-abstract class Screen extends Singleton {
+abstract class Screen extends ScreenPattern {
 
 	protected $icon = '';
 
@@ -17,19 +19,6 @@ abstract class Screen extends Singleton {
 	 */
 	protected $children = array();
 
-	/**
-	 * Should return unique URL slug.
-	 *
-	 * @return string
-	 */
-	abstract public function slug();
-
-	/**
-	 * Should return string.
-	 *
-	 * @return string
-	 */
-	abstract public function label();
 
 	/**
 	 * Show link in navigation.
@@ -45,17 +34,10 @@ abstract class Screen extends Singleton {
 	}
 
 	/**
-	 * Get description of this screen.
-	 *
-	 * @param string $page
-	 * @return string
-	 */
-	abstract public function description( $page = '' );
-
-	/**
 	 * Executed inside constructor.
 	 */
 	protected function init() {
+		parent::init();
 		$this->children = apply_filters( 'hashboard_screen_children', $this->default_children(), $this->slug() );
 	}
 
@@ -98,17 +80,9 @@ abstract class Screen extends Singleton {
 	}
 
 	/**
-	 * Get meta description
-	 *
-	 * @return string
-	 */
-	public function meta_description( $page = '' ) {
-		$description = $this->description( $page );
-		return strip_tags( str_replace( "\n", '', $description ) );
-	}
-
-	/**
 	 * Render HTML
+	 *
+	 * Normally, this will be the list of forms.
 	 *
 	 * @param string $page
 	 */
@@ -129,7 +103,7 @@ abstract class Screen extends Singleton {
 			/**
 			 * hashboard_before_fields_rendered
 			 *
-			 * Excecuted just after form is rendered.
+			 * Executed just after form is rendered.
 			 */
 			do_action( 'hashboard_before_fields_rendered', $this->slug(), $page, $name );
 			if ( $settings['label'] ) {
@@ -344,17 +318,4 @@ abstract class Screen extends Singleton {
 		echo $out;
 	}
 
-	/**
-	 * Head action
-	 */
-	public function head() {
-		// Do something.
-	}
-
-	/**
-	 * Footer action
-	 */
-	public function footer() {
-		// Do somehting.
-	}
 }

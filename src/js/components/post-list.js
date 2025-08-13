@@ -1,118 +1,149 @@
 /*!
- * List of posts.
+ * Post List component for React
  *
- * @deps vue-js,hb-components-loading,hashboard, hb-filters-moment, hb-components-list-table
+ * @deps @wordpress/element, @wordpress/api-fetch
  */
 
-/*global moment: false*/
+import { useState, useEffect, useCallback } from '@wordpress/element';
 
-const $ = jQuery;
+/**
+ * Post List Component
+ * @param {Object} props - Component props
+ */
+const PostList = ( props ) => {
+	const {
+		title = '',
+		postType = 'post',
+		moreButton = '',
+		moreLabel = 'READ MORE',
+		newDays = '0',
+		max = '3',
+		author = '0',
+		onPostListUpdated,
+	} = props;
 
-Vue.component( 'hb-post-list', {
-	data: function() {
-		return {
-			loading: true,
-			posts: [],
-		};
-	},
+	const [ loading, setLoading ] = useState( true );
+	const [ posts, setPosts ] = useState( [] );
 
-	props: {
-		title: {
-			type: String,
-			default: '',
-		},
-		postType: {
-			type: String,
-			default: 'post',
-		},
-		moreButton: {
-			type: String,
-			default: '',
-		},
-		moreLabel: {
-			type: String,
-			default: 'READ MORE',
-		},
-		new: {
-			type: String,
-			default: '0',
-		},
-		max: {
-			type: String,
-			default: '3',
-		},
-		author: {
-			type: String,
-			default: '0',
-		},
-	},
+	// Get ListTable component
+	const ListTable = window.hb?.components?.listTable;
 
-	mounted: function() {
-		this.fetch();
-	},
+	// Parse number from string prop
+	const parseNumber = ( value ) => {
+		if ( typeof value === 'number' ) {
+			return value;
+		}
+		const parsed = parseInt( value, 10 );
+		return isNaN( parsed ) ? 0 : parsed;
+	};
 
-	computed: {},
+	// Check if date is new
+	const isNew = ( date, timezone = 'Z' ) => {
+		const days = parseNumber( newDays );
+		if ( days < 1 ) {
+			return false;
+		}
 
-	methods: {
+		const limit = new Date();
+		limit.setDate( limit.getDate() - days );
 
-		/**
-		 * Check if date is new.
-		 *
-		 * @param {string} date
-		 * @param {string} timezone
-		 * @return {boolean} If data is new.
-		 */
-		isNew: function( date, timezone = 'Z' ) {
-			const days = parseInt( this.new, 10 );
-			if ( isNaN( days ) || 1 > days ) {
-				return false;
-			}
-			const limit = moment().subtract( days, 'days' ).toDate();
-			const compare = moment( date + timezone ).toDate();
-			return compare > limit;
-		},
+		const compareDate = new Date( date + timezone );
+		return compareDate > limit;
+	};
 
-		number: function( key ) {
-			if ( 'Number' === this[ key ] ) {
-				return this[ key ];
-			}
-			return parseInt( this[ key ], 10 );
-		},
-		fetch: function() {
+	// Format date
+	const formatDate = ( dateString ) => {
+		return new Date( dateString ).toLocaleDateString( undefined, {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric',
+		} );
+	};
+
+	// Fetch posts
+	const fetchPosts = useCallback( async () => {
+		if ( typeof window.wp?.apiFetch !== 'function' ) {
+			// eslint-disable-next-line no-console
+			console.error( 'wp.apiFetch is not available' );
+			return;
+		}
+
+		setLoading( true );
+
+		try {
 			const query = {
-				per_page: this.number( 'max' ),
+				per_page: parseNumber( max ),
 			};
-			const author = this.number( 'author' );
-			if ( author ) {
-				query[ 'author[]' ] = author;
+
+			const authorId = parseNumber( author );
+			if ( authorId > 0 ) {
+				query[ 'author[]' ] = authorId;
 			}
-			const path = `wp/v2/${ this.postType }?` + $.param( query );
-			this.loading = true;
-			wp.apiFetch( {
-				path: path,
-			} ).then( ( res ) => {
-				this.posts = res;
-			} ).catch().finally( () => {
-				this.$emit( 'post-list-updated' );
-				this.loading = false;
-			} );
-		},
-	},
 
-	template: `
-      <div class="hb-post-list">
-        <p class="hb-post-list-title" v-if="title">{{title}}</p>
-        <hb-list-table :loading="loading" :items="posts" :total-page="0">
-          <template slot="item" v-slot:item="{ item }">
-			<a :href="item.link" class="hb-post-list-link">
-				<span class="hb-post-list-title">{{ item.title.rendered }}</span>
-				<span class="hb-post-list-date">{{ item.date | moment('ll')}}</span>
-				<span v-if="isNew( item.date_gmt, 'Z')" class="hb-post-list-new material-icons">fiber_new</span>
-			</a>
-		  </template>
-        </hb-list-table>
-        <a :href="moreButton" class="btn btn-block btn-secondary">{{moreLabel}}</a>
-      </div>
-    `,
+			const queryString = new URLSearchParams( query ).toString();
+			const path = `wp/v2/${ postType }?${ queryString }`;
 
-} );
+			const response = await window.wp.apiFetch( { path } );
+			setPosts( response );
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Failed to fetch posts:', error );
+			setPosts( [] );
+		} finally {
+			setLoading( false );
+			if ( onPostListUpdated ) {
+				onPostListUpdated();
+			}
+		}
+	}, [ postType, max, author, onPostListUpdated ] );
+
+	// Fetch posts on mount and when dependencies change
+	useEffect( () => {
+		fetchPosts();
+	}, [ postType, max, author, fetchPosts ] );
+
+	// Custom item renderer for posts
+	const renderPostItem = ( item ) => (
+		<a href={ item.link } className="hb-post-list-link">
+			<span className="hb-post-list-title">{ item.title?.rendered || item.title }</span>
+			<span className="hb-post-list-date">{ formatDate( item.date ) }</span>
+			{ isNew( item.date_gmt, 'Z' ) && (
+				<span className="hb-post-list-new material-icons">fiber_new</span>
+			) }
+		</a>
+	);
+
+	// If ListTable component is not available, show fallback
+	if ( ! ListTable ) {
+		return (
+			<div className="hb-post-list">
+				{ title && <p className="hb-post-list-title">{ title }</p> }
+				<p className="text-muted">ListTable component not available</p>
+			</div>
+		);
+	}
+
+	return (
+		<div className="hb-post-list">
+			{ title && <p className="hb-post-list-title">{ title }</p> }
+
+			<ListTable
+				loading={ loading }
+				items={ posts }
+				totalPage={ 0 } // No pagination for post list
+				renderItem={ renderPostItem }
+				listWrapperClass="hb-post-list-items"
+				listClass="hb-post-list-item"
+			/>
+
+			{ moreButton && (
+				<a href={ moreButton } className="btn btn-block btn-secondary">
+					{ moreLabel }
+				</a>
+			) }
+		</div>
+	);
+};
+
+// Export component
+export default PostList;

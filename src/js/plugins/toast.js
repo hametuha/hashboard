@@ -1,28 +1,39 @@
 /*!
  * Toast Plugin
- *
- * @handle hb-toast
- * @deps jquery
  */
 
-window.Hashboard = window.Hashboard || {};
+/**
+ * トーストメッセージを表示する
+ *
+ * @param {string} html     表示するHTML
+ * @param {number} duration 表示時間（ミリ秒）
+ * @return {HTMLElement}    作成されたトースト要素
+ */
+const toast = function( html, duration ) {
+	const toastElement = document.createElement( 'div' );
+	toastElement.className = 'toast';
+	toastElement.innerHTML = html;
+	document.body.appendChild( toastElement );
 
-( function( $ ) {
-	'use strict';
+	// DOMの更新を確実に行うために少し遅延させる
+	setTimeout( () => {
+		toastElement.classList.add( 'init' );
 
-	const Hashboard = window.Hashboard;
+		if ( duration ) {
+			setTimeout( () => {
+				toastElement.classList.remove( 'init' );
 
-	Hashboard.toast = function( html, duration ) {
-		const $toast = $( '<div class="toast"></div>' );
-		$toast.html( html );
-		$( 'body' ).append( $toast );
-		$toast.addClass( 'init' );
-		setTimeout( function() {
-			if ( duration ) {
-				setTimeout( function() {
-					$toast.removeClass( 'init' );
-				}, duration );
-			}
-		}, 1 );
-	};
-}( jQuery ) );
+				// アニメーション終了後に要素を削除
+				toastElement.addEventListener( 'transitionend', () => {
+					if ( toastElement.parentNode ) {
+						toastElement.parentNode.removeChild( toastElement );
+					}
+				}, { once: true } );
+			}, duration );
+		}
+	}, 1 );
+
+	return toastElement;
+};
+
+export default toast;

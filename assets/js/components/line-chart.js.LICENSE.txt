@@ -1,0 +1,7 @@
+/*!
+ * Line chart component for React
+ *
+ */
+/*!
+ * @deps @wordpress/element, chart.js, wp-element
+ */

@@ -1,5 +1,7 @@
-/**
- * Description
+/*!
+ * Hashboard Helper Script
+ *
+ * @deps jquery
  */
 
 /*global Hashboard: true*/
@@ -9,28 +11,6 @@
 
 	const Hashboard = window.Hashboard || {};
 	const fileContainer = {};
-
-	// Fit sidebar height to window.
-	const fitHeight = function() {
-		$( '#hb-side-nav' ).height( window.innerHeight );
-	};
-
-	// Initialize on ready.
-	$( document ).ready( function() {
-		fitHeight();
-		$( '#hb-side-nav' ).addClass( 'initialized' );
-	} );
-
-	// Bind resize event.
-	let timer = null;
-	$( window ).on( 'resize', function() {
-		if ( timer ) {
-			clearTimeout( timer );
-		}
-		timer = setTimeout( function() {
-			fitHeight();
-		}, 10 );
-	} );
 
 	// Toggle buttons.
 	$( document ).on( 'click', '.side-nav-toggle', function( e ) {

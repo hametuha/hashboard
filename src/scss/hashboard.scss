@@ -2,8 +2,12 @@
  * Hashboard main stylesheet.
  *
  * @handle hashboard
+ * @deps material-design-icon
  */
 $hb-img-path: '../img' !default;
+
+// CSS Layers definition for proper cascade control
+@layer framework, components, utilities;
 
 // Bootstrapのオーバーライド変数を先に読み込む
 @import "hb_bootstrap_override";

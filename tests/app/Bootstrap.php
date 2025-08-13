@@ -17,5 +17,11 @@ class Bootstrap extends Singleton {
 	 */
 	protected function init() {
 		add_filter( 'show_admin_bar', '__return_false' );
+		add_filter( 'hashboard_screens', [ $this, 'register_screens' ] );
+	}
+
+	public function register_screens( $screens ) {
+		$screens['kitchen-sink'] = KitchenSink::class;
+		return $screens;
 	}
 }

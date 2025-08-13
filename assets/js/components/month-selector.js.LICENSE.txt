@@ -1,0 +1,7 @@
+/*!
+ * Month selector
+ *
+ */
+/*!
+ * @deps wp-element, wp-i18n
+ */

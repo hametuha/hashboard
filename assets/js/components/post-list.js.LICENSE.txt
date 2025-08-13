@@ -1,0 +1,7 @@
+/*!
+ * Post List component for React
+ *
+ */
+/*!
+ * @deps @wordpress/element, @wordpress/api-fetch, wp-element
+ */

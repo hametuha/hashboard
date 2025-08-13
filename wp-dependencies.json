@@ -1,6 +1,6 @@
 [
 	{
-		"handle": "hashboard-rest",
+		"handle": "hb-hashboard-rest",
 		"path": "assets/js/hashboard-rest.js",
 		"ext": "js",
 		"hash": "975e65a976a1f66751b5cc09161d4b32",
@@ -11,21 +11,23 @@
 		"strategy": ""
 	},
 	{
-		"handle": "hashboard-helper",
+		"handle": "hb-hashboard-helper",
 		"path": "assets/js/hashboard-helper.js",
 		"ext": "js",
-		"hash": "a453e34eaf45e384a3e95b9098bfeae7",
+		"hash": "795b8f0268b4ba720213efc44c1d51b2",
 		"version": "0.0.0",
-		"deps": [],
+		"deps": [
+			"jquery"
+		],
 		"footer": true,
 		"media": "all",
 		"strategy": ""
 	},
 	{
-		"handle": "toast",
+		"handle": "hb-plugins-toast",
 		"path": "assets/js/plugins/toast.js",
 		"ext": "js",
-		"hash": "08239ce3050a167de075501526561666",
+		"hash": "755f816e555cabb64d5d8cb4fe8c3399",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -33,21 +35,21 @@
 		"strategy": ""
 	},
 	{
-		"handle": "fitrows",
+		"handle": "hb-plugins-fitrows",
 		"path": "assets/js/plugins/fitrows.js",
 		"ext": "js",
-		"hash": "14b6f6e720c8aae7f3059126696522f7",
+		"hash": "d35d697e9d3e0abd1c0535fa9216539b",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
 		"media": "all",
-		"strategy": ""
+		"strategy": "defer"
 	},
 	{
-		"handle": "date",
+		"handle": "hb-plugins-date",
 		"path": "assets/js/plugins/date.js",
 		"ext": "js",
-		"hash": "fd78246bb607ccc5ae8f049800854607",
+		"hash": "3e3bf4be4fcb25245194c8a066f57eb5",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -55,10 +57,10 @@
 		"strategy": ""
 	},
 	{
-		"handle": "numbers",
+		"handle": "hb-filters-numbers",
 		"path": "assets/js/filters/numbers.js",
 		"ext": "js",
-		"hash": "51542eb313000964c632874c5e0dc74b",
+		"hash": "a64bd6aef1cecac39dc488ee251c340b",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -66,12 +68,173 @@
 		"strategy": ""
 	},
 	{
-		"handle": "moment",
-		"path": "assets/js/filters/moment.js",
+		"handle": "hb-components-sequence",
+		"path": "assets/js/components/sequence.js",
 		"ext": "js",
-		"hash": "1954bd11055e15297414ee0c032389ad",
+		"hash": "5409dbee8adacc07464214204da694cf",
 		"version": "0.0.0",
-		"deps": [],
+		"deps": [
+			"@wordpress/element",
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-post-list",
+		"path": "assets/js/components/post-list.js",
+		"ext": "js",
+		"hash": "e091bc52d1ff4ca094048b9c872f1dc1",
+		"version": "0.0.0",
+		"deps": [
+			"@wordpress/element",
+			"@wordpress/api-fetch",
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-period-picker",
+		"path": "assets/js/components/period-picker.js",
+		"ext": "js",
+		"hash": "4021eaf4ee9f4216e1cf9a03e9ce14bd",
+		"version": "0.0.0",
+		"deps": [
+			"@wordpress/element",
+			"@wordpress/i18n",
+			"wp-element",
+			"wp-i18n"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-password",
+		"path": "assets/js/components/password.js",
+		"ext": "js",
+		"hash": "5a041193ac0c3f2ec0eb9da13768f40c",
+		"version": "0.0.0",
+		"deps": [
+			"password-strength-meter",
+			"jquery"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-pagination",
+		"path": "assets/js/components/pagination.js",
+		"ext": "js",
+		"hash": "c319c4e5b332ba1dc54f8b6611ca7d23",
+		"version": "0.0.0",
+		"deps": [
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-month-selector",
+		"path": "assets/js/components/month-selector.js",
+		"ext": "js",
+		"hash": "64717e532e3c69f28a3683299d76ca0d",
+		"version": "0.0.0",
+		"deps": [
+			"wp-element",
+			"wp-i18n"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-loading",
+		"path": "assets/js/components/loading.js",
+		"ext": "js",
+		"hash": "b266d73d869313df3210530968e71b4d",
+		"version": "0.0.0",
+		"deps": [
+			"wp-components",
+			"wp-element",
+			"wp-i18n"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-list-table",
+		"path": "assets/js/components/list-table.js",
+		"ext": "js",
+		"hash": "cc176137fafac91fa358eb8210f6beb3",
+		"version": "0.0.0",
+		"deps": [
+			"@wordpress/element",
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-line-chart",
+		"path": "assets/js/components/line-chart.js",
+		"ext": "js",
+		"hash": "d7bf8a3931ad3380bd14bbfbbf818711",
+		"version": "0.0.0",
+		"deps": [
+			"@wordpress/element",
+			"chart.js",
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-input",
+		"path": "assets/js/components/input.js",
+		"ext": "js",
+		"hash": "d823ea5063fb4273edd59d9088f01bdd",
+		"version": "0.0.0",
+		"deps": [
+			"@wordpress/element",
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-date-range",
+		"path": "assets/js/components/date-range.js",
+		"ext": "js",
+		"hash": "f272f58382a74f4c01c02296711247ab",
+		"version": "0.0.0",
+		"deps": [
+			"wp-components",
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-bar-chart",
+		"path": "assets/js/components/bar-chart.js",
+		"ext": "js",
+		"hash": "70e744fa119d7da8ba36b66a49201509",
+		"version": "0.0.0",
+		"deps": [
+			"chart.js",
+			"wp-element"
+		],
 		"footer": true,
 		"media": "all",
 		"strategy": ""
@@ -80,9 +243,11 @@
 		"handle": "hashboard",
 		"path": "assets/css/hashboard.css",
 		"ext": "css",
-		"hash": "e30349ecef0e893cd6b58138dea02e66",
+		"hash": "874b21d4af9614d96480690b6c253114",
 		"version": "0.0.0",
-		"deps": [],
+		"deps": [
+			"material-design-icon"
+		],
 		"footer": true,
 		"media": "all",
 		"strategy": ""

@@ -1,0 +1,7 @@
+/*!
+ * Pagination for React (WordPress)
+ *
+ */
+/*!
+ * @deps wp-element
+ */

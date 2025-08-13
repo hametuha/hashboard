@@ -1,0 +1,7 @@
+/*!
+ * List table with pagination and search for React
+ *
+ */
+/*!
+ * @deps @wordpress/element, wp-element
+ */

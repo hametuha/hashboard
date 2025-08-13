@@ -1,130 +1,109 @@
 /*!
  * Date range picker
  *
- * @deps vue-js
  */
 
-/*global Vue: false*/
-/*global moment: false*/
-/*global HbComponentsDateRange: false*/
+import { useState, useEffect } from '@wordpress/element';
+import { DatePicker } from '@wordpress/components';
 
-import Datepicker from 'vuejs-datepicker';
-import * as languages from 'vuejs-datepicker/src/locale';
+/**
+ * Date Range Component
+ * @param {Object} props - Component props
+ */
+const DateRange = ( props ) => {
+	const {
+		status: initialStatus = 'default',
+		separator = '〜',
+		start: initialStart = new Date(),
+		end: initialEnd = new Date(),
+		onPeriodChanged,
+	} = props;
 
-const now = new Date();
+	const [ startDate, setStartDate ] = useState( initialStart );
+	const [ endDate, setEndDate ] = useState( initialEnd );
+	const [ status, setStatus ] = useState( initialStatus );
 
-Vue.component( 'HbDateRange', {
-
-	data: function() {
-		return {
-			bootstrap: true,
-		};
-	},
-
-	props: {
-		status: {
-			type: String,
-			default: 'default',
-		},
-		separator: {
-			type: String,
-			default: '〜',
-		},
-		format: {
-			type: String,
-			default: 'yyyy-MM-dd',
-		},
-		start: {
-			type: Date,
-			default: now,
-		},
-		end: {
-			type: Date,
-			default: now,
-		},
-		language: {
-			type: String,
-			default: HbComponentsDateRange.language,
-		},
-	},
-
-	template: `
-    <div class="hb-date-range row">
-        <div class="col-1 text-right">
-            <i :class="statusClass">{{statusLabel}}</i>
-        </div>
-        <div class="col-5 hb-date-range-start">
-            <datepicker :language="lang" :format="format" :bootstrap-styling="bootstrap" v-model="start" @input="testDate"></datepicker>
-        </div>
-        <div class="col-1 text-center">
-            <span class="hb-date-range-separator">{{separator}}</span>
-        </div>
-        <div class="col-5 hb-date-range-end">
-            <datepicker :language="lang" :format="format" :bootstrap-styling="bootstrap" v-model="end" @input="testDate"></datepicker>
-        </div>
-    </div>
-  `,
-
-	components: {
-		Datepicker,
-	},
-
-	computed: {
-
-		lang() {
-			return languages[ this.language ];
-		},
-
-		statusLabel() {
-			return this.getLabel( this.status );
-		},
-
-		statusClass() {
-			return this.getClass( this.status );
-		},
-
-	},
-
-	methods: {
-
-		getLabel( status ) {
-			return {
-				error: 'error',
-				success: 'done_all',
-				default: 'error_outline',
-			}[ status ];
-		},
-
-		getClass( status ) {
-			const classes = [ 'material-icons' ];
-			switch ( status ) {
-				case 'error':
-					classes.push( 'text-danger' );
-					break;
-				case 'success':
-					classes.push( 'text-success' );
-					break;
-				default:
-					classes.push( 'text-muted' );
-					break;
-			}
-			return classes;
-		},
-
-		testDate() {
-			if ( this.start && this.end ) {
-				if ( this.start <= this.end ) {
-					this.status = 'success';
-				} else {
-					this.status = 'error';
+	// 日付の妥当性をチェック
+	useEffect( () => {
+		if ( startDate && endDate ) {
+			if ( startDate <= endDate ) {
+				setStatus( 'success' );
+				if ( onPeriodChanged ) {
+					onPeriodChanged( startDate, endDate );
 				}
 			} else {
-				this.status = 'default';
+				setStatus( 'error' );
 			}
-			if ( 'success' === this.status ) {
-				this.$emit( 'date-changed', this.start, this.end );
-			}
-		},
-	},
+		} else {
+			setStatus( 'default' );
+		}
+	}, [ startDate, endDate, onPeriodChanged ] );
 
-} );
+	// ステータスラベルを取得
+	const getStatusLabel = ( currentStatus ) => {
+		const labels = {
+			error: 'error',
+			success: 'done_all',
+			default: 'error_outline',
+		};
+		return labels[ currentStatus ] || labels.default;
+	};
+
+	// ステータスクラスを取得
+	const getStatusClass = ( currentStatus ) => {
+		const baseClasses = [ 'material-icons' ];
+		switch ( currentStatus ) {
+			case 'error':
+				baseClasses.push( 'text-danger' );
+				break;
+			case 'success':
+				baseClasses.push( 'text-success' );
+				break;
+			default:
+				baseClasses.push( 'text-muted' );
+				break;
+		}
+		return baseClasses.join( ' ' );
+	};
+
+	// 開始日変更ハンドラー
+	const handleStartDateChange = ( newDate ) => {
+		setStartDate( newDate );
+	};
+
+	// 終了日変更ハンドラー
+	const handleEndDateChange = ( newDate ) => {
+		setEndDate( newDate );
+	};
+
+	const statusLabel = getStatusLabel( status );
+	const statusClass = getStatusClass( status );
+
+	return (
+		<div className="hb-date-range row">
+			<div className="col-1 text-right">
+				<i className={ statusClass }>{ statusLabel }</i>
+			</div>
+			<div className="col-5 hb-date-range-start">
+				<DatePicker
+					dateOrder="ymd"
+					currentDate={ startDate }
+					onChange={ handleStartDateChange }
+				/>
+			</div>
+			<div className="col-1 text-center">
+				<span className="hb-date-range-separator">{ separator }</span>
+			</div>
+			<div className="col-5 hb-date-range-end">
+				<DatePicker
+					dateOrder="ymd"
+					currentDate={ endDate }
+					onChange={ handleEndDateChange }
+				/>
+			</div>
+		</div>
+	);
+};
+
+// Export component
+export default DateRange;

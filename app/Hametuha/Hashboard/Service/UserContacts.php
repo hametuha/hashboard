@@ -3,7 +3,7 @@
 namespace Hametuha\Hashboard\Service;
 
 
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 
 /**
  * User contact methods

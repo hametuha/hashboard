@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Component Test</title>
+    <link rel="stylesheet" href="../../assets/css/hashboard.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        .test-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .control-panel {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        button {
+            margin-right: 10px;
+            padding: 8px 16px;
+            background-color: #21759b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #135e7c;
+        }
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Loading Component Test</h1>
+
+    <div class="test-container">
+        <h2>React Loading Component</h2>
+        <div id="loading-container">
+            <div data-react-loading-indicator></div>
+        </div>
+    </div>
+
+    <!-- Load React -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <script>
+        // Mock HbComponentsLoading global object
+        window.HbComponentsLoading = {
+            img: '../../assets/img/ripple.gif',
+            title: 'Loading...',
+            noValue: 'No value'
+        };
+
+        // Mock WordPress dependencies
+        window.wp = {
+            element: {
+                createElement: React.createElement,
+                render: ReactDOM.render,
+                useEffect: React.useEffect,
+                createRef: React.createRef
+            },
+            components: {
+                Animate: function(props) {
+                    const { type, children } = props;
+                    return children({ className: `wp-animation-${type}` });
+                }
+            }
+        };
+    </script>
+
+    <!-- Load the component -->
+    <script src="../../src/js/components/loading.js"></script>
+
+    <script>
+        // Wait for DOM to be fully loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded');
+
+            // Create a simple React component to manage state
+            class LoadingApp extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        loading: false
+                    };
+
+                    // Bind methods
+                    this.toggleLoading = this.toggleLoading.bind(this);
+                }
+
+                componentDidMount() {
+                    console.log('Component mounted with loading:', this.state.loading);
+                }
+
+                componentDidUpdate(prevProps, prevState) {
+                    if (prevState.loading !== this.state.loading) {
+                        console.log('Component updated - loading changed to:', this.state.loading);
+                    }
+                }
+
+                toggleLoading() {
+                    console.log('Button clicked - current state:', this.state.loading);
+                    this.setState(prevState => {
+                        const newLoading = !prevState.loading;
+                        console.log('Setting new state to:', newLoading);
+                        return { loading: newLoading };
+                    });
+                }
+
+                render() {
+                    const { loading } = this.state;
+                    console.log('Rendering component with loading:', loading);
+
+                    return React.createElement(
+                        'div',
+                        { className: 'loading-test-container' },
+                        [
+                            // Loading indicator
+                            React.createElement(window.Hashboard.React.LoadingIndicator, {
+                                loading: loading,
+                                title: HbComponentsLoading.title,
+                                key: 'loading-indicator'
+                            }),
+
+                            // Toggle button
+                            React.createElement(
+                                'button',
+                                {
+                                    onClick: this.toggleLoading,
+                                    className: 'btn btn-primary',
+                                    style: {
+                                        marginTop: '20px',
+                                        padding: '10px 20px',
+                                        fontSize: '16px',
+                                        cursor: 'pointer'
+                                    },
+                                    key: 'toggle-button'
+                                },
+                                loading ? 'Hide Loading' : 'Show Loading'
+                            )
+                        ]
+                    );
+                }
+            }
+
+            // Get the loading component mount point
+            const loadingMount = document.querySelector('[data-react-loading-indicator]');
+            if (!loadingMount) {
+                console.error('Loading mount point not found');
+                return;
+            }
+
+            // Render the app
+            try {
+                ReactDOM.render(
+                    React.createElement(LoadingApp),
+                    loadingMount
+                );
+                console.log('App rendered successfully');
+            } catch (error) {
+                console.error('Error rendering app:', error);
+            }
+        });
+    </script>
+</body>
+</html>

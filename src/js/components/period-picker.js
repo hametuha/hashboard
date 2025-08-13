@@ -1,113 +1,162 @@
 /*!
- * Date range picker
+ * Period Picker component for React
  *
- * @deps hb-components-date-range,moment
+ * @deps @wordpress/element, @wordpress/i18n
  */
 
-/*global Vue: false*/
-/*global moment: false*/
-/*global HbComponentsPeriodPicker: false*/
+import { useState, useEffect, useMemo, useCallback, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-Vue.component( 'HbPeriodPicker', {
+/**
+ * Period Picker Component
+ * @param {Object} props - Component props
+ */
+const PeriodPicker = ( props ) => {
+	const {
+		defaultMode = '7',
+		allowCustom = true,
+		onDateStart,
+		onDateChanged,
+		customLabel = __( 'Custom', 'hashboard' ),
+		buttons = [
+			{ value: '7', label: __( 'Last 7 days', 'hashboard' ) },
+			{ value: '30', label: __( 'Last 30 days', 'hashboard' ) },
+			{ value: '90', label: __( 'Last 90 days', 'hashboard' ) },
+			{ value: 'qtr', label: __( 'Current Quarter', 'hashboard' ) },
+		],
+	} = props;
 
-	data: function() {
-		return {
-			customLabel: HbComponentsPeriodPicker.custom,
-			mode: 7,
-		};
-	},
+	const [ mode, setMode ] = useState( defaultMode );
+	const [ customizing, setCustomizing ] = useState( false );
+	const [ componentId ] = useState( () => Math.random().toString( 36 ).substr( 2, 9 ) );
+	const initializedRef = useRef( false );
 
-	props: {
-		defaultMode: {
-			type: String,
-			default: 7,
-		},
-		allowCustom: {
-			type: Boolean,
-			default: true,
-		},
-	},
+	// Get DateRange component from global registry
+	const DateRange = window.hb?.components?.dateRange;
 
-	template: `
-      <div class="hb-period">
-        <span v-for="button, index in buttons" class="hb-radio hb-radio-sm">
-            <input type="radio" :id="'hb-date-range-' + id + '-' + index" :name="'hb-date-range-' + id"
-                :value="button.value" v-model="mode" />
-            <label class="hb-radio-label" :for="'hb-date-range-' + id + '-' + index">
-                <i class="material-icons">check</i> {{button.label}}
-            </label>
-        </span>
-        <span v-if="allowCustom" class="hb-radio hb-radio-sm">
-            <input type="radio" :id="'hb-date-range-' + id + '-custom'" :name="'hb-date-range-' + id"
-                value="custom" v-model="mode" />
-            <label class="hb-radio-label" :for="'hb-date-range-' + id + '-custom'">
-                <i class="material-icons">check</i> {{customLabel}}
-            </label>
-        </span>
-        <div class="hb-period-dates" :style="style">
-            <hb-date-range @date-changed="datePickerHandler"></hb-date-range>
-        </divc>
-      </div>
-  `,
+	// Calculate date range based on mode
+	const calculate = useCallback( ( days ) => {
+		let start;
+		const now = new Date();
 
-	computed: {
-		buttons() {
-			return HbComponentsPeriodPicker.default;
-		},
-		id() {
-			return this._uid;
-		},
-		style() {
-			return {
-				opacity: this.customizing && this.allowCustom ? 1 : 0,
-			};
-		},
-	},
+		switch ( days ) {
+			case 'qtr':
+				const month = Math.floor( now.getMonth() / 3 ) * 3;
+				start = new Date( now.getFullYear(), month, 1 );
+				break;
+			default:
+				const daysNum = parseInt( days, 10 );
+				start = new Date();
+				start.setDate( start.getDate() - daysNum );
+				break;
+		}
 
-	mounted() {
-		this.mode = this.defaultMode;
-		this.notify();
-	},
+		return [ start, now ];
+	}, [] );
 
-	methods: {
+	// Notify parent of date change
+	const notify = useCallback( () => {
+		const dateRange = calculate( mode );
+		if ( onDateStart ) {
+			onDateStart( dateRange[ 0 ], dateRange[ 1 ] );
+		}
+	}, [ mode, calculate, onDateStart ] );
 
-		notify() {
-			const now = this.calculate( this.mode );
-			this.$emit( 'date-start', now[ 0 ], now[ 1 ] );
-		},
+	// Handle date picker changes (for custom mode)
+	const datePickerHandler = useCallback( ( start, end ) => {
+		if ( onDateChanged ) {
+			onDateChanged( start, end );
+		}
+	}, [ onDateChanged ] );
 
-		calculate( days ) {
-			let start;
-			const now = new Date();
-			switch ( days ) {
-				case 'qtr':
-					const month = Math.floor( now.getMonth() / 3 ) * 3 + 1;
-					start = moment( [ now.getFullYear(), `0${ month }`.slice( -2 ), '01' ].join( '-' ) ).toDate();
-					break;
-				default:
-					start = moment().subtract( days, 'days' ).toDate();
-					break;
+	// Handle mode change
+	const handleModeChange = useCallback( ( event ) => {
+		const newMode = event.target.value;
+		setMode( newMode );
+
+		if ( newMode === 'custom' ) {
+			setCustomizing( true );
+		} else {
+			setCustomizing( false );
+			// Calculate and notify for predefined periods
+			const dateRange = calculate( newMode );
+			if ( onDateStart ) {
+				onDateStart( dateRange[ 0 ], dateRange[ 1 ] );
 			}
-			return [ start, now ];
-		},
+		}
+	}, [ calculate, onDateStart ] );
 
-		datePickerHandler( start, end ) {
-			this.$emit( 'date-changed', start, end );
-		},
-	},
+	// Style for custom date range
+	const dateRangeStyle = useMemo( () => ( {
+		opacity: customizing && allowCustom ? 1 : 0,
+		transition: 'opacity 0.3s ease',
+	} ), [ customizing, allowCustom ] );
 
-	watch: {
-		mode( newValue, oldValue ) {
-			switch ( newValue ) {
-				case 'custom':
-					this.customizing = true;
-					break;
-				default:
-					this.customizing = false;
-					this.notify();
-					break;
+	// Initialize on mount
+	useEffect( () => {
+		if ( ! initializedRef.current ) {
+			initializedRef.current = true;
+			const dateRange = calculate( mode );
+			if ( onDateStart ) {
+				onDateStart( dateRange[ 0 ], dateRange[ 1 ] );
 			}
-		},
-	},
+		}
+	}, [ calculate, mode, onDateStart ] );
 
-} );
+	return (
+		<div className="hb-period">
+			{ buttons.map( ( button, index ) => (
+				<span key={ button.value } className="hb-radio hb-radio-sm">
+					<input
+						type="radio"
+						id={ `hb-date-range-${ componentId }-${ index }` }
+						name={ `hb-date-range-${ componentId }` }
+						value={ button.value }
+						checked={ mode === button.value }
+						onChange={ handleModeChange }
+					/>
+					<label
+						className="hb-radio-label"
+						htmlFor={ `hb-date-range-${ componentId }-${ index }` }
+					>
+						<i className="material-icons">check</i>
+						{ ' ' }
+						{ button.label }
+					</label>
+				</span>
+			) ) }
+
+			{ allowCustom && (
+				<span className="hb-radio hb-radio-sm">
+					<input
+						type="radio"
+						id={ `hb-date-range-${ componentId }-custom` }
+						name={ `hb-date-range-${ componentId }` }
+						value="custom"
+						checked={ mode === 'custom' }
+						onChange={ handleModeChange }
+					/>
+					<label
+						className="hb-radio-label"
+						htmlFor={ `hb-date-range-${ componentId }-custom` }
+					>
+						<i className="material-icons">check</i>
+						{ ' ' }
+						{ customLabel }
+					</label>
+				</span>
+			) }
+
+			<div className="hb-period-dates" style={ dateRangeStyle }>
+				{ DateRange ? (
+					<DateRange onDateChanged={ datePickerHandler } />
+				) : (
+					<p className="text-muted">DateRange component not available</p>
+				) }
+			</div>
+		</div>
+	);
+};
+
+// Export component
+export default PeriodPicker;

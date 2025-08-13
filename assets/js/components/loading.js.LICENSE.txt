@@ -1,0 +1,7 @@
+/*!
+ * Loading indicator component
+ *
+ */
+/*!
+ * @deps wp-components, wp-element, wp-i18n
+ */

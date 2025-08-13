@@ -1,0 +1,7 @@
+/*!
+ * Date range picker
+ *
+ */
+/*!
+ * @deps wp-components, wp-element
+ */

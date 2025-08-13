@@ -1,0 +1,7 @@
+/*!
+ * Period Picker component for React
+ *
+ */
+/*!
+ * @deps @wordpress/element, @wordpress/i18n, wp-element, wp-i18n
+ */

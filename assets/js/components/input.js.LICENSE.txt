@@ -1,0 +1,7 @@
+/*!
+ * Input field component for React
+ *
+ */
+/*!
+ * @deps @wordpress/element, wp-element
+ */

@@ -3,14 +3,18 @@
 namespace Hametuha\Hashboard\Pattern;
 
 use Hametuha\Hashboard;
-use Hametuha\Pattern\RestApi;
+use Hametuha\RestPattern\RestApiBase;
 
 /**
  * Wrapper for namespace.
  *
  * @package hashbaord
+ * @method \WP_REST_Response|\WP_Error handle_post(\WP_REST_Request $request)
+ * @method \WP_REST_Response|\WP_Error handle_get( \WP_REST_Request $request )
+ * @method \WP_REST_Response|\WP_Error handle_delete( \WP_REST_Request $request )
+ * @method \WP_REST_Response|\WP_Error handle_put( \WP_REST_Request $request )
  */
-abstract class Api extends RestApi {
+abstract class Api extends RestApiBase {
 
 	protected $namespace = 'hashboard';
 

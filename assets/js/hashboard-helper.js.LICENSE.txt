@@ -1,0 +1,5 @@
+/*!
+ * Hashboard Helper Script
+ *
+ * @deps jquery
+ */

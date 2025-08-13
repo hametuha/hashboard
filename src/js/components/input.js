@@ -1,122 +1,154 @@
 /*!
- * Description
+ * Input field component for React
  *
- * @deps vue-js
+ * @deps @wordpress/element
  */
 
-/*global Vue: false*/
-/*global HbComponentsInput: false*/
+import { useState, useEffect } from '@wordpress/element';
 
-( function( $ ) {
-	'use strict';
+/**
+ * Input Field Component
+ * @param {Object} props - Component props
+ */
+const InputField = ( props ) => {
+	const {
+		id,
+		original = '',
+		title,
+		description = '',
+		rows = '3',
+		type = 'text',
+		onDataChanged,
+		editingLabel = 'Editing',
+		editLabel = 'Edit',
+		noValue = 'No value',
+	} = props;
 
-	Vue.component( 'hb-input', {
-		template: `
-      <div class="hb-input-field">
-        <div class="form-row">
-            <div class="form-group col-sm-10">
+	const [ editing, setEditing ] = useState( false );
+	const [ current, setCurrent ] = useState( '' );
 
-                <label class="hb-input-field-label" :for="id">
-                    {{title}}
-                    <a v-if="description" class="hb-input-field-tooltip tooltipped"
-                       data-position="top" :title="description">
-                      <i class="material-icons">help</i>
-                    </a>
-                </label>
+	// 入力タイプのバリデーション
+	const validTypes = [
+		'text', 'password', 'email', 'number', 'url',
+		'textarea', 'tel',
+	];
+	const isValidType = validTypes.includes( type );
+	const isTextArea = type === 'textarea';
 
-                <input v-if="!isTextArea && editing" :id="id" :type="type" v-model="current" class="validate form-control" />
+	// 複数行テキストを配列に変換
+	const originalLines = original ? original.split( '\n' ) : [];
 
-                <textarea v-if="isTextArea && editing" :id="id" v-model="current" :rows="rows" class="validate form-control"></textarea>
+	// forId生成
+	const forId = `${ id }::for`;
 
-                <div class="hb-input-field-value" v-if="original && !editing">
-                    <div v-for="line in originalLines">{{line}}</div>
-                </div>
+	// 編集モード切り替えハンドラー
+	const handleCheckboxChange = () => {
+		if ( ! editing ) {
+			// 編集モードに入る
+			setCurrent( original );
+			setEditing( true );
+		} else {
+			// 編集モードを終了
+			setEditing( false );
+			if ( current !== original && onDataChanged ) {
+				onDataChanged( current, id );
+			}
+		}
+	};
 
-                <p class="hb-input-field-no-value" v-if="!original && !editing">{{noValue}}</p>
-                <p class="hb-input-field-helper"></p>
-            </div>
+	// 入力値変更ハンドラー
+	const handleInputChange = ( e ) => {
+		setCurrent( e.target.value );
+	};
 
-            <div class="form-group col-sm-2 text-right">
-              <div class="switch">
-                <input class="switch-input sr-only" :id="forId" type="checkbox" v-model="editing" @click="checkboxHandler">
-                <label class="switch-label" :for="forId">
-                  <span v-if="editing" class="switch-on">{{editingLabel}}</span>
-                  <span v-else="editing" class="switch-off">{{editLabel}}</span>
-                </label>
-              </div>
-            </div>
-        </div>
-      </div>
-    `,
-		props: {
-			id: {
-				type: String,
-				required: true,
-			},
-			original: {
-				type: String,
-				default: '',
-			},
-			title: {
-				type: String,
-				required: true,
-			},
-			description: {
-				type: String,
-				default: '',
-			},
-			rows: {
-				type: String,
-				default: '3',
-			},
-			type: {
-				type: String,
-				default: 'text',
-				validator: function( value ) {
-					return -1 < [
-						'text', 'password', 'email', 'number', 'url',
-						'textarea', 'tel',
-					].indexOf( value );
-				},
-			},
-		},
-		computed: {
-			forId: function() {
-				return this.id + '::for';
-			},
-			editingLabel: function() {
-				return HbComponentsInput.editing;
-			},
-			isTextArea: function() {
-				return 'textarea' === this.type;
-			},
-			originalLines: function() {
-				return this.original.split( '\n' );
-			},
-		},
-		data: function() {
-			return {
-				editing: false,
-				current: '',
-				editingLabel: HbComponentsInput.editing,
-				editLabel: HbComponentsInput.edit,
-				noValue: HbComponentsInput.noValue,
-			};
-		},
+	// ツールチップ初期化（jQueryベースなので、useEffectで処理）
+	useEffect( () => {
+		// jQueryが利用可能な場合のみツールチップを初期化
+		if ( typeof window.jQuery !== 'undefined' && description ) {
+			const $ = window.jQuery;
+			$( `label[for="${ id }"] .tooltipped` ).tooltip( { delay: 50 } );
+		}
+	}, [ id, description ] );
 
-		mounted: function() {
-			$( `label[for="${ this.id }"] .tooltipped` ).tooltip( { delay: 50 } );
-		},
+	// 無効なタイプの場合は何も表示しない
+	if ( ! isValidType ) {
+		return null;
+	}
 
-		methods: {
-			checkboxHandler: function() {
-				if ( ! this.editing ) {
-					// Enter edit mode
-					this.current = this.original;
-				} else if ( this.current !== this.original ) {
-					this.$emit( 'data-changed', this.current, this.id );
-				}
-			},
-		},
-	} );
-}( jQuery ) );
+	return (
+		<div className="hb-input-field">
+			<div className="form-row">
+				<div className="form-group col-sm-10">
+					<label className="hb-input-field-label" htmlFor={ id }>
+						{ title }
+						{ description && (
+							<span
+								className="hb-input-field-tooltip tooltipped"
+								data-position="top"
+								title={ description }
+							>
+								<i className="material-icons">help</i>
+							</span>
+						) }
+					</label>
+
+					{ ! isTextArea && editing && (
+						<input
+							id={ id }
+							type={ type }
+							value={ current }
+							onChange={ handleInputChange }
+							className="validate form-control"
+						/>
+					) }
+
+					{ isTextArea && editing && (
+						<textarea
+							id={ id }
+							value={ current }
+							onChange={ handleInputChange }
+							rows={ rows }
+							className="validate form-control"
+						/>
+					) }
+
+					{ original && ! editing && (
+						<div className="hb-input-field-value">
+							{ originalLines.map( ( line, index ) => (
+								<div key={ index }>{ line }</div>
+							) ) }
+						</div>
+					) }
+
+					{ ! original && ! editing && (
+						<p className="hb-input-field-no-value">{ noValue }</p>
+					) }
+
+					<p className="hb-input-field-helper" />
+				</div>
+
+				<div className="form-group col-sm-2 text-right">
+					<div className="switch">
+						<input
+							className="switch-input sr-only"
+							id={ forId }
+							type="checkbox"
+							checked={ editing }
+							onChange={ handleCheckboxChange }
+						/>
+						<label className="switch-label" htmlFor={ forId }>
+							{ editing ? (
+								<span className="switch-on">{ editingLabel }</span>
+							) : (
+								<span className="switch-off">{ editLabel }</span>
+							) }
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+// Export component
+export default InputField;

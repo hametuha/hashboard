@@ -15,7 +15,8 @@
 		".",
 		"https://downloads.wordpress.org/plugin/wp-mail-smtp.zip",
 		"https://downloads.wordpress.org/plugin/query-monitor.latest-stable.zip",
-		"https://downloads.wordpress.org/plugin/localhost2host-docker-internal.latest-stable.zip"
+		"https://downloads.wordpress.org/plugin/localhost2host-docker-internal.latest-stable.zip",
+		"https://downloads.wordpress.org/plugin/fakerpress.latest-stable.zip"
 	],
 	"themes": [
 		"https://downloads.wordpress.org/theme/twentytwentyfive.latest-stable.zip"

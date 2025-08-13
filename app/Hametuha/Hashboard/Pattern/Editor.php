@@ -4,14 +4,13 @@ namespace Hametuha\Hashboard\Pattern;
 
 
 use Hametuha\Hashboard;
-use Hametuha\Pattern\Singleton;
 
 /**
  * Editor base
  *
  * @package hashboard
  */
-abstract class Editor extends Singleton {
+abstract class Editor extends ScreenPattern {
 
 	/**
 	 * Object to edit.
@@ -20,30 +19,12 @@ abstract class Editor extends Singleton {
 	 */
 	protected $object = null;
 
-	protected function init() {
-		add_action( 'hashboard_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-	}
-
 	/**
 	 * Enqueue assets
 	 */
 	public function enqueue_scripts() {
 		// Do nothing.
 	}
-
-	/**
-	 * Get slug.
-	 *
-	 * @return string
-	 */
-	abstract protected function get_slug();
-
-	/**
-	 * Get page label.
-	 *
-	 * @return string
-	 */
-	abstract protected function get_label();
 
 	/**
 	 * Back link url
@@ -75,20 +56,6 @@ abstract class Editor extends Singleton {
 	abstract protected function is_editable( $object, \WP_User $user );
 
 	/**
-	 * Override  this method if you need something in head tag.
-	 */
-	public function head() {
-		// Do nothing.
-	}
-
-	/**
-	 * Override  this method if you need something in footer.
-	 */
-	public function footer() {
-		// Do nothing.
-	}
-
-	/**
 	 * Render body
 	 *
 	 * @param int      $object_id Object ID to edit.
@@ -104,14 +71,11 @@ abstract class Editor extends Singleton {
 			throw new \Exception( __( 'You have no permission to edit this data.', 'hashboard' ), 403 );
 		}
 		// Enqueueu many things.
-		wp_enqueue_style( 'bootstrap' );
-		wp_enqueue_script( 'hashboard' );
-		do_action( 'hashboard_enqueue_scripts' );
 		Hashboard::load_template( 'editor.php', array(
 			'editor'   => $this,
-			'page'     => $this->get_slug(),
+			'page'     => $this->slug(),
 			'object'   => $this->object,
-			'label'    => $this->get_label(),
+			'label'    => $this->label(),
 			'back_url' => $this->get_back_link(),
 			'child'    => get_query_var( 'hashboard-child' ),
 		) );
@@ -128,7 +92,7 @@ abstract class Editor extends Singleton {
 	 * Register editor.
 	 */
 	public static function register() {
-		$slug       = static::get_instance()->get_slug();
+		$slug       = static::get_instance()->slug();
 		$class_name = get_called_class();
 		add_filter( 'hashboard_editors', function ( $editors ) use ( $slug, $class_name ) {
 			if ( ! isset( $editors[ $slug ] ) ) {

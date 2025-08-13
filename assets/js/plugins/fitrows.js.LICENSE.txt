@@ -1,0 +1,6 @@
+/*!
+ * HbFitRows Plugin
+ * Fit textarea's height with rows.
+ *
+ * @strategy defer
+ */

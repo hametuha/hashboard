@@ -3,14 +3,14 @@
 namespace Hametuha;
 
 use Hametuha\Hashboard\API\Avatar;
+use Hametuha\Hashboard\Pattern\Api;
 use Hametuha\Hashboard\Pattern\Editor;
 use Hametuha\Hashboard\Pattern\Screen;
 use Hametuha\Hashboard\Screens\Dashboard;
 use Hametuha\Hashboard\Screens\Profile;
 use Hametuha\Hashboard\Screens\Account;
 use Hametuha\Hashboard\Utility\Favicon;
-use Hametuha\Pattern\RestApi;
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 
 /**
  * Bootstrap instance
@@ -44,7 +44,9 @@ class Hashboard extends Singleton {
 	 * Hashboard constructor.
 	 */
 	protected function init() {
-		$this->load_text_domain();
+		// Load text domain.
+		$mo = sprintf( 'hashboard-%s.mo', get_user_locale() );
+		load_textdomain( 'hashboard', self::dir() . '/languages/' . $mo );
 		/**
 		 * Register editors.
 		 */
@@ -52,25 +54,14 @@ class Hashboard extends Singleton {
 		add_filter( 'query_vars', array( $this, 'query_vars' ) );
 		add_filter( 'rewrite_rules_array', array( $this, 'rewrite_rules' ) );
 		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
-		add_action( 'hashboard_head', array( $this, 'enqueue_screen_styles' ), 11 );
-		add_action( 'hashboard_footer', array( $this, 'enqueue_screen_scripts' ), 11 );
-		add_action( 'init', function () {
-			/**
-			 * hashboard_screens
-			 *
-			 * @param array $screens Associative array of Hametuha\Hashboard\Pattern\Screen
-			 */
-			$this->screens = apply_filters( 'hashboard_screens', array(
-				'dashboard' => Dashboard::class,
-				'profile'   => Profile::class,
-				'account'   => Account::class,
-			) );
-		}, 1 );
+		add_action( 'template_redirect', array( $this, 'template_redirect' ), 99999 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 11 );
+		add_action( 'init', [ $this, 'register_screens' ], 1 );
 		// Register assets globally.
 		add_action( 'init', array( $this, 'register_assets' ), 11 );
 		// Register all API.
 		foreach ( array(
-			'API'    => RestApi::class,
+			'API'    => Api::class,
 			'Bridge' => Singleton::class,
 		) as $name => $subclass ) {
 			foreach ( scandir( __DIR__ . '/Hashboard/' . $name ) as $file ) {
@@ -97,13 +88,21 @@ class Hashboard extends Singleton {
 	}
 
 	/**
-	 * Load text domain
+	 * Register Screen classes.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function load_text_domain() {
-		$mo = sprintf( 'hashboard-%s.mo', get_user_locale() );
-		return load_textdomain( 'hashboard', self::dir() . '/languages/' . $mo );
+	public function register_screens() {
+		/**
+		 * hashboard_screens
+		 *
+		 * @param array<string,string> $screens Associative array of Hametuha\Hashboard\Pattern\Screen
+		 */
+		$this->screens = apply_filters( 'hashboard_screens', array(
+			'dashboard' => Dashboard::class,
+			'profile'   => Profile::class,
+			'account'   => Account::class,
+		) );
 	}
 
 	/**
@@ -177,10 +176,28 @@ class Hashboard extends Singleton {
 	/**
 	 * Get plugin version.
 	 *
+	 * @deprecated 1.0.0
 	 * @return string
 	 */
 	public static function version() {
 		return self::$version;
+	}
+
+	/**
+	 * Detect if current page is hashboard page.
+	 *
+	 * @param string $slug Optional slug to check.
+	 * @return bool
+	 */
+	public static function is_page( $slug = '' ) {
+		if ( is_admin() ) {
+			return false;
+		}
+		$current_slug = get_query_var( 'hashboard' );
+		if ( ! $current_slug ) {
+			return false;
+		}
+		return ( empty( $slug ) || $current_slug === $slug );
 	}
 
 	/**
@@ -216,26 +233,10 @@ class Hashboard extends Singleton {
 	public function register_assets() {
 		// Material Design Icons
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null );
-		wp_register_style( 'bootstrap', self::url( '/assets/css/hashboard.css' ), array( 'material-design-icon' ), self::version() );
 		// Bootstrap
-		wp_register_script( 'popper', self::url( '/assets/js/popper.min.js' ), array(), '1.16.0', true );
-		// Popper
-		wp_register_script( 'bootstrap', self::url( '/assets/js/bootstrap.min.js' ), array( 'jquery', 'popper' ), '4.4.1', true );
+		wp_register_script( 'bootstrap', self::url( '/assets/vendor/bootstrap.bundle.min.js' ), [], '5.3.6', true );
 		// Chart JS
-		wp_register_script( 'chart-js', self::url( '/assets/js/Chart.min.js' ), array(), '2.9.3', true );
-		// Moment
-		if ( wp_script_is( 'moment', 'registered' ) ) {
-			wp_deregister_script( 'moment' );
-		}
-		wp_register_script( 'moment', self::url( '/assets/js/moment-with-locales.min.js' ), array(), '2.24.0', true );
-		// Vue.js.
-		wp_register_script( 'vue-js', self::url( '/assets/js/vue.min.js' ), array(), '2.6.11', true );
-		$vue_helper = <<<JS
-			window.bus = new Vue({});
-JS;
-		wp_add_inline_script( 'vue-js', $vue_helper );
-		// Chart JS vue.
-		wp_register_script( 'chart-js-vue', self::url( '/assets/js/vue-chartjs.min.js' ), array( 'chart-js', 'vue-js' ), '3.5.0', true );
+		wp_register_script( 'chart-js', self::url( '/assets/vendor/chart.umd.js' ), array(), '4.4.0', true );
 		// Hash Rest
 		wp_register_script( 'hashboard-rest', self::url( '/assets/js/hashboard-rest.js' ), array( 'jquery', 'hb-plugins-toast' ), self::version(), true );
 		wp_localize_script( 'hashboard-rest', 'HashRest', array(
@@ -251,16 +252,46 @@ JS;
 			'hb-plugins-fitrows',
 		), self::version(), true );
 		// Register scripts.
-		foreach ( array( 'components', 'filters', 'plugins' ) as $group ) {
-			$base_dir = self::dir() . "/assets/js/{$group}";
-			if ( ! is_dir( $base_dir ) ) {
+		$json_path = self::dir() . '/wp-dependencies.json';
+		if ( ! file_exists( $json_path ) ) {
+			trigger_error( sprintf( __( '%s doesn\'t exist.', 'hashboard' ), $json_path ), E_USER_WARNING );
+			return;
+		}
+		$json = json_decode( file_get_contents( $json_path ), true );
+		if ( ! $json ) {
+			trigger_error( sprintf( __( '%s is not a valid JSON.', 'hashboard' ), $json_path ), E_USER_WARNING );
+			return;
+		}
+		foreach ( $json as $asset ) {
+			if ( empty( $asset['path'] ) ) {
 				continue;
 			}
-			// Bulk register.
-			WpEnqueueManager::register_js( $base_dir, "hb-{$group}-", self::version() );
+			$path = self::url( $asset['path'] );
+			switch ( $asset['ext'] ) {
+				case 'js':
+					$js_setting = [
+						'in_footer' => $asset['footer'],
+					];
+					if ( in_array( $asset['strategy'], [ 'async', 'defer' ], true ) ) {
+						$js_setting['strategy'] = $asset['strategy'];
+					}
+					wp_register_script( $asset['handle'], $path, $asset['deps'], $asset['hash'], $js_setting );
+					// If using wp-i18n, localize script.
+					if ( in_array( 'wp-i18n', $asset['deps'], true ) ) {
+						// Localize script.
+						wp_set_script_translations( $asset['handle'], 'hashboard', self::dir() . '/languages' );
+					}
+					if ( 'hb-components-loading' === $asset['handle'] ) {
+						wp_localize_script( 'hb-components-loading', 'HbComponentsLoading', array(
+							'img' => self::url( '/assets/img/ripple.gif' ),
+						) );
+					}
+					break;
+				case 'css':
+					wp_register_style( $asset['handle'], $path, $asset['deps'], $asset['hash'], $asset['media'] );
+					break;
+			}
 		}
-		// Localize scripts.
-		WpEnqueueManager::register_js_var_files( self::dir() . '/l10n' );
 	}
 
 	/**
@@ -269,11 +300,22 @@ JS;
 	 * @param \WP_Query $wp_query
 	 */
 	public function pre_get_posts( \WP_Query &$wp_query ) {
-		if ( $wp_query->is_main_query() && ( $action = $wp_query->get( 'hashboard' ) ) ) {
+		if ( $wp_query->is_main_query() && $wp_query->get( 'hashboard' ) ) {
+			// At least, Hashboard is requested.
+			// Check authentication.
 			if ( ! current_user_can( self::get_default_capability() ) ) {
 				auth_redirect();
 				exit;
 			}
+		}
+	}
+
+	public function template_redirect() {
+		$action = get_query_var( 'hashboard' );
+		if ( ! $action ) {
+			// Not hashboard page.
+			return;
+		}
 			switch ( $action ) {
 				case $this->get_prefix():
 					$slug = 'dashboard';
@@ -284,9 +326,11 @@ JS;
 			}
 			try {
 				$this->current = $slug;
+				// No cache.
+				nocache_headers();
 				if ( 'editor' === $slug ) {
 					// Render editor if available.
-					$key = $wp_query->get( 'hashboard-child' );
+					$key = get_query_var( 'hashboard-child' );
 					if ( ! isset( $this->editors[ $key ] ) ) {
 						throw new \Exception( 'no editor', 404 );
 					}
@@ -299,7 +343,7 @@ JS;
 						throw new \Exception( 'no editor', 404 );
 					}
 					/** @var Editor $class_name */
-					$class_name::get_instance()->render( $wp_query->get( 'p' ), wp_get_current_user() );
+					$class_name::get_instance()->render( get_query_var( 'p' ), wp_get_current_user() );
 					exit;
 				} elseif ( isset( $this->screens[ $slug ] ) ) {
 					// Render screen.
@@ -307,13 +351,10 @@ JS;
 					/** @var Screen $screen */
 					$screen = $class_name::get_instance();
 					// Is there children?
-					$child = $wp_query->get( 'hashboard-child' );
+					$child = get_query_var( 'hashboard-child' );
 					if ( ! $screen->has_children( $child ) ) {
 						$child = '';
 					}
-					global $wp_styles;
-					wp_enqueue_style( 'bootstrap' );
-					wp_enqueue_script( 'hashboard' );
 					/**
 					 * hashboard_enqueue_scripts
 					 *
@@ -321,7 +362,6 @@ JS;
 					 *
 					 * @param bool $is_head
 					 */
-					do_action( 'hashboard_enqueue_scripts', $screen, $child );
 					self::load_template( 'body.php', array(
 						'page'      => $screen,
 						'hashboard' => self::get_instance(),
@@ -329,10 +369,12 @@ JS;
 					) );
 					exit;
 				} else {
-					throw new Exception( 'no editor', 404 );
+					throw new \Exception( 'no screen', 404 );
 				}
 			} catch ( \Exception $e ) {
 				if ( 404 == $e->getCode() ) {
+					// Do nothing.
+					global $wp_query;
 					$wp_query->set_404();
 				} else {
 					wp_die( $e->getMessage(), get_status_header_desc( $e->getCode() ), array(
@@ -341,7 +383,6 @@ JS;
 					) );
 				}
 			}
-		}
 	}
 
 	/**
@@ -399,9 +440,10 @@ JS;
 	 * Load template
 	 *
 	 * @param string $template
-	 * @param array $args
+	 * @param array  $args
+	 * @parma bool   $require_once
 	 */
-	public static function load_template( $template, $args = array() ) {
+	public static function load_template( $template, $args = array(), $require_once = false ) {
 		$located = '';
 		foreach ( array(
 			self::dir() . '/templates',
@@ -422,12 +464,9 @@ JS;
 		 */
 		$located = apply_filters( 'hashboard_template', $located, $template, $args );
 		if ( ! $located || ! file_exists( $located ) ) {
-			trigger_error( sprintf( __( 'Template %s doesn\'t exist.', 'hashboard' ), $located ), E_USER_WARNING );
+			trigger_error( sprintf( __( 'Template %s dose not exist.', 'hashboard' ), $located ), E_USER_WARNING );
 		} else {
-			if ( $args ) {
-				extract( $args );
-			}
-			include $located;
+			load_template( $located, $require_once, $args );
 		}
 	}
 
@@ -470,16 +509,12 @@ JS;
 	}
 
 	/**
-	 * Enqueue screen css.
+	 * Enqueue screen css & js.
 	 */
-	public function enqueue_screen_styles() {
-		wp_styles()->do_items( false );
-	}
-
-	/**
-	 * Enqueue screen scripts.
-	 */
-	public function enqueue_screen_scripts() {
-		wp_scripts()->do_footer_items();
+	public function enqueue_assets() {
+		if ( self::is_page() ) {
+			wp_enqueue_script( 'bootstrap' );
+			wp_enqueue_style( 'hashboard' );
+		}
 	}
 }

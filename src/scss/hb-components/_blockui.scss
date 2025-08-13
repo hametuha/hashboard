@@ -25,8 +25,18 @@ $loading-container-min-height: $loading-image-size * 1.5;
 
 
 
-[data-loading-wrapper='true']{
-  min-height: $loading-container-min-height;
+// Use CSS Layer to provide default positioning without overriding existing styles
+@layer framework {
+	[data-loading-wrapper='true'] {
+		min-height: $loading-container-min-height;
+		// Only apply position: relative if no position is set (i.e., position: static)
+		position: relative;
+	}
+
+	// Don't override existing positioned elements
+	[data-loading-wrapper='true']:is([style*="position"], .positioned, .position-absolute, .position-fixed, .position-relative, .position-sticky) {
+		position: unset;
+	}
 }
 
 .hb-loading-indicator{

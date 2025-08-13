@@ -15,20 +15,10 @@ class Profile extends Screen {
 
 	protected $icon = 'account_circle';
 
-	/**
-	 * String
-	 *
-	 * @return string
-	 */
 	public function slug() {
 		return 'profile';
 	}
 
-	/**
-	 * Get profile.
-	 *
-	 * @return string
-	 */
 	public function label() {
 		return __( 'Profile', 'hashboard' );
 	}

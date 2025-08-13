@@ -1,21 +1,19 @@
 <?php
-/** @var \Hametuha\Hashboard\Pattern\Screen $page */
-/** @var \Hametuha\Hashboard $hashboard */
-/** @var string $child */
+/** @var array{page:\Hametuha\Hashboard\Pattern\Screen, hashboard: \Hametuha\Hashboard, child: string} $args */
 $user = wp_get_current_user();
-
+$page = $args['page'];
+$hashboard = $args['hashboard'];
+$child = $args['child'];
 ?><!doctype html>
-<html>
+<html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
-	<title><?php echo esc_html( $page->label() ); ?> | <?php bloginfo( 'name' ); ?></title>
-	<meta name="description" content="<?php echo esc_attr( $page->meta_description( $child ) ); ?>"/>
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<?php
-		$page->head();
-		do_action( 'hashboard_head', $page );
+	$page->head();
+	do_action( 'wp_head' );
 	?>
 </head>
-<body>
+<body><?php wp_body_open(); ?>
 
 <header class="hb-sidebar" id="hb-side-nav">
 	<ul id="nav-mobile" class="hb-menu side-nav fixed">
@@ -149,7 +147,9 @@ $user = wp_get_current_user();
 	</div>
 
 </main>
-<?php $page->footer(); ?>
-<?php do_action( 'hashboard_footer', $page ); ?>
+<?php
+$page->footer();
+do_action( 'wp_footer' );
+?>
 </body>
 </html>

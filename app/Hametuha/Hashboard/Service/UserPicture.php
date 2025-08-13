@@ -4,7 +4,7 @@ namespace Hametuha\Hashboard\Service;
 
 
 use Hametuha\Hashboard\Utility\Media;
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 
 /**
  * User's local avatar

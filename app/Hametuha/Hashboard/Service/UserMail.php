@@ -4,7 +4,7 @@ namespace Hametuha\Hashboard\Service;
 
 use Hametuha\Hashboard;
 use Ramsey\Uuid\Uuid;
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 
 /**
  * User mail handler

@@ -4,7 +4,7 @@ namespace Hametuha\Hashboard\Router;
 
 
 use Hametuha\Hashboard;
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 
 /**
  * Handle profile page routing.
@@ -13,6 +13,9 @@ use Hametuha\Pattern\Singleton;
  */
 class Profile extends Singleton {
 
+	/**
+	 * @var string[] List of allowed roles.
+	 */
 	private $allowed_roles = array( 'administrator' );
 
 	/**
@@ -56,6 +59,7 @@ class Profile extends Singleton {
 	}
 
 	/**
+	 * Allow external role insert.
 	 *
 	 * @param array $roles
 	 */

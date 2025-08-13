@@ -1,0 +1,7 @@
+/*!
+ * Bar chart component for React
+ *
+ */
+/*!
+ * @deps chart.js, wp-element
+ */

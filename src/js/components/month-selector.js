@@ -1,92 +1,109 @@
 /*!
  * Month selector
  *
- * @deps vue-js,bootstrap
  */
 
-/*global Vue: true*/
-/*global HbComponentsMonthSelector*/
+import { useState, useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-( function() {
-	'use strict';
+/**
+ * Month Selector Component
+ * @param {Object} props - Component props
+ */
+const MonthSelector = ( props ) => {
+	const {
+		label,
+		maxYear = new Date().getFullYear(),
+		minYear = new Date().getFullYear() - 10,
+		initialMonth = new Date().getMonth() + 1,
+		initialYear = new Date().getFullYear(),
+		onDateUpdated,
+	} = props;
 
-	Vue.component( 'hb-month-selector', {
-		template: `
-      <div class="hb-month-selector form-row" :title="label">
-        <div class="form-group col">
-          <select class="form-control" v-model="curYear">
-            <option v-for="year in years" :value="year.value">{{year.label}}</option>
-          </select>
-          </div>
-        <div class="form-group col">
-          <select class="form-control" v-model="curMonth">
-            <option v-for="(label, value) in month" :value="value+1" :key="value">{{label}}</option>
-          </select>
-        </div>
-        <div class="form-group col">
-          <button type="button" class="btn btn-secondary ripple" v-on:click="updateYearMonth">
-            {{updateLabel}}
-          </button>
-        </div>
-      </div>`,
-		props: {
-			label: {
-				type: String,
-				required: true,
-			},
-			maxYear: {
-				type: Number,
-				default: function() {
-					return new Date().getFullYear();
-				},
-			},
-			minYear: {
-				type: Number,
-				default: function() {
-					return new Date().getFullYear() - 10;
-				},
-			},
-			curMonth: {
-				type: Number,
-				default: function() {
-					return new Date().getMonth() + 1;
-				},
-			},
-			curYear: {
-				type: Number,
-				default: function() {
-					return new Date().getFullYear();
-				},
-			},
-		},
-		computed: {
-			month: function() {
-				return HbComponentsMonthSelector.month;
-			},
-			years: function() {
-				const range = [];
-				let year = this.maxYear;
-				while ( year >= this.minYear ) {
-					range.push( {
-						value: year,
-						label: year + HbComponentsMonthSelector.yearSuffix,
-					} );
-					year--;
-				}
-				return range;
-			},
-			updateLabel: function() {
-				return HbComponentsMonthSelector.update;
-			},
-		},
-		mounted: function() {
+	const [ curMonth, setCurMonth ] = useState( initialMonth );
+	const [ curYear, setCurYear ] = useState( initialYear );
 
-			// console.log(this.curMonth, this.curYear);
-		},
-		methods: {
-			updateYearMonth: function() {
-				this.$emit( 'date-updated', this.curYear.toString(), ( '0' + this.curMonth ).slice( -2 ) );
-			},
-		},
-	} );
-}() );
+	// 月の選択肢（国際化対応）
+	const months = useMemo( () => [
+		__( 'January', 'hashboard' ),
+		__( 'February', 'hashboard' ),
+		__( 'March', 'hashboard' ),
+		__( 'April', 'hashboard' ),
+		__( 'May', 'hashboard' ),
+		__( 'June', 'hashboard' ),
+		__( 'July', 'hashboard' ),
+		__( 'August', 'hashboard' ),
+		__( 'September', 'hashboard' ),
+		__( 'October', 'hashboard' ),
+		__( 'November', 'hashboard' ),
+		__( 'December', 'hashboard' ),
+	], [] );
+
+	// 年の選択肢
+	const years = useMemo( () => {
+		const range = [];
+		let year = maxYear;
+		while ( year >= minYear ) {
+			range.push( {
+				value: year,
+				label: year + __( '年', 'hashboard' ),
+			} );
+			year--;
+		}
+		return range;
+	}, [ maxYear, minYear ] );
+
+	// 更新ボタンのラベル
+	const updateLabel = __( 'Update', 'hashboard' );
+
+	// 日付更新ハンドラー
+	const handleUpdateYearMonth = () => {
+		if ( onDateUpdated ) {
+			const formattedMonth = ( '0' + curMonth ).slice( -2 );
+			onDateUpdated( curYear.toString(), formattedMonth );
+		}
+	};
+
+	return (
+		<div className="hb-month-selector form-row" title={ label }>
+			<div className="form-group col">
+				<select
+					className="form-control"
+					value={ curYear }
+					onChange={ ( e ) => setCurYear( parseInt( e.target.value ) ) }
+				>
+					{ years.map( ( year ) => (
+						<option key={ year.value } value={ year.value }>
+							{ year.label }
+						</option>
+					) ) }
+				</select>
+			</div>
+			<div className="form-group col">
+				<select
+					className="form-control"
+					value={ curMonth }
+					onChange={ ( e ) => setCurMonth( parseInt( e.target.value ) ) }
+				>
+					{ months.map( ( monthLabel, index ) => (
+						<option key={ index + 1 } value={ index + 1 }>
+							{ monthLabel }
+						</option>
+					) ) }
+				</select>
+			</div>
+			<div className="form-group col">
+				<button
+					type="button"
+					className="btn btn-secondary ripple"
+					onClick={ handleUpdateYearMonth }
+				>
+					{ updateLabel }
+				</button>
+			</div>
+		</div>
+	);
+};
+
+// Export component
+export default MonthSelector;

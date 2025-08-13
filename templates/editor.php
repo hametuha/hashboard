@@ -5,16 +5,17 @@
 /** @var string $child */
 $user = wp_get_current_user();
 ?><!doctype html>
-<html>
+<html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
 	<title><?php echo esc_html( $label ); ?> | <?php bloginfo( 'name' ); ?></title>
 	<?php
 	$editor->head();
-	do_action( 'hashboard_head', $editor );
+	$editor->enqueue_scripts();
+	do_action( 'wp_head' );
 	?>
 </head>
-<body>
+<body><?php wp_body_open(); ?>
 
 <div>
 	<nav class="top-nav top-nav-over">
@@ -39,7 +40,7 @@ $user = wp_get_current_user();
 				 *
 				 * Display something before main container
 				 *
-				 * @param \Hametuha\Hashboard\Pattern\Screen $page
+				 * @param \Hametuha\Hashboard\Pattern\Screen $editor
 				 * @param string $child
 				 */
 				do_action( 'hashboard_before_main', $editor, $child );
@@ -63,6 +64,6 @@ $user = wp_get_current_user();
 
 </div>
 <?php $editor->footer(); ?>
-<?php do_action( 'hashboard_footer', $page ); ?>
+<?php do_action( 'wp_footer' ); ?>
 </body>
 </html>

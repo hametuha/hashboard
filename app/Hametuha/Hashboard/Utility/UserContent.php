@@ -1,7 +1,7 @@
 <?php
 
 namespace Hametuha\Hashboard\Utility;
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 
 
 /**

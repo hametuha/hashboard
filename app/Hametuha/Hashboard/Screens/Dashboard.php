@@ -88,6 +88,5 @@ HTML;
 	 * Footer action
 	 */
 	public function footer() {
-		wp_enqueue_script( 'hb-components-dashboard' );
 	}
 }
