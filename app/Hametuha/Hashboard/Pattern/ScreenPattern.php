@@ -63,9 +63,9 @@ abstract class ScreenPattern extends Singleton {
 	 */
 	protected function init() {
 		// Title tag.
-		add_filter( 'document_title_parts', [ $this, 'title_parts' ] );
+		add_filter( 'document_title_parts', array( $this, 'title_parts' ) );
 		// Meta description.
-		add_action( 'wp_head', [ $this, 'render_meta_description' ] );
+		add_action( 'wp_head', array( $this, 'render_meta_description' ) );
 	}
 
 	/**
@@ -76,7 +76,7 @@ abstract class ScreenPattern extends Singleton {
 	 */
 	public function title_parts( $title ) {
 		$title['title'] = $this->label();
-		$title['site'] = get_bloginfo( 'name' );
+		$title['site']  = get_bloginfo( 'name' );
 		return $title;
 	}
 

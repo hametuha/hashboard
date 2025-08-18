@@ -1,42 +1,70 @@
-// ブランドカラー
-$yellow: #F4B700 !default;
-$brown: #594324 !default;
-$red: #E03A01 !default;
+// Colors
+$yellow: #F5AC37 !default;
+$brown: #855942 !default;
+$red: #f44336 !default;
 $blue: #176B86 !default;
-$green: #4D8E26 !default;
+$green: #7fae49 !default;
 
-// テーマカラー
-$primary: #21759b !default;
-$warning: #ff6f00 !default;
-$secondary: $blue !default;
-$success: $green !default;
-$danger: $red !default;
+// Monotones
+$gray-100: #F2F5F1 !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #beb4ba !default;
+$gray-500: #949395 !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #1F1C1D !default;
+$black:    #0E191F !default;
+
+// Theme Colors
+$primary:       $gray-900 !default;
+$secondary:     $gray-500 !default;
+$success:       $green !default;
+$info:          $blue !default;
+$warning:       $yellow !default;
+$dark:          $black !default;
+$danger:        $red !default;
 
 // Specific color
-$link-color: #000 !default;
-$code-color: #20c997 !default;
+$link-color: $primary !default;
+
+// Code
+$code-color: $red !default;
+
+// Typography
+$line-height-base: 1.8 !default;
+$line-height-sm: 1.5 !default;
+$line-height-lg: 2.2 !default;
+
+// Border radius
+$border-radius:               3px !default;
+$border-radius-sm:            2px !default;
+$border-radius-lg:            5px !default;
+
+// Buttons
+$input-btn-padding-x:         1.5rem !default;
+$input-btn-padding-x-sm:      1rem !default;
+$input-btn-padding-x-lg:      2rem !default;
+
+
 
 // Sidenav
 
-//
 $site-icon-max-width: 200px !default;
-$site-title-color: #888 !default;
+$site-title-color: $gray-600 !default;
 
 // Description
-$page-description-color: #888 !default;
-$page-description-bg: #f9f9f9 !default;
+$page-description-color: $gray-600 !default;
+$page-description-bg: $gray-100 !default;
 
 // Other
-$separator-color: #e0e0e0 !default;
+$separator-color: $gray-500 !default;
 $navbar-height: 50px;
 $sidenav-padding: 16px !default;
 
 // Animation
 $animation-duration: .5s !default;
-
-// Form
-$input-padding-y: 0 !default;
-$input-padding-x: 0 !default;
 
 // Rotatable buttons.
 $rotatable-buttons: ( cog,  );

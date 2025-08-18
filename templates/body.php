@@ -1,9 +1,9 @@
 <?php
 /** @var array{page:\Hametuha\Hashboard\Pattern\Screen, hashboard: \Hametuha\Hashboard, child: string} $args */
-$user = wp_get_current_user();
-$page = $args['page'];
+$user      = wp_get_current_user();
+$page      = $args['page'];
 $hashboard = $args['hashboard'];
-$child = $args['child'];
+$child     = $args['child'];
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>

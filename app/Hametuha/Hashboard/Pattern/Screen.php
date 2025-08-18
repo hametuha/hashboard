@@ -318,5 +318,4 @@ abstract class Screen extends ScreenPattern {
 		}
 		echo $out;
 	}
-
 }

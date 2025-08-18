@@ -56,7 +56,7 @@ class Hashboard extends Singleton {
 		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 		add_action( 'template_redirect', array( $this, 'template_redirect' ), 99999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 11 );
-		add_action( 'init', [ $this, 'register_screens' ], 1 );
+		add_action( 'init', array( $this, 'register_screens' ), 1 );
 		// Register assets globally.
 		add_action( 'init', array( $this, 'register_assets' ), 11 );
 		// Register all API.
@@ -85,6 +85,8 @@ class Hashboard extends Singleton {
 		Avatar::get_instance();
 		// Enable Favicon
 		Favicon::get_instance();
+		// Enable User Color Scheme
+		\Hametuha\Hashboard\Service\UserColorScheme::get_instance();
 	}
 
 	/**
@@ -234,7 +236,7 @@ class Hashboard extends Singleton {
 		// Material Design Icons
 		wp_register_style( 'material-design-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), null );
 		// Bootstrap
-		wp_register_script( 'bootstrap', self::url( '/assets/vendor/bootstrap.bundle.min.js' ), [], '5.3.6', true );
+		wp_register_script( 'bootstrap', self::url( '/assets/vendor/bootstrap.bundle.min.js' ), array(), '5.3.6', true );
 		// Chart JS
 		wp_register_script( 'chart-js', self::url( '/assets/vendor/chart.umd.js' ), array(), '4.4.0', true );
 		// Hash Rest
@@ -269,10 +271,10 @@ class Hashboard extends Singleton {
 			$path = self::url( $asset['path'] );
 			switch ( $asset['ext'] ) {
 				case 'js':
-					$js_setting = [
+					$js_setting = array(
 						'in_footer' => $asset['footer'],
-					];
-					if ( in_array( $asset['strategy'], [ 'async', 'defer' ], true ) ) {
+					);
+					if ( in_array( $asset['strategy'], array( 'async', 'defer' ), true ) ) {
 						$js_setting['strategy'] = $asset['strategy'];
 					}
 					wp_register_script( $asset['handle'], $path, $asset['deps'], $asset['hash'], $js_setting );
@@ -316,73 +318,73 @@ class Hashboard extends Singleton {
 			// Not hashboard page.
 			return;
 		}
-			switch ( $action ) {
-				case $this->get_prefix():
-					$slug = 'dashboard';
-					break;
-				default:
-					$slug = $action;
-					break;
-			}
-			try {
-				$this->current = $slug;
-				// No cache.
-				nocache_headers();
-				if ( 'editor' === $slug ) {
-					// Render editor if available.
-					$key = get_query_var( 'hashboard-child' );
-					if ( ! isset( $this->editors[ $key ] ) ) {
-						throw new \Exception( 'no editor', 404 );
-					}
-					$class_name = $this->editors[ $key ];
-					if ( ! class_exists( $class_name ) ) {
-						throw new \Exception( 'no editor', 404 );
-					}
-					$reflection = new \ReflectionClass( $class_name );
-					if ( $reflection->isAbstract() || ! $reflection->isSubclassOf( Editor::class ) ) {
-						throw new \Exception( 'no editor', 404 );
-					}
-					/** @var Editor $class_name */
-					$class_name::get_instance()->render( get_query_var( 'p' ), wp_get_current_user() );
-					exit;
-				} elseif ( isset( $this->screens[ $slug ] ) ) {
-					// Render screen.
-					$class_name = $this->screens[ $this->current ];
-					/** @var Screen $screen */
-					$screen = $class_name::get_instance();
-					// Is there children?
-					$child = get_query_var( 'hashboard-child' );
-					if ( ! $screen->has_children( $child ) ) {
-						$child = '';
-					}
-					/**
-					 * hashboard_enqueue_scripts
-					 *
-					 * Print scripts
-					 *
-					 * @param bool $is_head
-					 */
-					self::load_template( 'body.php', array(
-						'page'      => $screen,
-						'hashboard' => self::get_instance(),
-						'child'     => $child,
-					) );
-					exit;
-				} else {
-					throw new \Exception( 'no screen', 404 );
+		switch ( $action ) {
+			case $this->get_prefix():
+				$slug = 'dashboard';
+				break;
+			default:
+				$slug = $action;
+				break;
+		}
+		try {
+			$this->current = $slug;
+			// No cache.
+			nocache_headers();
+			if ( 'editor' === $slug ) {
+				// Render editor if available.
+				$key = get_query_var( 'hashboard-child' );
+				if ( ! isset( $this->editors[ $key ] ) ) {
+					throw new \Exception( 'no editor', 404 );
 				}
-			} catch ( \Exception $e ) {
-				if ( 404 == $e->getCode() ) {
-					// Do nothing.
-					global $wp_query;
-					$wp_query->set_404();
-				} else {
-					wp_die( $e->getMessage(), get_status_header_desc( $e->getCode() ), array(
-						'back_link' => true,
-						'response'  => $e->getCode(),
-					) );
+				$class_name = $this->editors[ $key ];
+				if ( ! class_exists( $class_name ) ) {
+					throw new \Exception( 'no editor', 404 );
 				}
+				$reflection = new \ReflectionClass( $class_name );
+				if ( $reflection->isAbstract() || ! $reflection->isSubclassOf( Editor::class ) ) {
+					throw new \Exception( 'no editor', 404 );
+				}
+				/** @var Editor $class_name */
+				$class_name::get_instance()->render( get_query_var( 'p' ), wp_get_current_user() );
+				exit;
+			} elseif ( isset( $this->screens[ $slug ] ) ) {
+				// Render screen.
+				$class_name = $this->screens[ $this->current ];
+				/** @var Screen $screen */
+				$screen = $class_name::get_instance();
+				// Is there children?
+				$child = get_query_var( 'hashboard-child' );
+				if ( ! $screen->has_children( $child ) ) {
+					$child = '';
+				}
+				/**
+				 * hashboard_enqueue_scripts
+				 *
+				 * Print scripts
+				 *
+				 * @param bool $is_head
+				 */
+				self::load_template( 'body.php', array(
+					'page'      => $screen,
+					'hashboard' => self::get_instance(),
+					'child'     => $child,
+				) );
+				exit;
+			} else {
+				throw new \Exception( 'no screen', 404 );
 			}
+		} catch ( \Exception $e ) {
+			if ( 404 == $e->getCode() ) {
+				// Do nothing.
+				global $wp_query;
+				$wp_query->set_404();
+			} else {
+				wp_die( $e->getMessage(), get_status_header_desc( $e->getCode() ), array(
+					'back_link' => true,
+					'response'  => $e->getCode(),
+				) );
+			}
+		}
 	}
 
 	/**
