@@ -137,6 +137,10 @@ const LoadingIndicatorTest = () => {
 				Toggle Loading Indicator
 			</Button>
 			<div className="loading-indicator-exmplle-container">
+				<h2 className="pt-5">ローディングでブロックされるもの</h2>
+				<p>
+					ここに入る要素はローディング中にブロックされます。
+				</p>
 				<LoadingIndicator loading={ loading } />
 			</div>
 		</div>

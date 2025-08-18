@@ -3,10 +3,8 @@
  *
  */
 
-/* global HbComponentsLoading */
-
 import { useEffect, useRef } from '@wordpress/element';
-import { Animate } from '@wordpress/components';
+import { Spinner } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,6 +17,8 @@ export const LoadingIndicator = ( props ) => {
 	const {
 		loading = false,
 		title = __( 'Loading…', 'hashboard' ),
+		size = 40, // デフォルトサイズ (px)
+		showTitle = true,
 	} = props;
 
 	const containerRef = useRef();
@@ -27,7 +27,7 @@ export const LoadingIndicator = ( props ) => {
 	useEffect( () => {
 		const container = containerRef.current;
 		const parent = container?.parentElement;
-		
+
 		if ( parent ) {
 			if ( loading ) {
 				parent.setAttribute( 'data-loading-wrapper', 'true' );
@@ -48,26 +48,25 @@ export const LoadingIndicator = ( props ) => {
 		return <div ref={ containerRef } style={ { display: 'none' } } />;
 	}
 
+	// Spinner のスタイル設定
+	const spinnerStyle = {
+		height: `${ size }px`,
+		width: `${ size }px`,
+	};
+
 	return (
-		<Animate type="fade-in">
-			{ ( { className } ) => (
-				<div
-					ref={ containerRef }
-					className={ `hb-loading-indicator ${ className }` }
-					title={ title }
-				>
-					<img
-						src={ HbComponentsLoading.img || '../../img/ripple.gif' }
-						width="100"
-						height="100"
-						alt={ title }
-					/>
-					<span className="hb-loading-indicator-title">
-						{ title }
-					</span>
-				</div>
+		<div
+			ref={ containerRef }
+			className="hb-loading-indicator"
+			title={ title }
+		>
+			<Spinner style={ spinnerStyle } />
+			{ showTitle && (
+				<span className="hb-loading-indicator-title">
+					{ title }
+				</span>
 			) }
-		</Animate>
+		</div>
 	);
 };
 
