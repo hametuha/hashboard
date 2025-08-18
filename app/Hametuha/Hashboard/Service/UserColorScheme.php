@@ -42,16 +42,16 @@ class UserColorScheme extends Singleton {
 		 * @param array $colors Default color scheme
 		 */
 		return apply_filters( 'hashboard_theme_colors', array(
-			'primary'   => '#21759b',
-			'secondary' => '#176B86',
-			'success'   => '#4D8E26',
-			'danger'    => '#E03A01',
-			'warning'   => '#ff6f00',
-			'yellow'    => '#F4B700',
+			'primary'   => '#1F1C1D',  // Bootstrap $gray-900 equivalent
+			'secondary' => '#949395',  // Bootstrap $gray-500 equivalent  
+			'success'   => '#7fae49',  // Bootstrap $green equivalent
+			'danger'    => '#f44336',  // Bootstrap $red equivalent
+			'warning'   => '#F5AC37',  // Bootstrap $yellow equivalent
+			'yellow'    => '#F5AC37',
 			'brown'     => '#594324',
-			'red'       => '#E03A01',
+			'red'       => '#f44336',
 			'blue'      => '#176B86',
-			'green'     => '#4D8E26',
+			'green'     => '#7fae49',
 		) );
 	}
 

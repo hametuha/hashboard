@@ -113,7 +113,7 @@ const DatepickerTest = () => {
 	return (
 		<div className="datepicker-example">
 			<div className="datepicker-example-container">
-				<h3>Selected Date: { startDate.toString() } - { endDate.toString() }</h3>
+				<h3>Selected Date: { startDate.toLocaleDateString() } - { endDate.toLocaleDateString() }</h3>
 				<DateRange start={ startDate } end={ endDate } onPeriodChanged={ ( start, end ) => {
 					setStartDate( start );
 					setEndDate( end );

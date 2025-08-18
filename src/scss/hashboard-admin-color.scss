@@ -1,7 +1,7 @@
 /*!
  * Hashboard Admin Color Scheme
  * WordPress Admin Color Scheme powered by Bootstrap variables
- * 
+ *
  * @handle hashboard-admin-color
  * @deps wp-admin
  */
@@ -13,12 +13,12 @@
 @use "wp-admin-colors/admin" with (
   $scheme-name: "hashboard",
   $base-color: #1F1C1D,                    // Bootstrap $primary (gray-900) equivalent
-  $highlight-color: #949395,               // Bootstrap $secondary (gray-500) equivalent  
+  $highlight-color: #949395,               // Bootstrap $secondary (gray-500) equivalent
   $notification-color: #f44336,            // Bootstrap $danger equivalent
   $link: #1F1C1D,
-  $link-focus: color.adjust(#1F1C1D, $lightness: 10%),
+  $link-focus: color.adjust(#1F1C1D, $lightness: 20%),
   $button-color: #1F1C1D,
-  $menu-submenu-text: color.adjust(#1F1C1D, $lightness: 40%),
+  $menu-submenu-text: #e9ecef, // gray-200
   $menu-submenu-focus-text: #fff,
   $menu-submenu-background: color.adjust(#1F1C1D, $lightness: -10%)
 );
@@ -34,12 +34,12 @@ body.admin-color-hashboard {
   --bs-success: #{$success};
   --bs-danger: #{$danger};
   --bs-warning: #{$warning};
-  
-  // WordPress Components integration  
+
+  // WordPress Components integration
   --wp-components-color-accent: #{$primary};
   --wp-components-color-accent-darker-10: #{darken($primary, 10%)};
   --wp-components-color-accent-darker-20: #{darken($primary, 20%)};
-  
+
   // Ensure theme colors are properly set
   --wp-admin-theme-color: #{$primary};
   --wp-admin-theme-color-darker-10: #{darken($primary, 10%)};
