@@ -1,0 +1,9 @@
+/*!
+ * Hashboard REST API Helper
+ * 
+ * Uses WordPress wp-api-fetch for REST API calls
+ * 
+ */
+/*!
+ * @deps wp-api-fetch, wp-url, hb-plugins-toast
+ */

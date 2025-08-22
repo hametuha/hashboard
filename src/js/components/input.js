@@ -1,7 +1,6 @@
 /*!
  * Input field component for React
  *
- * @deps @wordpress/element
  */
 
 import { useState, useEffect } from '@wordpress/element';

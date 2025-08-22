@@ -25,6 +25,9 @@ $ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
 	}
 }
 
+.btn[disabled] {
+	cursor: not-allowed !important;
+}
 
 .btn.btn-circle {
 	border-radius: 50%;

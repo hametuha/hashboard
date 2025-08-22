@@ -1,7 +1,7 @@
 /*!
  * Bar chart component for React
  *
- * @deps chart.js
+ * @deps chart-js
  */
 
 import { useEffect, useRef, useMemo } from '@wordpress/element';

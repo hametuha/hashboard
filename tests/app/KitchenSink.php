@@ -21,6 +21,8 @@ class KitchenSink extends Screen {
 		return [
 			'bootstrap'  => 'Bootstrap',
 			'components' => 'Components',
+			'charts'     => 'Charts',
+			'tables'     => 'Tables',
 		];
 	}
 
@@ -41,10 +43,15 @@ class KitchenSink extends Screen {
 	}
 
 	public function head() {
+		wp_enqueue_script( 'hb-hashboard-helper' );
 		wp_enqueue_script( 'hashboard-kitchen-sink', Hashboard::url( 'assets/test/kitchen-sink.js' ), [
 			'hb-components-loading',
 			'hb-components-date-range',
 			'hb-components-pagination',
+			'hb-components-bar-chart',
+			'hb-components-line-chart',
+			'hb-components-list-table',
+			'hb-components-post-list',
 			'wp-components',
 		], md5_file( Hashboard::dir() . '/assets/test/kitchen-sink.js' ), true );
 		wp_enqueue_style( 'wp-components' );

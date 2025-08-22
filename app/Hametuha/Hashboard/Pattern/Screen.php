@@ -304,17 +304,17 @@ abstract class Screen extends ScreenPattern {
 		// Wrap fields.
 		if ( ! in_array( $fields['type'], array( 'separator' ) ) ) {
 			$out = sprintf(
-				'<div class="%s col-12 col-md-%d">%s</div>',
+				'<div class="%s col-12 col-sm-%d">%s</div>',
 				'file' == $fields['type'] ? 'file-field' : '',
 				( is_numeric( $fields['col'] ) && $fields['col'] ) ? ceil( 12 / $fields['col'] ) : 12,
 			$out );
 		}
 		if ( 'open' == $fields['group'] ) {
-			$out = '<div class="form-row">' . $out;
+			$out = '<div class="row form-row">' . $out;
 		} elseif ( 'close' == $fields['group'] ) {
 			$out .= '</div>';
 		} else {
-			$out = '<div class="form-row">' . $out . '</div>';
+			$out = '<div class="row form-row">' . $out . '</div>';
 		}
 		echo $out;
 	}

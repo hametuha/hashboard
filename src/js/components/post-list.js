@@ -1,10 +1,11 @@
 /*!
  * Post List component for React
  *
- * @deps @wordpress/element, @wordpress/api-fetch
+ * @deps wp-api-fetch
  */
 
 import { useState, useEffect, useCallback } from '@wordpress/element';
+const { apiFetch } = wp;
 
 /**
  * Post List Component
@@ -62,11 +63,6 @@ const PostList = ( props ) => {
 
 	// Fetch posts
 	const fetchPosts = useCallback( async () => {
-		if ( typeof window.wp?.apiFetch !== 'function' ) {
-			// eslint-disable-next-line no-console
-			console.error( 'wp.apiFetch is not available' );
-			return;
-		}
 
 		setLoading( true );
 
@@ -83,7 +79,7 @@ const PostList = ( props ) => {
 			const queryString = new URLSearchParams( query ).toString();
 			const path = `wp/v2/${ postType }?${ queryString }`;
 
-			const response = await window.wp.apiFetch( { path } );
+			const response = await apiFetch( { path } );
 			setPosts( response );
 		} catch ( error ) {
 			// eslint-disable-next-line no-console

@@ -1,7 +1,7 @@
 /*!
  * Line chart component for React
  *
- * @deps @wordpress/element, chart.js
+ * @deps chart-js
  */
 
 import { useEffect, useRef, useMemo } from '@wordpress/element';

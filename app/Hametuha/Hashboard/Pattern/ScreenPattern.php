@@ -48,7 +48,7 @@ abstract class ScreenPattern extends Singleton {
 	 * Head action
 	 */
 	public function head() {
-		// Do something.
+		wp_enqueue_script( 'hb-hashboard-helper' );
 	}
 
 	/**

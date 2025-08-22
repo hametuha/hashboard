@@ -246,13 +246,6 @@ class Hashboard extends Singleton {
 			'nonce' => wp_create_nonce( 'wp_rest' ),
 			'error' => __( 'Server returns error. Please try again later', 'hashboard' ),
 		) );
-		// Hashboard Utility.
-		wp_register_script( 'hashboard', self::url( '/assets/js/hashboard-helper.js' ), array(
-			'bootstrap',
-			'hashboard-rest',
-			'hb-plugins-toast',
-			'hb-plugins-fitrows',
-		), self::version(), true );
 		// Register scripts.
 		$json_path = self::dir() . '/wp-dependencies.json';
 		if ( ! file_exists( $json_path ) ) {
@@ -312,6 +305,11 @@ class Hashboard extends Singleton {
 		}
 	}
 
+	/**
+	 * Override /dashboard URL.
+	 *
+	 * @return void
+	 */
 	public function template_redirect() {
 		$action = get_query_var( 'hashboard' );
 		if ( ! $action ) {

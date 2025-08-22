@@ -1,7 +1,6 @@
 /*!
  * List table with pagination and search for React
  *
- * @deps @wordpress/element
  */
 
 import { useMemo } from '@wordpress/element';

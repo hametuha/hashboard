@@ -97,31 +97,21 @@
 		"globalExportGeneration": true
 	},
 	"watch": {
-		"build:js": {
+		"build:css": {
 			"patterns": [
-				"src/js/**/*.js"
-			],
-			"ignore": [
-				"assets/js/**/*",
-				"**/*.LICENSE.txt",
-				"**/*.backup",
-				".grab-deps-temp/**/*"
+				"src/scss/**/*.scss"
 			],
 			"extensions": [
-				"js"
+				"scss"
 			]
 		},
-		"build:js:test": {
+		"dump": {
 			"patterns": [
-				"tests/src/js/**/*.js"
-			],
-			"ignore": [
-				"tests/src/js/**/*",
-				"**/*.LICENSE.txt",
-				"**/*.backup",
-				".grab-deps-temp/**/*"
+				"assets/css/**/*.css",
+				"assets/js/**/*.js"
 			],
 			"extensions": [
+				"css",
 				"js"
 			]
 		}

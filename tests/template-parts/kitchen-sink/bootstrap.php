@@ -463,6 +463,8 @@ echo esc_html( $txt );
 					</div>
 				</div>
 			</div>
+
+			<button type="button" class="btn btn-success" id="toast-opener">トーストを開く</button>
 		</div>
 	</div>
 </section>

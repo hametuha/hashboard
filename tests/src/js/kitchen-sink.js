@@ -12,6 +12,11 @@ const {
 const LoadingIndicator = hb.components.loading;
 const DateRange = hb.components.dateRange;
 const Pagination = hb.components.pagination;
+const BarChart = hb.components.barChart;
+const LineChart = hb.components.lineChart;
+const ListTable = hb.components.listTable;
+const PostList = hb.components.postList;
+const { toast } = hb.plugins;
 
 // Button Component
 const ButtonTest = () => {
@@ -239,7 +244,7 @@ const FeedbackTest = () => {
 						actions={ [
 							{
 								label: 'Open WP.org',
-								url: 'https://wordpress.org'
+								url: 'https://wordpress.org',
 							},
 						] }
 						onDismiss={ () => setSnackbar( false ) }
@@ -265,3 +270,238 @@ const feedbackContainer = document.getElementById( 'react-feedback-test' );
 if ( feedbackContainer ) {
 	createRoot( feedbackContainer ).render( <FeedbackTest /> );
 }
+
+// Toast
+const toastBtn = document.getElementById( 'toast-opener' );
+if ( toastBtn ) {
+	toastBtn.addEventListener( 'click', ( event ) => {
+		event.preventDefault();
+		toast( 'これは3秒で消えるToastのメッセージです', { duration: 30000 } );
+		toast( 'これはアイコン付きのメッセージです', { icon: 'error', type: 'error' } );
+		toast( { message: '成功しました！', type: 'success' } );
+		toast( { message: '警告メッセージ', type: 'warning', duration: 50000 } );
+	} );
+}
+
+// Charts Test
+const initCharts = () => {
+	// Bar Chart Test
+	const barChartContainer = document.getElementById( 'bar-chart-test' );
+	if ( barChartContainer ) {
+		BarChart( {
+			labels: [ '1月', '2月', '3月', '4月', '5月', '6月' ],
+			datasets: [ {
+				label: '売上（万円）',
+				data: [ 120, 190, 300, 500, 200, 300 ],
+				backgroundColor: 'rgba(54, 162, 235, 0.5)',
+				borderColor: 'rgba(54, 162, 235, 1)',
+				borderWidth: 1,
+			} ],
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+			},
+			container: barChartContainer,
+		} );
+	}
+
+	// Line Chart Test
+	const lineChartContainer = document.getElementById( 'line-chart-test' );
+	if ( lineChartContainer ) {
+		LineChart( {
+			labels: [ '月', '火', '水', '木', '金', '土', '日' ],
+			datasets: [ {
+				label: '訪問者数',
+				data: [ 65, 59, 80, 81, 56, 55, 40 ],
+				fill: false,
+				borderColor: 'rgb(75, 192, 192)',
+				tension: 0.1,
+			} ],
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+			},
+			container: lineChartContainer,
+		} );
+	}
+
+	// Multiple Bar Chart
+	const barMultipleContainer = document.getElementById( 'bar-chart-multiple' );
+	if ( barMultipleContainer ) {
+		BarChart( {
+			labels: [ 'Q1', 'Q2', 'Q3', 'Q4' ],
+			datasets: [
+				{
+					label: '売上',
+					data: [ 300, 450, 320, 520 ],
+					backgroundColor: 'rgba(255, 99, 132, 0.5)',
+				},
+				{
+					label: '利益',
+					data: [ 120, 190, 150, 250 ],
+					backgroundColor: 'rgba(54, 162, 235, 0.5)',
+				},
+			],
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+			},
+			container: barMultipleContainer,
+		} );
+	}
+
+	// Multiple Line Chart
+	const lineMultipleContainer = document.getElementById( 'line-chart-multiple' );
+	if ( lineMultipleContainer ) {
+		LineChart( {
+			labels: [ '1月', '2月', '3月', '4月', '5月' ],
+			datasets: [
+				{
+					label: 'PC',
+					data: [ 100, 120, 115, 134, 168 ],
+					borderColor: 'rgb(255, 99, 132)',
+				},
+				{
+					label: 'モバイル',
+					data: [ 200, 220, 280, 300, 340 ],
+					borderColor: 'rgb(54, 162, 235)',
+				},
+			],
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+			},
+			container: lineMultipleContainer,
+		} );
+	}
+};
+
+// Tables Test
+const initTables = () => {
+	// Basic List Table
+	const listTableContainer = document.getElementById( 'list-table-test' );
+	if ( listTableContainer ) {
+		const sampleData = [
+			{ id: 1, title: { rendered: '最初の投稿' }, status: '公開', date: '2024-01-01' },
+			{ id: 2, title: { rendered: 'テスト投稿' }, status: '下書き', date: '2024-01-02' },
+			{ id: 3, title: { rendered: 'サンプル記事' }, status: '公開', date: '2024-01-03' },
+			{ id: 4, title: { rendered: 'お知らせ' }, status: 'レビュー待ち', date: '2024-01-04' },
+			{ id: 5, title: { rendered: '新機能の紹介' }, status: '公開', date: '2024-01-05' },
+		];
+
+		ListTable( {
+			items: sampleData,
+			curPage: 1,
+			totalPage: 3,
+			onPageChanged: ( page ) => console.log( 'Page changed to:', page ),
+			container: listTableContainer,
+		} );
+	}
+
+	// Post List Test
+	const postListContainer = document.getElementById( 'post-list-test' );
+	if ( postListContainer ) {
+		const posts = [
+			{
+				id: 1,
+				title: { rendered: 'WordPressの新機能について' },
+				excerpt: { rendered: 'WordPress 6.4がリリースされました。新しい機能について詳しく解説します。' },
+				link: '#',
+				date: '2024-01-15T10:00:00',
+			},
+			{
+				id: 2,
+				title: { rendered: 'Reactコンポーネントの作り方' },
+				excerpt: { rendered: '再利用可能なReactコンポーネントを作成する方法を解説します。' },
+				link: '#',
+				date: '2024-01-14T15:30:00',
+			},
+		];
+
+		PostList( {
+			items: posts,
+			curPage: 1,
+			totalPage: 2,
+			onPageChanged: ( page ) => console.log( 'Post page:', page ),
+			container: postListContainer,
+		} );
+	}
+
+	// Custom Table Test
+	const customTableContainer = document.getElementById( 'custom-table-test' );
+	if ( customTableContainer ) {
+		const users = [
+			{ id: 1, name: '山田太郎', email: 'yamada@example.com', role: '管理者' },
+			{ id: 2, name: '鈴木花子', email: 'suzuki@example.com', role: '編集者' },
+			{ id: 3, name: '佐藤次郎', email: 'sato@example.com', role: '投稿者' },
+		];
+
+		// カスタムレンダリング関数
+		const renderUser = ( user ) => {
+			const div = document.createElement( 'div' );
+			div.className = 'd-flex align-items-center justify-content-between';
+			div.innerHTML = `
+				<div>
+					<strong>${ user.name }</strong><br>
+					<small class="text-muted">${ user.email }</small>
+				</div>
+				<span class="badge bg-secondary">${ user.role }</span>
+			`;
+			return div;
+		};
+
+		ListTable( {
+			items: users,
+			renderItem: renderUser,
+			listClass: 'list-item p-3',
+			container: customTableContainer,
+		} );
+	}
+
+	// Loading State Test
+	const loadingTableContainer = document.getElementById( 'loading-table-test' );
+	if ( loadingTableContainer ) {
+		let loadingState = false;
+		const toggleBtn = document.getElementById( 'toggle-loading' );
+
+		const renderTable = () => {
+			ListTable( {
+				items: loadingState ? [] : [ { id: 1, title: { rendered: 'Sample' } } ],
+				loading: loadingState,
+				container: loadingTableContainer,
+			} );
+		};
+
+		renderTable();
+		toggleBtn.addEventListener( 'click', () => {
+			loadingState = ! loadingState;
+			renderTable();
+		} );
+	}
+
+	// Empty State Test
+	const emptyTableContainer = document.getElementById( 'empty-table-test' );
+	if ( emptyTableContainer ) {
+		let showEmpty = true;
+		const toggleBtn = document.getElementById( 'toggle-empty' );
+
+		const renderTable = () => {
+			ListTable( {
+				items: showEmpty ? [] : [ { id: 1, title: { rendered: 'データあり' } } ],
+				container: emptyTableContainer,
+			} );
+		};
+
+		renderTable();
+		toggleBtn.addEventListener( 'click', () => {
+			showEmpty = ! showEmpty;
+			renderTable();
+		} );
+	}
+};
+
+// Initialize on page load
+document.addEventListener( 'DOMContentLoaded', () => {
+	initCharts();
+	initTables();
+} );

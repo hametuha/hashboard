@@ -1,36 +1,17 @@
+// Color
 $main-background-color: $white !default;
 
-.hb{
-  background: $main-background-color;
-  padding-left: 300px;
-  @media #{$medium-and-down} {
-    padding-left: 0;
-  }
+.hb {
+	background: $main-background-color;
 }
 
-
-.hb-sidebar{
-  width: 300px;
-  position: fixed;
+.hb-main {
+	padding: 1.5rem;
+	@include media-breakpoint-down(md) {
+		padding: 1.5rem 0.75rem;
+	}
 }
 
-
-.hb-container{
-
-}
-
-.hb-main{
-  padding: 1.5rem;
-  @media #{$medium-and-down} {
-    padding: 1.5rem 0.75rem;
-  }
-}
-
-// Sidenav
-
-
-
-
-.row{
-  @extend %clearfix;
+.row {
+	@extend %clearfix;
 }
