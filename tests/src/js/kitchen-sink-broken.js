@@ -4,7 +4,9 @@
 
 /* global hb:false */
 
-const { createRoot, useState, useEffect } = wp.element;
+import debugHelper from './debug-helper.js';
+
+const { createRoot, useState, useEffect, createElement } = wp.element;
 const {
 	Button, SelectControl, ButtonGroup, ToggleControl, Modal, RangeControl, RadioControl,
 	Notice, ProgressBar, Snackbar, Spinner
@@ -288,7 +290,7 @@ const initCharts = () => {
 	// Bar Chart Test
 	const barChartContainer = document.getElementById( 'bar-chart-test' );
 	if ( barChartContainer ) {
-		BarChart( {
+		const chartData = {
 			labels: [ '1月', '2月', '3月', '4月', '5月', '6月' ],
 			datasets: [ {
 				label: '売上（万円）',
@@ -297,18 +299,28 @@ const initCharts = () => {
 				borderColor: 'rgba(54, 162, 235, 1)',
 				borderWidth: 1,
 			} ],
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-			},
-			container: barChartContainer,
+		};
+		
+		const chartOptions = {
+			responsive: true,
+			maintainAspectRatio: false,
+		};
+		
+		// Reactコンポーネントとしてレンダリング
+		const chartElement = createElement( BarChart, {
+			chartData: chartData,
+			options: chartOptions,
+			width: barChartContainer.offsetWidth,
+			height: 400,
 		} );
+		
+		createRoot( barChartContainer ).render( chartElement );
 	}
 
 	// Line Chart Test
 	const lineChartContainer = document.getElementById( 'line-chart-test' );
 	if ( lineChartContainer ) {
-		LineChart( {
+		const chartData = {
 			labels: [ '月', '火', '水', '木', '金', '土', '日' ],
 			datasets: [ {
 				label: '訪問者数',
@@ -317,12 +329,21 @@ const initCharts = () => {
 				borderColor: 'rgb(75, 192, 192)',
 				tension: 0.1,
 			} ],
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-			},
-			container: lineChartContainer,
+		};
+		
+		const chartOptions = {
+			responsive: true,
+			maintainAspectRatio: false,
+		};
+		
+		const chartElement = createElement( LineChart, {
+			chartData: chartData,
+			options: chartOptions,
+			width: lineChartContainer.offsetWidth,
+			height: 400,
 		} );
+		
+		createRoot( lineChartContainer ).render( chartElement );
 	}
 
 	// Multiple Bar Chart

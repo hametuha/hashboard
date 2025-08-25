@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useRef, useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Bar Chart Component
@@ -82,7 +83,7 @@ const BarChart = ( props ) => {
 	if ( ! chartData ) {
 		return (
 			<div className="hb-bar-chart">
-				<p>No data available</p>
+				<p className="hb-no-data hb-no-data-chart">{ __( 'No data available.', 'hashboard' ) }</p>
 			</div>
 		);
 	}

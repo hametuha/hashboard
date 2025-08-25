@@ -4,6 +4,7 @@
  */
 
 import { useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * List Table Component
@@ -46,7 +47,7 @@ const ListTable = ( props ) => {
 	);
 
 	const defaultRenderEmpty = () => (
-		<p className="text-muted text-center">No items found</p>
+		<p className="hb-no-data hb-no-data-table">{ __( 'No items found', 'hashboard' ) }</p>
 	);
 
 	// Handle pagination
@@ -56,15 +57,36 @@ const ListTable = ( props ) => {
 		}
 	};
 
-	// Use provided components or existing components
-	const Loading = LoadingComponent || ( window.hb?.components?.loading || DefaultLoading );
-	const Pagination = PaginationComponent || ( window.hb?.components?.pagination || DefaultPagination );
+	// Use provided components or existing hb components
+	// Note: hb.components are available at runtime, not during module evaluation
+	const getLoadingComponent = () => {
+		if ( LoadingComponent ) {
+			return LoadingComponent;
+		}
+		if ( window.hb?.components?.loading ) {
+			return window.hb.components.loading;
+		}
+		return DefaultLoading;
+	};
+
+	const getPaginationComponent = () => {
+		if ( PaginationComponent ) {
+			return PaginationComponent;
+		}
+		if ( window.hb?.components?.pagination ) {
+			return window.hb.components.pagination;
+		}
+		return DefaultPagination;
+	};
+
+	const Loading = getLoadingComponent();
+	const Pagination = getPaginationComponent();
 
 	return (
 		<div className={ wrapperClassName }>
 			{ renderHeader && renderHeader() }
 
-			{ ( items.length > 0 ) ? (
+			{ items.length > 0 && (
 				<ul className={ listWrapperClass }>
 					{ items.map( ( item ) => (
 						<li key={ item.id } className={ listClass }>
@@ -72,7 +94,9 @@ const ListTable = ( props ) => {
 						</li>
 					) ) }
 				</ul>
-			) : (
+			) }
+
+			{ items.length === 0 && (
 				renderEmpty ? renderEmpty() : defaultRenderEmpty()
 			) }
 
@@ -89,39 +113,52 @@ const ListTable = ( props ) => {
 	);
 };
 
-// Default Loading Component
+// Fallback Loading Component (only used if hb.components.loading is not available)
 const DefaultLoading = ( { loading } ) => {
 	if ( ! loading ) {
 		return null;
 	}
 
+	// Try to use WordPress Spinner if available
+	if ( window.wp?.components?.Spinner ) {
+		const { Spinner } = window.wp.components;
+		return (
+			<div className="hb-loading-overlay">
+				<Spinner />
+			</div>
+		);
+	}
+
+	// Fallback to basic spinner
 	return (
 		<div className="hb-loading-overlay">
 			<div className="spinner-border" role="status">
-				<span className="sr-only">Loading...</span>
+				<span className="sr-only">{ __( 'Loading...', 'hashboard' ) }</span>
 			</div>
 		</div>
 	);
 };
 
-// Default Pagination Component (placeholder - should use the actual HbPagination)
+// Fallback Pagination Component (only used if hb.components.pagination is not available)
 const DefaultPagination = ( { current, total, onPageChanged } ) => {
-	// This is a placeholder - in real implementation,
-	// we would use the actual HbPagination component
 	return (
-		<div className="pagination-wrapper">
+		<div className="pagination-wrapper hb-pagination">
 			<button
+				className="btn btn-sm btn-secondary"
 				onClick={ () => onPageChanged( current - 1 ) }
 				disabled={ current <= 1 }
 			>
-				Previous
+				{ __( 'Previous', 'hashboard' ) }
 			</button>
-			<span>Page { current } of { total }</span>
+			<span className="mx-3">
+				{ __( 'Page', 'hashboard' ) } { current } { __( 'of', 'hashboard' ) } { total }
+			</span>
 			<button
+				className="btn btn-sm btn-secondary"
 				onClick={ () => onPageChanged( current + 1 ) }
 				disabled={ current >= total }
 			>
-				Next
+				{ __( 'Next', 'hashboard' ) }
 			</button>
 		</div>
 	);

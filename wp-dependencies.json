@@ -178,10 +178,11 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "cc176137fafac91fa358eb8210f6beb3",
+		"hash": "9c7d997c7c81775eac1fd1915a922dec",
 		"version": "0.0.0",
 		"deps": [
-			"wp-element"
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",
@@ -191,11 +192,12 @@
 		"handle": "hb-components-line-chart",
 		"path": "assets/js/components/line-chart.js",
 		"ext": "js",
-		"hash": "d7bf8a3931ad3380bd14bbfbbf818711",
+		"hash": "899930c51c334f4eff88e55f0168c566",
 		"version": "0.0.0",
 		"deps": [
 			"chart-js",
-			"wp-element"
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",
@@ -233,11 +235,12 @@
 		"handle": "hb-components-bar-chart",
 		"path": "assets/js/components/bar-chart.js",
 		"ext": "js",
-		"hash": "70e744fa119d7da8ba36b66a49201509",
+		"hash": "aa3a854a8cd1970d92b32d53fe793cea",
 		"version": "0.0.0",
 		"deps": [
 			"chart-js",
-			"wp-element"
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",

@@ -463,8 +463,6 @@ echo esc_html( $txt );
 					</div>
 				</div>
 			</div>
-
-			<button type="button" class="btn btn-success" id="toast-opener">トーストを開く</button>
 		</div>
 	</div>
 </section>
@@ -510,10 +508,12 @@ echo esc_html( $txt );
 	</div>
 </section>
 
-<!-- リーダビリティ -->
-<section class="md-5">
-	<h2>リーダビリティ</h2>
-	<div>
-
+<!-- Interactive Bootstrap Components -->
+<section class="mb-5">
+	<h2>Interactive Components</h2>
+	<div class="card">
+		<div class="card-body">
+			<div id="bootstrap-container"></div>
+		</div>
 	</div>
 </section>
