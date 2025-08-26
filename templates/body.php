@@ -3,13 +3,13 @@
 $user      = wp_get_current_user();
 $page      = $args['page'];
 $hashboard = $args['hashboard'];
-$child     = $args['child'];
+$child     = $args['child'] ?: '';
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<?php
-	$page->head();
+	$page->head( $child );
 	do_action( 'wp_head' );
 	?>
 </head>
@@ -97,7 +97,7 @@ $child     = $args['child'];
 
 </main>
 <?php
-$page->footer();
+$page->footer( $child );
 do_action( 'wp_footer' );
 ?>
 </body>

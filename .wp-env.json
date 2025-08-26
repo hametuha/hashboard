@@ -9,7 +9,8 @@
 		"WPMS_SMTP_HOST": "mailhog",
 		"WPMS_SMTP_PORT": 1025,
 		"WPMS_MAILER": "smtp",
-		"HAMAIL_DEBUG": true
+		"HAMAIL_DEBUG": true,
+		"WP_ENVIRONMENT_TYPE": "local"
 	},
 	"plugins": [
 		".",

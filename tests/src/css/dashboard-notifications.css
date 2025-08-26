@@ -1,0 +1,113 @@
+/**
+ * Dashboard Notifications Block Styles
+ */
+
+#notifications .notifications-list {
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+#notifications .alert {
+	margin-bottom: 0.75rem;
+	border-left-width: 4px;
+	animation: slideIn 0.3s ease-out;
+}
+
+#notifications .alert:last-child {
+	margin-bottom: 0;
+}
+
+/* Custom alert styles */
+#notifications .alert-info {
+	background-color: #cff4fc;
+	border-left-color: #0dcaf0;
+	color: #055160;
+}
+
+#notifications .alert-warning {
+	background-color: #fff3cd;
+	border-left-color: #ffc107;
+	color: #664d03;
+}
+
+#notifications .alert-success {
+	background-color: #d1e7dd;
+	border-left-color: #198754;
+	color: #0f5132;
+}
+
+#notifications .alert-danger {
+	background-color: #f8d7da;
+	border-left-color: #dc3545;
+	color: #842029;
+}
+
+/* Close button styling */
+#notifications .btn-close {
+	opacity: 0.7;
+	font-size: 0.875rem;
+}
+
+#notifications .btn-close:hover {
+	opacity: 1;
+}
+
+/* Animation */
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+/* Scrollbar styling */
+#notifications .notifications-list::-webkit-scrollbar {
+	width: 6px;
+}
+
+#notifications .notifications-list::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 3px;
+}
+
+#notifications .notifications-list::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 3px;
+}
+
+#notifications .notifications-list::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+/* Empty state */
+#notifications .notifications-list:empty::after {
+	content: 'No notifications';
+	display: block;
+	text-align: center;
+	padding: 2rem;
+	color: #6c757d;
+	font-style: italic;
+}
+
+/* Badge for notification count in header */
+#notifications .card-header::after {
+	content: attr(data-count);
+	display: inline-block;
+	margin-left: 0.5rem;
+	padding: 0.25em 0.5em;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	background-color: #dc3545;
+	border-radius: 10px;
+}
+
+#notifications .card-header[data-count="0"]::after,
+#notifications .card-header:not([data-count])::after {
+	display: none;
+}

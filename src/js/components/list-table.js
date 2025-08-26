@@ -1,10 +1,12 @@
 /*!
  * List table with pagination and search for React
  *
+ * @deps hb-components-pagination, hb-components-loading
  */
 
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+const { pagination: Pagination, loadingIndicator: LoadingIndicator } = hb.components;
 
 /**
  * List Table Component
@@ -16,7 +18,7 @@ const ListTable = ( props ) => {
 		items = [],
 		curPage = 1,
 		totalPage = 1,
-		listClass = 'list-item hb-post-list-item',
+		listClass = 'list-group-item hb-post-list-item',
 		wrapperClass = '',
 		listWrapperClass = 'list-group hb-post-list',
 		onPageChanged,
@@ -25,8 +27,8 @@ const ListTable = ( props ) => {
 		renderItem,
 		renderEmpty,
 		// Dependencies for child components
-		LoadingComponent,
-		PaginationComponent,
+		Loading = LoadingIndicator,
+		PaginationComponent = Pagination,
 	} = props;
 
 	// Compute wrapper class names
@@ -57,31 +59,6 @@ const ListTable = ( props ) => {
 		}
 	};
 
-	// Use provided components or existing hb components
-	// Note: hb.components are available at runtime, not during module evaluation
-	const getLoadingComponent = () => {
-		if ( LoadingComponent ) {
-			return LoadingComponent;
-		}
-		if ( window.hb?.components?.loading ) {
-			return window.hb.components.loading;
-		}
-		return DefaultLoading;
-	};
-
-	const getPaginationComponent = () => {
-		if ( PaginationComponent ) {
-			return PaginationComponent;
-		}
-		if ( window.hb?.components?.pagination ) {
-			return window.hb.components.pagination;
-		}
-		return DefaultPagination;
-	};
-
-	const Loading = getLoadingComponent();
-	const Pagination = getPaginationComponent();
-
 	return (
 		<div className={ wrapperClassName }>
 			{ renderHeader && renderHeader() }
@@ -101,7 +78,7 @@ const ListTable = ( props ) => {
 			) }
 
 			{ ! loading && totalPage > 1 && (
-				<Pagination
+				<PaginationComponent
 					current={ curPage }
 					total={ totalPage }
 					onPageChanged={ handlePagination }
@@ -109,57 +86,6 @@ const ListTable = ( props ) => {
 			) }
 
 			<Loading loading={ loading } />
-		</div>
-	);
-};
-
-// Fallback Loading Component (only used if hb.components.loading is not available)
-const DefaultLoading = ( { loading } ) => {
-	if ( ! loading ) {
-		return null;
-	}
-
-	// Try to use WordPress Spinner if available
-	if ( window.wp?.components?.Spinner ) {
-		const { Spinner } = window.wp.components;
-		return (
-			<div className="hb-loading-overlay">
-				<Spinner />
-			</div>
-		);
-	}
-
-	// Fallback to basic spinner
-	return (
-		<div className="hb-loading-overlay">
-			<div className="spinner-border" role="status">
-				<span className="sr-only">{ __( 'Loading...', 'hashboard' ) }</span>
-			</div>
-		</div>
-	);
-};
-
-// Fallback Pagination Component (only used if hb.components.pagination is not available)
-const DefaultPagination = ( { current, total, onPageChanged } ) => {
-	return (
-		<div className="pagination-wrapper hb-pagination">
-			<button
-				className="btn btn-sm btn-secondary"
-				onClick={ () => onPageChanged( current - 1 ) }
-				disabled={ current <= 1 }
-			>
-				{ __( 'Previous', 'hashboard' ) }
-			</button>
-			<span className="mx-3">
-				{ __( 'Page', 'hashboard' ) } { current } { __( 'of', 'hashboard' ) } { total }
-			</span>
-			<button
-				className="btn btn-sm btn-secondary"
-				onClick={ () => onPageChanged( current + 1 ) }
-				disabled={ current >= total }
-			>
-				{ __( 'Next', 'hashboard' ) }
-			</button>
 		</div>
 	);
 };

@@ -92,10 +92,11 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "2fa4c4c3fa7f5210f6d43b5eeb19da86",
+		"hash": "79a44f16ccaa214afad0c779f0ea08cb",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
+			"hb-components-list-table",
 			"wp-element"
 		],
 		"footer": true,
@@ -178,9 +179,11 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "9c7d997c7c81775eac1fd1915a922dec",
+		"hash": "e130f8500fa10a195d791bff563a7144",
 		"version": "0.0.0",
 		"deps": [
+			"hb-components-pagination",
+			"hb-components-loading",
 			"wp-element",
 			"wp-i18n"
 		],

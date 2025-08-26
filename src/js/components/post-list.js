@@ -1,11 +1,12 @@
 /*!
  * Post List component for React
  *
- * @deps wp-api-fetch
+ * @deps wp-api-fetch, hb-components-list-table
  */
 
 import { useState, useEffect, useCallback } from '@wordpress/element';
 const { apiFetch } = wp;
+const { listTable: ListTable } = hb.components;
 
 /**
  * Post List Component
@@ -25,9 +26,6 @@ const PostList = ( props ) => {
 
 	const [ loading, setLoading ] = useState( true );
 	const [ posts, setPosts ] = useState( [] );
-
-	// Get ListTable component
-	const ListTable = window.hb?.components?.listTable;
 
 	// Parse number from string prop
 	const parseNumber = ( value ) => {
@@ -108,16 +106,6 @@ const PostList = ( props ) => {
 			) }
 		</a>
 	);
-
-	// If ListTable component is not available, show fallback
-	if ( ! ListTable ) {
-		return (
-			<div className="hb-post-list">
-				{ title && <p className="hb-post-list-title">{ title }</p> }
-				<p className="text-muted">ListTable component not available</p>
-			</div>
-		);
-	}
 
 	return (
 		<div className="hb-post-list">

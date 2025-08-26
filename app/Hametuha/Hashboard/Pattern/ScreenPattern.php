@@ -46,15 +46,19 @@ abstract class ScreenPattern extends Singleton {
 
 	/**
 	 * Head action
+	 *
+	 * @param string $child If this is not child page, empty string.
 	 */
-	public function head() {
+	public function head( $child = '' ) {
 		wp_enqueue_script( 'hb-hashboard-helper' );
 	}
 
 	/**
 	 * Footer action
+	 *
+	 * @param string $child If this is not child page, empty string.
 	 */
-	public function footer() {
+	public function footer( $child = '' ) {
 		// Do something.
 	}
 

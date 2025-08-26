@@ -6,23 +6,7 @@ const { createRoot, useState, useEffect } = wp.element;
 const { Button, SearchControl, SelectControl } = wp.components;
 
 // Table components from hb namespace (available at runtime)
-let ListTable, PostList, LoadingIndicator, Pagination;
-
-// Initialize components when available
-const initTableComponents = () => {
-	if ( window.hb?.components?.listTable ) {
-		ListTable = window.hb.components.listTable;
-	}
-	if ( window.hb?.components?.postList ) {
-		PostList = window.hb.components.postList;
-	}
-	if ( window.hb?.components?.loading ) {
-		LoadingIndicator = window.hb.components.loading;
-	}
-	if ( window.hb?.components?.pagination ) {
-		Pagination = window.hb.components.pagination;
-	}
-};
+const { listTable: ListTable, postList: PostList } = hb.components;
 
 // Sample data
 const generateSamplePosts = ( count = 10 ) => {
@@ -39,7 +23,7 @@ const generateSamplePosts = ( count = 10 ) => {
 		'Performance Optimization',
 		'Accessibility Guidelines',
 	];
-	
+
 	for ( let i = 1; i <= count; i++ ) {
 		posts.push( {
 			id: i,
@@ -51,7 +35,7 @@ const generateSamplePosts = ( count = 10 ) => {
 			status: Math.random() > 0.8 ? 'draft' : 'publish',
 		} );
 	}
-	
+
 	return posts;
 };
 
@@ -59,7 +43,7 @@ const generateSampleUsers = ( count = 8 ) => {
 	const users = [];
 	const names = ['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Brown', 'Charlie Wilson', 'Diana Davis', 'Eve Miller', 'Frank Taylor'];
 	const roles = ['Administrator', 'Editor', 'Author', 'Contributor'];
-	
+
 	for ( let i = 1; i <= count; i++ ) {
 		users.push( {
 			id: i,
@@ -70,7 +54,7 @@ const generateSampleUsers = ( count = 8 ) => {
 			posts_count: Math.floor( Math.random() * 50 ),
 		} );
 	}
-	
+
 	return users;
 };
 
@@ -81,39 +65,39 @@ const ListTableTest = () => {
 	const [ currentPage, setCurrentPage ] = useState( 1 );
 	const [ searchQuery, setSearchQuery ] = useState( '' );
 	const [ statusFilter, setStatusFilter ] = useState( 'all' );
-	
+
 	const itemsPerPage = 10;
-	
+
 	// Filter and paginate data
 	const filteredPosts = posts.filter( ( post ) => {
 		const matchesSearch = post.title.rendered.toLowerCase().includes( searchQuery.toLowerCase() );
 		const matchesStatus = statusFilter === 'all' || post.status === statusFilter;
 		return matchesSearch && matchesStatus;
 	} );
-	
+
 	const totalPages = Math.ceil( filteredPosts.length / itemsPerPage );
-	const currentItems = filteredPosts.slice( 
-		( currentPage - 1 ) * itemsPerPage, 
-		currentPage * itemsPerPage 
+	const currentItems = filteredPosts.slice(
+		( currentPage - 1 ) * itemsPerPage,
+		currentPage * itemsPerPage
 	);
-	
+
 	// Handle page change
 	const handlePageChange = ( page ) => {
 		setCurrentPage( page );
 	};
-	
+
 	// Handle search
 	const handleSearch = ( query ) => {
 		setSearchQuery( query );
 		setCurrentPage( 1 );
 	};
-	
+
 	// Handle status filter
 	const handleStatusFilter = ( status ) => {
 		setStatusFilter( status );
 		setCurrentPage( 1 );
 	};
-	
+
 	// Simulate loading
 	const handleRefresh = () => {
 		setLoading( true );
@@ -122,7 +106,7 @@ const ListTableTest = () => {
 			setLoading( false );
 		}, 1000 );
 	};
-	
+
 	// Custom render functions
 	const renderHeader = () => (
 		<div className="d-flex justify-content-between align-items-center mb-3">
@@ -150,7 +134,7 @@ const ListTableTest = () => {
 			</div>
 		</div>
 	);
-	
+
 	const renderPostItem = ( post ) => (
 		<div className="d-flex justify-content-between align-items-center">
 			<div className="flex-grow-1">
@@ -168,7 +152,7 @@ const ListTableTest = () => {
 			</div>
 		</div>
 	);
-	
+
 	const renderEmpty = () => (
 		<div className="text-center py-5">
 			<p className="text-muted">No posts found matching your criteria.</p>
@@ -177,11 +161,11 @@ const ListTableTest = () => {
 			</Button>
 		</div>
 	);
-	
+
 	if ( ! ListTable ) {
 		return <p>ListTable component not available</p>;
 	}
-	
+
 	return (
 		<ListTable
 			items={ currentItems }
@@ -192,7 +176,7 @@ const ListTableTest = () => {
 			renderItem={ renderPostItem }
 			renderEmpty={ renderEmpty }
 			onPageChanged={ handlePageChange }
-			listClass="list-item p-3 border-bottom"
+			listClass="list-group-item p-3 border-bottom"
 			listWrapperClass="list-group"
 		/>
 	);
@@ -202,18 +186,18 @@ const ListTableTest = () => {
 const UserListTest = () => {
 	const [ users, setUsers ] = useState( generateSampleUsers() );
 	const [ currentPage, setCurrentPage ] = useState( 1 );
-	
+
 	const itemsPerPage = 5;
 	const totalPages = Math.ceil( users.length / itemsPerPage );
-	const currentItems = users.slice( 
-		( currentPage - 1 ) * itemsPerPage, 
-		currentPage * itemsPerPage 
+	const currentItems = users.slice(
+		( currentPage - 1 ) * itemsPerPage,
+		currentPage * itemsPerPage
 	);
-	
+
 	const renderUserItem = ( user ) => (
 		<div className="d-flex align-items-center">
-			<img 
-				src={ user.avatar } 
+			<img
+				src={ user.avatar }
 				alt={ user.name }
 				className="rounded-circle me-3"
 				width={ 40 }
@@ -229,11 +213,11 @@ const UserListTest = () => {
 			</div>
 		</div>
 	);
-	
+
 	if ( ! ListTable ) {
 		return <p>ListTable component not available</p>;
 	}
-	
+
 	return (
 		<>
 			<h4>Users</h4>
@@ -243,7 +227,7 @@ const UserListTest = () => {
 				totalPage={ totalPages }
 				renderItem={ renderUserItem }
 				onPageChanged={ setCurrentPage }
-				listClass="list-item p-3"
+				listClass="list-group-item p-3"
 				listWrapperClass="list-group border rounded"
 			/>
 		</>
@@ -254,7 +238,7 @@ const UserListTest = () => {
 const PostListTest = () => {
 	const [ posts, setPosts ] = useState( generateSamplePosts( 15 ) );
 	const [ loading, setLoading ] = useState( false );
-	
+
 	const handleRefresh = () => {
 		setLoading( true );
 		setTimeout( () => {
@@ -262,12 +246,12 @@ const PostListTest = () => {
 			setLoading( false );
 		}, 800 );
 	};
-	
+
 	if ( ! PostList ) {
 		// Fallback if PostList is not available
 		return <p>PostList component not available, using ListTable instead</p>;
 	}
-	
+
 	return (
 		<>
 			<div className="d-flex justify-content-between align-items-center mb-3">
@@ -289,8 +273,6 @@ const PostListTest = () => {
 
 // Mount tables when DOM is ready and components are available
 const initTables = () => {
-	initTableComponents();
-	
 	const tablesContainer = document.getElementById( 'tables-container' );
 	if ( tablesContainer && ListTable ) {
 		createRoot( tablesContainer ).render(

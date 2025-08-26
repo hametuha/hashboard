@@ -202,23 +202,49 @@ const LineChartTest = () => {
 
 // Mount charts when DOM is ready and components are available
 const initCharts = () => {
-	initChartComponents();
+	console.log('initCharts called');
 	
 	const chartsContainer = document.getElementById( 'charts-container' );
-	if ( chartsContainer && ( BarChart || LineChart ) ) {
-		createRoot( chartsContainer ).render(
-			<>
-				<div className="chart-section">
-					<h3>Bar Chart</h3>
-					<BarChartTest />
-				</div>
+	console.log('chartsContainer:', chartsContainer);
+	
+	if ( chartsContainer ) {
+		try {
+			initChartComponents();
+			console.log('BarChart:', BarChart, 'LineChart:', LineChart);
+			console.log('window.hb:', window.hb);
+			console.log('window.hb.components:', window.hb?.components);
+			
+			if ( BarChart || LineChart ) {
+				console.log('Rendering charts...');
+				createRoot( chartsContainer ).render(
+					<>
+						<div className="chart-section">
+							<h3>Bar Chart</h3>
+							<BarChartTest />
+						</div>
 
-				<div className="chart-section">
-					<h3>Line Chart</h3>
-					<LineChartTest />
-				</div>
-			</>
-		);
+						<div className="chart-section">
+							<h3>Line Chart</h3>
+							<LineChartTest />
+						</div>
+					</>
+				);
+			} else {
+				// Show loading message if components aren't available yet
+				const availableComponents = Object.keys(window.hb?.components || {});
+				chartsContainer.innerHTML = '<div class="alert alert-info"><p>Loading chart components...</p><p>Available hb.components: <code>' + 
+					availableComponents.join(', ') + '</code></p><p>window.Chart available: ' + 
+					(typeof window.Chart !== 'undefined') + '</p></div>';
+				
+				// Retry after a short delay
+				setTimeout( initCharts, 100 );
+			}
+		} catch (error) {
+			console.error('Error in initCharts:', error);
+			chartsContainer.innerHTML = '<div class="alert alert-danger"><p>Error initializing charts: ' + error.message + '</p></div>';
+		}
+	} else {
+		console.log('charts-container not found');
 	}
 };
 
@@ -226,5 +252,6 @@ const initCharts = () => {
 if ( document.readyState === 'loading' ) {
 	document.addEventListener( 'DOMContentLoaded', initCharts );
 } else {
-	initCharts();
+	// Add a small delay to ensure all scripts are loaded
+	setTimeout( initCharts, 50 );
 }
