@@ -3,7 +3,7 @@
 		"handle": "hb-hashboard-rest",
 		"path": "assets/js/hashboard-rest.js",
 		"ext": "js",
-		"hash": "875d85d7b880a9628741cdd8b42dbb3f",
+		"hash": "9fb012b2db1880724bf706d4543c1fed",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
@@ -18,7 +18,7 @@
 		"handle": "hb-hashboard-helper",
 		"path": "assets/js/hashboard-helper.js",
 		"ext": "js",
-		"hash": "0df68a8259a43136f448eecb5048a41b",
+		"hash": "420142494b32549154e17c2c7589ecef",
 		"version": "0.0.0",
 		"deps": [
 			"jquery",
@@ -32,10 +32,23 @@
 		"strategy": ""
 	},
 	{
+		"handle": "hb-test-TestComponent",
+		"path": "assets/js/test/TestComponent.js",
+		"ext": "js",
+		"hash": "8f21ce2098cb45082a8b36e2ae89bec9",
+		"version": "0.0.0",
+		"deps": [
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
 		"handle": "hb-plugins-toast",
 		"path": "assets/js/plugins/toast.js",
 		"ext": "js",
-		"hash": "3f13b6f3442868375a8ba3039c064a91",
+		"hash": "d41d8cd98f00b204e9800998ecf8427e",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -46,7 +59,7 @@
 		"handle": "hb-plugins-fitrows",
 		"path": "assets/js/plugins/fitrows.js",
 		"ext": "js",
-		"hash": "d35d697e9d3e0abd1c0535fa9216539b",
+		"hash": "c8079ecf444dbd04cf89654e3721eed5",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -57,7 +70,7 @@
 		"handle": "hb-plugins-date",
 		"path": "assets/js/plugins/date.js",
 		"ext": "js",
-		"hash": "3e3bf4be4fcb25245194c8a066f57eb5",
+		"hash": "2e8e482f1f0920534282319d236108d8",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -68,9 +81,46 @@
 		"handle": "hb-filters-numbers",
 		"path": "assets/js/filters/numbers.js",
 		"ext": "js",
-		"hash": "a64bd6aef1cecac39dc488ee251c340b",
+		"hash": "c1c2c5f066f87af7db976f0381606eaf",
 		"version": "0.0.0",
 		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-test-with-deps",
+		"path": "assets/js/components/test-with-deps.js",
+		"ext": "js",
+		"hash": "103bd21a9e7e7796d7f16f20002cf32b",
+		"version": "0.0.0",
+		"deps": [
+			"jquery"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-test-simple",
+		"path": "assets/js/components/test-simple.js",
+		"ext": "js",
+		"hash": "120fd7e2ecdba607e5d6f03cf16eff91",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-test-namespace",
+		"path": "assets/js/components/test-namespace.js",
+		"ext": "js",
+		"hash": "1530801baec5541fc8a56fab34f4f4a8",
+		"version": "0.0.0",
+		"deps": [
+			"wp-element"
+		],
 		"footer": true,
 		"media": "all",
 		"strategy": ""
@@ -79,7 +129,20 @@
 		"handle": "hb-components-sequence",
 		"path": "assets/js/components/sequence.js",
 		"ext": "js",
-		"hash": "da01faf74e406a23d787ba6a5775b2d5",
+		"hash": "c2698b44fcdb6a489e3be8178dfa79a1",
+		"version": "0.0.0",
+		"deps": [
+			"wp-element"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-components-sample-component",
+		"path": "assets/js/components/sample-component.js",
+		"ext": "js",
+		"hash": "d5ef7f7168fdaded691ef1d5be8139f1",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -92,7 +155,7 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "79a44f16ccaa214afad0c779f0ea08cb",
+		"hash": "d85f4943d47a3dd4d0ab81f9e12552d3",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
@@ -107,11 +170,9 @@
 		"handle": "hb-components-period-picker",
 		"path": "assets/js/components/period-picker.js",
 		"ext": "js",
-		"hash": "4021eaf4ee9f4216e1cf9a03e9ce14bd",
+		"hash": "d29b43997e732f3910004a1dc5e7eab2",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
-			"@wordpress/i18n",
 			"wp-element",
 			"wp-i18n"
 		],
@@ -123,7 +184,7 @@
 		"handle": "hb-components-password",
 		"path": "assets/js/components/password.js",
 		"ext": "js",
-		"hash": "5a041193ac0c3f2ec0eb9da13768f40c",
+		"hash": "b99987cdda50ce6749c7d0f334ecc2cc",
 		"version": "0.0.0",
 		"deps": [
 			"password-strength-meter",
@@ -137,7 +198,7 @@
 		"handle": "hb-components-pagination",
 		"path": "assets/js/components/pagination.js",
 		"ext": "js",
-		"hash": "c319c4e5b332ba1dc54f8b6611ca7d23",
+		"hash": "ce889100ca820f8ee5db37d091024486",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -150,7 +211,7 @@
 		"handle": "hb-components-month-selector",
 		"path": "assets/js/components/month-selector.js",
 		"ext": "js",
-		"hash": "64717e532e3c69f28a3683299d76ca0d",
+		"hash": "5955b9298c8d072a1eb5c5123cc3539a",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element",
@@ -164,7 +225,7 @@
 		"handle": "hb-components-loading",
 		"path": "assets/js/components/loading.js",
 		"ext": "js",
-		"hash": "22e69140095b10e33e788ab2d2da8eff",
+		"hash": "b3294ccc1f91cba90ef3bfa5dcdd2ebb",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",
@@ -179,7 +240,7 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "e130f8500fa10a195d791bff563a7144",
+		"hash": "7f98017e856093f0948a73515a46cc82",
 		"version": "0.0.0",
 		"deps": [
 			"hb-components-pagination",
@@ -195,7 +256,7 @@
 		"handle": "hb-components-line-chart",
 		"path": "assets/js/components/line-chart.js",
 		"ext": "js",
-		"hash": "899930c51c334f4eff88e55f0168c566",
+		"hash": "53a4a032e52ad424adccc1b54531f359",
 		"version": "0.0.0",
 		"deps": [
 			"chart-js",
@@ -210,7 +271,7 @@
 		"handle": "hb-components-input",
 		"path": "assets/js/components/input.js",
 		"ext": "js",
-		"hash": "d823ea5063fb4273edd59d9088f01bdd",
+		"hash": "e477e02ed2cf2b046b5a536fc1dd0dba",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -223,7 +284,7 @@
 		"handle": "hb-components-date-range",
 		"path": "assets/js/components/date-range.js",
 		"ext": "js",
-		"hash": "ede84f081596f77cd11f4a6315132662",
+		"hash": "ad548af445f1ac4c56f60847c591dfb3",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",
@@ -238,7 +299,7 @@
 		"handle": "hb-components-bar-chart",
 		"path": "assets/js/components/bar-chart.js",
 		"ext": "js",
-		"hash": "aa3a854a8cd1970d92b32d53fe793cea",
+		"hash": "9e1f2d77d59bec7e5337bc5eefb6de22",
 		"version": "0.0.0",
 		"deps": [
 			"chart-js",
@@ -250,10 +311,10 @@
 		"strategy": ""
 	},
 	{
-		"handle": "hashboard",
-		"path": "assets/css/hashboard.css",
+		"handle": "hb-app",
+		"path": "assets/css/app.css",
 		"ext": "css",
-		"hash": "c5bc88ef054fae9233775e5705c28722",
+		"hash": "81a31acd379a4db27c702e3026f07880",
 		"version": "0.0.0",
 		"deps": [
 			"material-design-icon"
@@ -263,10 +324,10 @@
 		"strategy": ""
 	},
 	{
-		"handle": "hashboard-admin-color",
-		"path": "assets/css/hashboard-admin-color.css",
+		"handle": "hb-admin-color",
+		"path": "assets/css/admin-color.css",
 		"ext": "css",
-		"hash": "c706fb982b65091559a36f20a1dd4dd0",
+		"hash": "24317f605b78c9a466d5969735ca1acc",
 		"version": "0.0.0",
 		"deps": [
 			"wp-admin"

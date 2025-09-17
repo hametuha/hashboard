@@ -3,5 +3,5 @@
  *
  */
 /*!
- * @deps @wordpress/element, @wordpress/i18n, wp-element, wp-i18n
+ * @deps wp-element, wp-i18n
  */

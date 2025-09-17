@@ -21,7 +21,7 @@
 	"scripts": {
 		"start": "wp-env start",
 		"update": "wp-env start --update",
-		"stop": "wp-env stop",
+		"stop": "wp-env stop && bash bin/stop-mailhog.sh",
 		"env": "wp-env",
 		"cli": "wp-env run cli wp",
 		"cli:test": "wp-env run tests-cli wp",
@@ -53,7 +53,7 @@
 	"license": "GPL-3.0",
 	"devDependencies": {
 		"@babel/preset-react": "^7.27.1",
-		"@kunoichi/grab-deps": "^3.0.0",
+		"@kunoichi/grab-deps": "^3.1.4",
 		"@playwright/test": "^1.54.2",
 		"@popperjs/core": "^2.11.8",
 		"@testing-library/jest-dom": "^6.6.3",
@@ -91,10 +91,17 @@
 	],
 	"grabDeps": {
 		"namespace": "hb",
-		"srcDir": "assets/js",
-		"autoHandleGeneration": true,
-		"autoImportDetection": true,
-		"globalExportGeneration": true
+		"js": {
+			"srcDir": "src/js",
+			"dumpDir": "assets/js",
+			"autoHandleGeneration": true,
+			"globalExportGeneration": true
+		},
+		"css": {
+			"srcDir": "src/css",
+			"dumpDir": "assets/css",
+			"autoHandleGeneration": true
+		}
 	},
 	"watch": {
 		"build:css": {
