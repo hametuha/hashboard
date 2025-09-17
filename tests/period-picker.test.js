@@ -25,9 +25,9 @@ global.window.hb = {
 
 // Import compiled component
 require('../assets/js/components/period-picker.js');
-const HbPeriodPicker = window.hb?.components?.periodPicker;
+const { PeriodPicker } = window.hb?.components || {};
 
-describe('HbPeriodPicker', () => {
+describe('PeriodPicker', () => {
 	const mockOnDateStart = jest.fn();
 	const mockOnDateChanged = jest.fn();
 
@@ -38,12 +38,12 @@ describe('HbPeriodPicker', () => {
 	});
 
 	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbPeriodPicker ? describe : describe.skip;
+	const skipIfNoComponent = PeriodPicker ? describe : describe.skip;
 
 	skipIfNoComponent('PeriodPicker Component Tests', () => {
 		test('renders period picker with default buttons', () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					onDateStart: mockOnDateStart,
 					onDateChanged: mockOnDateChanged
 				})
@@ -62,7 +62,7 @@ describe('HbPeriodPicker', () => {
 
 		test('renders custom period option when allowCustom is true', () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					allowCustom: true,
 					onDateStart: mockOnDateStart
 				})
@@ -74,7 +74,7 @@ describe('HbPeriodPicker', () => {
 
 		test('does not render custom option when allowCustom is false', () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					allowCustom: false,
 					onDateStart: mockOnDateStart
 				})
@@ -86,7 +86,7 @@ describe('HbPeriodPicker', () => {
 
 		test('calls onDateStart on mount with default mode', async () => {
 			render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					defaultMode: '30',
 					onDateStart: mockOnDateStart
 				})
@@ -102,7 +102,7 @@ describe('HbPeriodPicker', () => {
 
 		test('handles mode change to predefined period', async () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					defaultMode: '7',
 					onDateStart: mockOnDateStart
 				})
@@ -129,7 +129,7 @@ describe('HbPeriodPicker', () => {
 
 		test('handles quarterly period calculation', async () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					buttons: [
 						{ value: 'qtr', label: 'Current Quarter' }
 					],
@@ -160,7 +160,7 @@ describe('HbPeriodPicker', () => {
 
 		test('shows custom date range when custom mode is selected', () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					allowCustom: true,
 					onDateStart: mockOnDateStart
 				})
@@ -180,7 +180,7 @@ describe('HbPeriodPicker', () => {
 
 		test('calls onDateChanged when custom date range changes', () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					allowCustom: true,
 					onDateChanged: mockOnDateChanged
 				})
@@ -206,7 +206,7 @@ describe('HbPeriodPicker', () => {
 			delete global.window.hb.components.dateRange;
 
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					allowCustom: true,
 					onDateStart: mockOnDateStart
 				})
@@ -229,7 +229,7 @@ describe('HbPeriodPicker', () => {
 			];
 
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					buttons: customButtons,
 					onDateStart: mockOnDateStart
 				})
@@ -241,7 +241,7 @@ describe('HbPeriodPicker', () => {
 
 		test('uses custom label for custom option', () => {
 			const { container } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					allowCustom: true,
 					customLabel: 'Select Range',
 					onDateStart: mockOnDateStart
@@ -253,13 +253,13 @@ describe('HbPeriodPicker', () => {
 
 		test('generates unique component IDs', () => {
 			const { container: container1 } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					onDateStart: mockOnDateStart
 				})
 			);
 
 			const { container: container2 } = render(
-				React.createElement(HbPeriodPicker, {
+				React.createElement(PeriodPicker, {
 					onDateStart: mockOnDateStart
 				})
 			);
@@ -275,6 +275,6 @@ describe('HbPeriodPicker', () => {
 	});
 
 	test('component is exported correctly', () => {
-		expect(HbPeriodPicker).toBeDefined();
+		expect(PeriodPicker).toBeDefined();
 	});
 });
