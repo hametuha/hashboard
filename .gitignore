@@ -10,3 +10,4 @@ assets/test/
 test-results/*
 !test-results/.gitkeep
 playwright-report/
+/*.cache
