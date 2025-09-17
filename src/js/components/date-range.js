@@ -3,7 +3,7 @@
  *
  */
 
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback, useRef } from '@wordpress/element';
 import { DatePicker, Button, Popover, Flex, FlexItem } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -29,12 +29,16 @@ export const DateRange = ( props ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
 	const [ anchor, setAnchor ] = useState( null );
 
+	// Store the callback in a ref to avoid re-renders
+	const onPeriodChangedRef = useRef( onPeriodChanged );
+	onPeriodChangedRef.current = onPeriodChanged;
+
 	// 日付変更時のコールバック
 	useEffect( () => {
-		if ( onPeriodChanged && startDate && endDate ) {
-			onPeriodChanged( startDate, endDate );
+		if ( onPeriodChangedRef.current && startDate && endDate ) {
+			onPeriodChangedRef.current( startDate, endDate );
 		}
-	}, [ startDate, endDate, onPeriodChanged ] );
+	}, [ startDate, endDate ] );
 
 	// 文字列またはDateオブジェクトをDateオブジェクトに変換
 	const parseDate = ( dateValue ) => {

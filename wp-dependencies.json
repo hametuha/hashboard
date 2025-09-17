@@ -223,7 +223,7 @@
 		"handle": "hb-components-date-range",
 		"path": "assets/js/components/date-range.js",
 		"ext": "js",
-		"hash": "1cb47f6ed87b488960cfb63529d3f3c3",
+		"hash": "6a9e7d3283436c14f2f5b5c60cdd7d69",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",

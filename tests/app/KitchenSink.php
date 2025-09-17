@@ -52,7 +52,7 @@ class KitchenSink extends Screen {
 				wp_enqueue_script(
 					'hashboard-kitchen-sink-components',
 					Hashboard::url( 'assets/test/kitchen-sink-components.js' ),
-					[ 'wp-components' ],
+					[ 'wp-components', 'hb-components-date-range' ],
 					md5_file( Hashboard::dir() . '/assets/test/kitchen-sink-components.js' ),
 					true
 				);

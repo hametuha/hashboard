@@ -2,7 +2,7 @@
  * Kitchen Sink - Components Tab
  */
 
-const { createRoot, useState } = wp.element;
+const { createRoot, useState, useCallback } = wp.element;
 const {
 	Button, SelectControl, ButtonGroup, ToggleControl, Modal, RangeControl, RadioControl,
 	Notice, ProgressBar, Snackbar, Spinner
@@ -216,11 +216,45 @@ const SpinnerTest = () => {
 	);
 };
 
+// DateRange Component Test
+const DateRangeTest = () => {
+	const { DateRange } = hb.components;
+	const [ period, setPeriod ] = useState( null );
+
+	const handlePeriodChange = useCallback( ( start, end ) => {
+		setPeriod( { start, end } );
+	}, [] );
+
+	if ( ! DateRange ) {
+		return <p>DateRange component not available</p>;
+	}
+
+	return (
+		<>
+			<div id="react-datepicker-test">
+				<DateRange
+					onPeriodChanged={ handlePeriodChange }
+				/>
+			</div>
+			{ period && (
+				<p>
+					Selected period: { period.start?.toLocaleDateString() } - { period.end?.toLocaleDateString() }
+				</p>
+			) }
+		</>
+	);
+};
+
 // Mount components
 const componentsContainer = document.getElementById( 'components-container' );
 if ( componentsContainer ) {
 	createRoot( componentsContainer ).render(
 		<>
+			<div className="component-section">
+				<h3>日付選択コンポーネント</h3>
+				<DateRangeTest />
+			</div>
+
 			<div className="component-section">
 				<h3>Button Component</h3>
 				<ButtonTest />
