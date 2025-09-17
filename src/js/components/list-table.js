@@ -6,7 +6,7 @@
 
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-const { pagination: Pagination, loadingIndicator: LoadingIndicator } = hb.components;
+const { Pagination, LoadingIndicator } = hb.components;
 
 /**
  * List Table Component

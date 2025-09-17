@@ -92,7 +92,7 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "80571794e7692ea48aa76551a5f824f0",
+		"hash": "f00595e951042a15fd02d66574d31d08",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
@@ -179,7 +179,7 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "09abe515573eb09b23e0c3eb821a5297",
+		"hash": "4872f749a93f726315aba0cb7b3eb757",
 		"version": "0.0.0",
 		"deps": [
 			"hb-components-pagination",

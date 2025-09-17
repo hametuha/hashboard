@@ -3,18 +3,18 @@
  */
 
 const { createRoot, useState, useEffect } = wp.element;
-const { Button, SelectControl, RangeControl } = wp.components;
+const { Button, RangeControl } = wp.components;
 
 // Chart components from hb namespace (available at runtime)
 let BarChart, LineChart;
 
 // Initialize components when available
 const initChartComponents = () => {
-	if ( window.hb?.components?.barChart ) {
-		BarChart = window.hb.components.barChart;
+	if ( window.hb?.components?.BarChart ) {
+		BarChart = window.hb.components.BarChart;
 	}
-	if ( window.hb?.components?.lineChart ) {
-		LineChart = window.hb.components.lineChart;
+	if ( window.hb?.components?.LineChart ) {
+		LineChart = window.hb.components.LineChart;
 	}
 };
 
@@ -202,20 +202,13 @@ const LineChartTest = () => {
 
 // Mount charts when DOM is ready and components are available
 const initCharts = () => {
-	console.log('initCharts called');
-	
 	const chartsContainer = document.getElementById( 'charts-container' );
-	console.log('chartsContainer:', chartsContainer);
-	
+
 	if ( chartsContainer ) {
 		try {
 			initChartComponents();
-			console.log('BarChart:', BarChart, 'LineChart:', LineChart);
-			console.log('window.hb:', window.hb);
-			console.log('window.hb.components:', window.hb?.components);
-			
+
 			if ( BarChart || LineChart ) {
-				console.log('Rendering charts...');
 				createRoot( chartsContainer ).render(
 					<>
 						<div className="chart-section">
@@ -231,11 +224,8 @@ const initCharts = () => {
 				);
 			} else {
 				// Show loading message if components aren't available yet
-				const availableComponents = Object.keys(window.hb?.components || {});
-				chartsContainer.innerHTML = '<div class="alert alert-info"><p>Loading chart components...</p><p>Available hb.components: <code>' + 
-					availableComponents.join(', ') + '</code></p><p>window.Chart available: ' + 
-					(typeof window.Chart !== 'undefined') + '</p></div>';
-				
+				chartsContainer.innerHTML = '<div class="alert alert-info"><p>Loading chart components...</p></div>';
+
 				// Retry after a short delay
 				setTimeout( initCharts, 100 );
 			}
@@ -243,8 +233,6 @@ const initCharts = () => {
 			console.error('Error in initCharts:', error);
 			chartsContainer.innerHTML = '<div class="alert alert-danger"><p>Error initializing charts: ' + error.message + '</p></div>';
 		}
-	} else {
-		console.log('charts-container not found');
 	}
 };
 

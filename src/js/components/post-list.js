@@ -6,7 +6,7 @@
 
 import { useState, useEffect, useCallback } from '@wordpress/element';
 const { apiFetch } = wp;
-const { listTable: ListTable } = hb.components;
+const { ListTable } = hb.components;
 
 /**
  * Post List Component

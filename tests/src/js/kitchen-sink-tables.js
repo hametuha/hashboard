@@ -3,9 +3,7 @@
  *
  */
 
-alert('hogehoge');
-
-import { createRoot, useState, useEffect } from '@wordpress/element';
+import { createRoot, useState } from '@wordpress/element';
 import { Button, SearchControl, SelectControl } from '@wordpress/components';
 
 // Table components from hb namespace (available at runtime)
