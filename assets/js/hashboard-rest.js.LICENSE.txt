@@ -6,5 +6,5 @@
  * @strategy defer
  */
 /*!
- * @deps wp-api-fetch, wp-url, hb-plugins-toast
+ * @deps hb-plugins-toast, wp-api-fetch, wp-url
  */

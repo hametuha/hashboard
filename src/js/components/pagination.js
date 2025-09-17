@@ -56,13 +56,13 @@ export const PaginationButton = ( props ) => {
 
 	return (
 		<li className={ className }>
-			<a
+			<button
+				type="button"
 				className="page-link"
-				href="#"
 				onClick={ clickHandler }
 			>
 				{ icon }
-			</a>
+			</button>
 		</li>
 	);
 };

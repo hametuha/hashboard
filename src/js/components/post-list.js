@@ -61,7 +61,6 @@ export const PostList = ( props ) => {
 
 	// Fetch posts
 	const fetchPosts = useCallback( async () => {
-
 		setLoading( true );
 
 		try {

@@ -3,12 +3,12 @@
 		"handle": "hb-hashboard-rest",
 		"path": "assets/js/hashboard-rest.js",
 		"ext": "js",
-		"hash": "62b6d550fee7152da451c2eab472ecfa",
+		"hash": "41dbb31e1de4002dc0ee461efe65d621",
 		"version": "0.0.0",
 		"deps": [
+			"hb-plugins-toast",
 			"wp-api-fetch",
-			"wp-url",
-			"hb-plugins-toast"
+			"wp-url"
 		],
 		"footer": true,
 		"media": "all",
@@ -18,7 +18,7 @@
 		"handle": "hb-hashboard-helper",
 		"path": "assets/js/hashboard-helper.js",
 		"ext": "js",
-		"hash": "0df68a8259a43136f448eecb5048a41b",
+		"hash": "33877db3ed2d796f4933b857a05eda25",
 		"version": "0.0.0",
 		"deps": [
 			"jquery",
@@ -107,7 +107,7 @@
 		"handle": "hb-components-period-picker",
 		"path": "assets/js/components/period-picker.js",
 		"ext": "js",
-		"hash": "7f1d2481963dd7cd823f23825c387fe3",
+		"hash": "e0e9e0f91b42892cad60b85a99eb831a",
 		"version": "0.0.0",
 		"deps": [
 			"@wordpress/element",
@@ -137,7 +137,7 @@
 		"handle": "hb-components-pagination",
 		"path": "assets/js/components/pagination.js",
 		"ext": "js",
-		"hash": "ee3608cb9107f82ec624859540fc1d88",
+		"hash": "3e700c198fc52f049be9aa8b09611bde",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"

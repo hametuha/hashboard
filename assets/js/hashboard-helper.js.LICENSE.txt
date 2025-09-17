@@ -1,7 +1,5 @@
 /*!
  * Hashboard Helper Script
  *
- */
-/*!
  * @deps jquery, hb-plugins-toast, hb-plugins-fitrows, wp-api-fetch, wp-url
  */

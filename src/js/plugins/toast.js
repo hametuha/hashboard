@@ -23,11 +23,11 @@ const getToastContainer = () => {
 /**
  * トーストメッセージを表示する
  *
- * @param {string|Object} message 表示するメッセージ（文字列またはオプションオブジェクト）
- * @param {Object} options オプション設定（messageが文字列の場合のみ）
- * @param {string} options.icon Material Iconsのアイコン名（例: 'done', 'error', 'info'）
- * @param {string} options.type タイプクラス（'success', 'error', 'warning', 'info'）
- * @param {number} options.duration 表示時間（ミリ秒）デフォルト: 4000
+ * @param {string|Object} message          表示するメッセージ（文字列またはオプションオブジェクト）
+ * @param {Object}        options          オプション設定（messageが文字列の場合のみ）
+ * @param {string}        options.icon     Material Iconsのアイコン名（例: 'done', 'error', 'info'）
+ * @param {string}        options.type     タイプクラス（'success', 'error', 'warning', 'info'）
+ * @param {number}        options.duration 表示時間（ミリ秒）デフォルト: 4000
  * @return {HTMLElement} 作成されたトースト要素
  *
  * @example
@@ -85,14 +85,14 @@ export const toast = function( message, options = {} ) {
 	const toastElement = document.createElement( 'div' );
 	toastElement.className = 'hb-toast';
 	if ( type ) {
-		toastElement.classList.add( `hb-toast-${type}` );
+		toastElement.classList.add( `hb-toast-${ type }` );
 	}
 	toastElement.setAttribute( 'role', 'alert' );
 
 	// アイコンを追加
 	if ( finalIcon ) {
 		const iconElement = document.createElement( 'i' );
-		iconElement.className = `material-icons ${type}`;
+		iconElement.className = `material-icons ${ type }`;
 		iconElement.textContent = finalIcon;
 		toastElement.appendChild( iconElement );
 	}

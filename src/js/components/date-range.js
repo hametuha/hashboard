@@ -3,18 +3,18 @@
  *
  */
 
-import { useState, useEffect, useCallback, useRef } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { DatePicker, Button, Popover, Flex, FlexItem } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Date Range Component using WordPress native DatePicker
  *
- * @param {Object} props - Component props
- * @param {Date} props.start - Initial start date
- * @param {Date} props.end - Initial end date
+ * @param {Object}   props                 - Component props
+ * @param {Date}     props.start           - Initial start date
+ * @param {Date}     props.end             - Initial end date
  * @param {Function} props.onPeriodChanged - Callback when period changes
- * @param {string} props.separator - Date separator text
+ * @param {string}   props.separator       - Date separator text
  */
 export const DateRange = ( props ) => {
 	const {
@@ -42,16 +42,24 @@ export const DateRange = ( props ) => {
 
 	// 文字列またはDateオブジェクトをDateオブジェクトに変換
 	const parseDate = ( dateValue ) => {
-		if ( ! dateValue ) return null;
-		if ( dateValue instanceof Date ) return dateValue;
-		if ( typeof dateValue === 'string' ) return new Date( dateValue );
+		if ( ! dateValue ) {
+			return null;
+		}
+		if ( dateValue instanceof Date ) {
+			return dateValue;
+		}
+		if ( typeof dateValue === 'string' ) {
+			return new Date( dateValue );
+		}
 		return null;
 	};
 
 	// 日付フォーマット関数
 	const formatDate = ( date ) => {
 		const parsedDate = parseDate( date );
-		if ( ! parsedDate ) return '';
+		if ( ! parsedDate ) {
+			return '';
+		}
 		return parsedDate.toLocaleDateString( 'ja-JP', {
 			year: 'numeric',
 			month: '2-digit',
@@ -116,21 +124,21 @@ export const DateRange = ( props ) => {
 					shift
 					flip
 				>
-					<div style={ { 
-						padding: '12px', 
+					<div style={ {
+						padding: '12px',
 						width: 'min(320px, calc(100vw - 32px))',
-						maxWidth: '320px'
+						maxWidth: '320px',
 					} }>
-						<Flex 
-							direction="column" 
+						<Flex
+							direction="column"
 							gap={ 3 }
 							style={ { width: '100%' } }
 						>
 							<FlexItem>
-								<h4 style={ { 
-									margin: '0 0 8px 0', 
+								<h4 style={ {
+									margin: '0 0 8px 0',
 									fontSize: '14px',
-									fontWeight: '600'
+									fontWeight: '600',
 								} }>
 									{ __( 'Start Date', 'hashboard' ) }
 								</h4>
@@ -142,10 +150,10 @@ export const DateRange = ( props ) => {
 								</div>
 							</FlexItem>
 							<FlexItem>
-								<h4 style={ { 
-									margin: '12px 0 8px 0', 
+								<h4 style={ {
+									margin: '12px 0 8px 0',
 									fontSize: '14px',
-									fontWeight: '600'
+									fontWeight: '600',
 								} }>
 									{ __( 'End Date', 'hashboard' ) }
 								</h4>
@@ -157,11 +165,11 @@ export const DateRange = ( props ) => {
 								</div>
 							</FlexItem>
 							<FlexItem>
-								<div style={ { 
-									marginTop: '12px', 
+								<div style={ {
+									marginTop: '12px',
 									textAlign: 'right',
 									borderTop: '1px solid #e0e0e0',
-									paddingTop: '12px'
+									paddingTop: '12px',
 								} }>
 									<Button
 										variant="primary"

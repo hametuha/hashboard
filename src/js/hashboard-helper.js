@@ -60,7 +60,7 @@ $( document ).on( 'click', '.hb-mail-resend, .hb-mail-cancel', function( e ) {
 
 // File data store.
 const fileContainer = {};
-$( document ).on( 'change', '.hb-form input[type=file]', function( e ) {
+$( document ).on( 'change', '.hb-form input[type=file]', function() {
 	const name = $( this ).attr( 'name' );
 	if ( ! this.files.length ) {
 		if ( fileContainer[ name ] ) {

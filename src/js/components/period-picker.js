@@ -54,14 +54,6 @@ export const PeriodPicker = ( props ) => {
 		return [ start, now ];
 	}, [] );
 
-	// Notify parent of date change
-	const notify = useCallback( () => {
-		const dateRange = calculate( mode );
-		if ( onDateStart ) {
-			onDateStart( dateRange[ 0 ], dateRange[ 1 ] );
-		}
-	}, [ mode, calculate, onDateStart ] );
-
 	// Handle date picker changes (for custom mode)
 	const datePickerHandler = useCallback( ( start, end ) => {
 		if ( onDateChanged ) {

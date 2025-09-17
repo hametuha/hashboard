@@ -3,7 +3,7 @@
  *
  * Uses WordPress wp-api-fetch for REST API calls
  *
- * @deps wp-api-fetch, wp-url, hb-plugins-toast
+ * @deps hb-plugins-toast
  * @strategy defer
  */
 
@@ -33,8 +33,8 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 	 * REST API helper function using wp-api-fetch
 	 *
 	 * @param {string} method - HTTP method (GET, POST, PUT, DELETE)
-	 * @param {string} path - API endpoint path
-	 * @param {Object} data - Request data
+	 * @param {string} path   - API endpoint path
+	 * @param {Object} data   - Request data
 	 * @return {Promise} Promise that resolves with response data
 	 */
 	hbRest = function( method, path, data = {} ) {
@@ -64,7 +64,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 		}
 
 		const options = {
-			method: method,
+			method,
 			path: fullPath,
 		};
 
@@ -84,7 +84,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 					} else {
 						// For full URLs, manually add query params
 						const url = new URL( fullPath );
-						Object.keys( data ).forEach( key => {
+						Object.keys( data ).forEach( ( key ) => {
 							url.searchParams.append( key, data[ key ] );
 						} );
 						options.path = url.toString();
@@ -109,9 +109,9 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 	/**
 	 * Display message with toast
 	 *
-	 * @param {string} msg - Message to display
-	 * @param {string} color - Color class (success, error, info)
-	 * @param {string} icon - Material icon name
+	 * @param {string} msg      - Message to display
+	 * @param {string} color    - Color class (success, error, info)
+	 * @param {string} icon     - Material icon name
 	 * @param {number} duration - Duration in milliseconds
 	 */
 	hbMessage = function( msg, color = 'info', icon = null, duration = 4000 ) {
@@ -129,21 +129,19 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 			}
 		}
 
-		const message = `<i class="material-icons ${color}">${icon}</i>${msg}`;
+		const message = `<i class="material-icons ${ color }">${ icon }</i>${ msg }`;
 
 		if ( Hashboard.toast ) {
 			Hashboard.toast( message, duration );
-		} else {
-			console.log( `[${color}] ${msg}` );
 		}
 	};
 
 	/**
 	 * Get nested object property safely
 	 *
-	 * @param {Object} obj - Object to traverse
-	 * @param {string} path - Dot-notation path (e.g., 'responseJSON.message')
-	 * @param {*} defaultValue - Default value if path not found
+	 * @param {Object} obj          - Object to traverse
+	 * @param {string} path         - Dot-notation path (e.g., 'responseJSON.message')
+	 * @param {*}      defaultValue - Default value if path not found
 	 * @return {*} Value at path or default value
 	 */
 	hbValues = function( obj, path, defaultValue ) {
@@ -151,7 +149,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 		let value = obj;
 
 		for ( let i = 0; i < keys.length; i++ ) {
-			if ( value == null || ! ( keys[ i ] in value ) ) {
+			if ( value === null || value === undefined || ! ( keys[ i ] in value ) ) {
 				return defaultValue;
 			}
 			value = value[ keys[ i ] ];
@@ -178,40 +176,4 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 	window.hbMessage = hbMessage;
 	window.hbValues = hbValues;
 	window.hbRestError = hbRestError;
-
-	// Also attach to jQuery if it exists (for backward compatibility)
-	if ( window.jQuery ) {
-		window.jQuery.extend( {
-			hbRest: hbRest,
-			hbErrorMessage: hbErrorMessage,
-			hbMessage: hbMessage,
-			hbValues: hbValues,
-			hbRestError: hbRestError
-		} );
-	}
-
 }() );
-
-// Export for ES modules
-export {
-	hbRest,
-	hbErrorMessage,
-	hbMessage,
-	hbValues,
-	hbRestError
-};
-
-// Default export
-const defaultExport = hbRest;
-
-// Global registration for src/js/hashboard-rest.js
-window.hb = window.hb || {};
-window.hb.hashboardRest = window.hb.hashboardRest || {};
-window.hb.hashboardRest = Object.assign( window.hb.hashboardRest, {
-	hbRest: hbRest,
-	hbErrorMessage: hbErrorMessage,
-	hbMessage: hbMessage,
-	hbValues: hbValues,
-	hbRestError: hbRestError
-} );
-window.hb.hashboardRest = hbRest;
