@@ -45,7 +45,7 @@ const getToastContainer = () => {
  *   duration: 5000
  * });
  */
-const toast = function( message, options = {} ) {
+export const toast = function( message, options = {} ) {
 	// 引数を正規化
 	let config;
 	if ( typeof message === 'object' && message !== null ) {
@@ -138,5 +138,3 @@ const toast = function( message, options = {} ) {
 
 	return toastElement;
 };
-
-export default toast;

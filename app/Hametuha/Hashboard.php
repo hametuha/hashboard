@@ -514,7 +514,7 @@ class Hashboard extends Singleton {
 	public function enqueue_assets() {
 		if ( self::is_page() ) {
 			wp_enqueue_script( 'bootstrap' );
-			wp_enqueue_style( 'hashboard' );
+			wp_enqueue_style( 'hb-app' );
 		}
 	}
 }

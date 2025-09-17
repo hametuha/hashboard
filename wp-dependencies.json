@@ -3,7 +3,7 @@
 		"handle": "hb-hashboard-rest",
 		"path": "assets/js/hashboard-rest.js",
 		"ext": "js",
-		"hash": "9fb012b2db1880724bf706d4543c1fed",
+		"hash": "62b6d550fee7152da451c2eab472ecfa",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
@@ -12,13 +12,13 @@
 		],
 		"footer": true,
 		"media": "all",
-		"strategy": ""
+		"strategy": "defer"
 	},
 	{
 		"handle": "hb-hashboard-helper",
 		"path": "assets/js/hashboard-helper.js",
 		"ext": "js",
-		"hash": "420142494b32549154e17c2c7589ecef",
+		"hash": "0df68a8259a43136f448eecb5048a41b",
 		"version": "0.0.0",
 		"deps": [
 			"jquery",
@@ -32,23 +32,10 @@
 		"strategy": ""
 	},
 	{
-		"handle": "hb-test-TestComponent",
-		"path": "assets/js/test/TestComponent.js",
-		"ext": "js",
-		"hash": "8f21ce2098cb45082a8b36e2ae89bec9",
-		"version": "0.0.0",
-		"deps": [
-			"wp-element"
-		],
-		"footer": true,
-		"media": "all",
-		"strategy": ""
-	},
-	{
 		"handle": "hb-plugins-toast",
 		"path": "assets/js/plugins/toast.js",
 		"ext": "js",
-		"hash": "d41d8cd98f00b204e9800998ecf8427e",
+		"hash": "855b1fb74eced9591a31bd43e7bcf09e",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -59,7 +46,7 @@
 		"handle": "hb-plugins-fitrows",
 		"path": "assets/js/plugins/fitrows.js",
 		"ext": "js",
-		"hash": "c8079ecf444dbd04cf89654e3721eed5",
+		"hash": "d35d697e9d3e0abd1c0535fa9216539b",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -89,60 +76,10 @@
 		"strategy": ""
 	},
 	{
-		"handle": "hb-components-test-with-deps",
-		"path": "assets/js/components/test-with-deps.js",
-		"ext": "js",
-		"hash": "103bd21a9e7e7796d7f16f20002cf32b",
-		"version": "0.0.0",
-		"deps": [
-			"jquery"
-		],
-		"footer": true,
-		"media": "all",
-		"strategy": ""
-	},
-	{
-		"handle": "hb-components-test-simple",
-		"path": "assets/js/components/test-simple.js",
-		"ext": "js",
-		"hash": "120fd7e2ecdba607e5d6f03cf16eff91",
-		"version": "0.0.0",
-		"deps": [],
-		"footer": true,
-		"media": "all",
-		"strategy": ""
-	},
-	{
-		"handle": "hb-components-test-namespace",
-		"path": "assets/js/components/test-namespace.js",
-		"ext": "js",
-		"hash": "1530801baec5541fc8a56fab34f4f4a8",
-		"version": "0.0.0",
-		"deps": [
-			"wp-element"
-		],
-		"footer": true,
-		"media": "all",
-		"strategy": ""
-	},
-	{
 		"handle": "hb-components-sequence",
 		"path": "assets/js/components/sequence.js",
 		"ext": "js",
-		"hash": "c2698b44fcdb6a489e3be8178dfa79a1",
-		"version": "0.0.0",
-		"deps": [
-			"wp-element"
-		],
-		"footer": true,
-		"media": "all",
-		"strategy": ""
-	},
-	{
-		"handle": "hb-components-sample-component",
-		"path": "assets/js/components/sample-component.js",
-		"ext": "js",
-		"hash": "d5ef7f7168fdaded691ef1d5be8139f1",
+		"hash": "31819c622a9fed74a115ddea9269cd24",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -155,7 +92,7 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "d85f4943d47a3dd4d0ab81f9e12552d3",
+		"hash": "80571794e7692ea48aa76551a5f824f0",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
@@ -170,9 +107,11 @@
 		"handle": "hb-components-period-picker",
 		"path": "assets/js/components/period-picker.js",
 		"ext": "js",
-		"hash": "d29b43997e732f3910004a1dc5e7eab2",
+		"hash": "7f1d2481963dd7cd823f23825c387fe3",
 		"version": "0.0.0",
 		"deps": [
+			"@wordpress/element",
+			"@wordpress/i18n",
 			"wp-element",
 			"wp-i18n"
 		],
@@ -184,7 +123,7 @@
 		"handle": "hb-components-password",
 		"path": "assets/js/components/password.js",
 		"ext": "js",
-		"hash": "b99987cdda50ce6749c7d0f334ecc2cc",
+		"hash": "5a041193ac0c3f2ec0eb9da13768f40c",
 		"version": "0.0.0",
 		"deps": [
 			"password-strength-meter",
@@ -198,7 +137,7 @@
 		"handle": "hb-components-pagination",
 		"path": "assets/js/components/pagination.js",
 		"ext": "js",
-		"hash": "ce889100ca820f8ee5db37d091024486",
+		"hash": "ee3608cb9107f82ec624859540fc1d88",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -211,7 +150,7 @@
 		"handle": "hb-components-month-selector",
 		"path": "assets/js/components/month-selector.js",
 		"ext": "js",
-		"hash": "5955b9298c8d072a1eb5c5123cc3539a",
+		"hash": "265a18133daa259a789f205a1c11ab12",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element",
@@ -225,7 +164,7 @@
 		"handle": "hb-components-loading",
 		"path": "assets/js/components/loading.js",
 		"ext": "js",
-		"hash": "b3294ccc1f91cba90ef3bfa5dcdd2ebb",
+		"hash": "7c5ffddecf053b9e70b995577fd9921a",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",
@@ -240,7 +179,7 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "7f98017e856093f0948a73515a46cc82",
+		"hash": "09abe515573eb09b23e0c3eb821a5297",
 		"version": "0.0.0",
 		"deps": [
 			"hb-components-pagination",
@@ -256,7 +195,7 @@
 		"handle": "hb-components-line-chart",
 		"path": "assets/js/components/line-chart.js",
 		"ext": "js",
-		"hash": "53a4a032e52ad424adccc1b54531f359",
+		"hash": "c5f1d95072795c8572fa3474fb2b7915",
 		"version": "0.0.0",
 		"deps": [
 			"chart-js",
@@ -271,7 +210,7 @@
 		"handle": "hb-components-input",
 		"path": "assets/js/components/input.js",
 		"ext": "js",
-		"hash": "e477e02ed2cf2b046b5a536fc1dd0dba",
+		"hash": "1276ceff2054c6f6af08507bc077b825",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -284,7 +223,7 @@
 		"handle": "hb-components-date-range",
 		"path": "assets/js/components/date-range.js",
 		"ext": "js",
-		"hash": "ad548af445f1ac4c56f60847c591dfb3",
+		"hash": "1cb47f6ed87b488960cfb63529d3f3c3",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",
@@ -299,7 +238,7 @@
 		"handle": "hb-components-bar-chart",
 		"path": "assets/js/components/bar-chart.js",
 		"ext": "js",
-		"hash": "9e1f2d77d59bec7e5337bc5eefb6de22",
+		"hash": "e8e771bbd6e32627213156e5262ffbd5",
 		"version": "0.0.0",
 		"deps": [
 			"chart-js",
@@ -314,7 +253,7 @@
 		"handle": "hb-app",
 		"path": "assets/css/app.css",
 		"ext": "css",
-		"hash": "81a31acd379a4db27c702e3026f07880",
+		"hash": "eee019804c2070ad9ab1eaf2dba78e98",
 		"version": "0.0.0",
 		"deps": [
 			"material-design-icon"

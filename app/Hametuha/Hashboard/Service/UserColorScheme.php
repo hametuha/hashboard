@@ -43,7 +43,7 @@ class UserColorScheme extends Singleton {
 		 */
 		return apply_filters( 'hashboard_theme_colors', array(
 			'primary'   => '#1F1C1D',  // Bootstrap $gray-900 equivalent
-			'secondary' => '#949395',  // Bootstrap $gray-500 equivalent  
+			'secondary' => '#949395',  // Bootstrap $gray-500 equivalent
 			'success'   => '#7fae49',  // Bootstrap $green equivalent
 			'danger'    => '#f44336',  // Bootstrap $red equivalent
 			'warning'   => '#F5AC37',  // Bootstrap $yellow equivalent
@@ -139,7 +139,7 @@ class UserColorScheme extends Singleton {
 		wp_admin_css_color(
 			'hashboard',
 			__( 'Hashboard', 'hashboard' ),
-			Hashboard::url( '/assets/css/hashboard-admin-color.css' ),
+			Hashboard::url( '/assets/css/admin-color.css' ),
 			array( $colors['primary'], $colors['secondary'], $colors['success'], $colors['danger'] ),
 			array(
 				'base'    => $this->adjust_color_brightness( $colors['primary'], 20, true ),

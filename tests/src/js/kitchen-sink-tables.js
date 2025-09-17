@@ -1,12 +1,15 @@
 /*!
  * Kitchen Sink - Tables Tab
+ *
  */
 
-const { createRoot, useState, useEffect } = wp.element;
-const { Button, SearchControl, SelectControl } = wp.components;
+alert('hogehoge');
+
+import { createRoot, useState, useEffect } from '@wordpress/element';
+import { Button, SearchControl, SelectControl } from '@wordpress/components';
 
 // Table components from hb namespace (available at runtime)
-const { listTable: ListTable, postList: PostList } = hb.components;
+const { ListTable, PostList } = hb.components;
 
 // Sample data
 const generateSamplePosts = ( count = 10 ) => {

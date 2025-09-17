@@ -15,6 +15,13 @@ abstract class Screen extends ScreenPattern {
 	protected $icon = '';
 
 	/**
+	 * Current page.
+	 *
+	 * @var string
+	 */
+	protected $cur_page = '';
+
+	/**
 	 * @var array
 	 */
 	protected $children = array();
@@ -55,6 +62,15 @@ abstract class Screen extends ScreenPattern {
 	 */
 	public function get_children() {
 		return $this->children;
+	}
+
+	/**
+	 * Get current page.
+	 *
+	 * @return string
+	 */
+	public function current_page() {
+		return $this->cur_page;
 	}
 
 	/**

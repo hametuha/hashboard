@@ -1,9 +1,10 @@
 /*!
  * Hashboard REST API Helper
- * 
+ *
  * Uses WordPress wp-api-fetch for REST API calls
- * 
+ *
  * @deps wp-api-fetch, wp-url, hb-plugins-toast
+ * @strategy defer
  */
 
 import apiFetch from '@wordpress/api-fetch';
@@ -30,7 +31,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 
 	/**
 	 * REST API helper function using wp-api-fetch
-	 * 
+	 *
 	 * @param {string} method - HTTP method (GET, POST, PUT, DELETE)
 	 * @param {string} path - API endpoint path
 	 * @param {Object} data - Request data
@@ -38,7 +39,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 	 */
 	hbRest = function( method, path, data = {} ) {
 		method = method.toUpperCase();
-		
+
 		// Handle full URLs vs relative paths
 		let fullPath = path;
 		if ( ! /^https?:\/\//.test( path ) ) {
@@ -98,7 +99,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 
 	/**
 	 * Display error message
-	 * 
+	 *
 	 * @param {string} msg - Error message to display
 	 */
 	hbErrorMessage = function( msg ) {
@@ -107,7 +108,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 
 	/**
 	 * Display message with toast
-	 * 
+	 *
 	 * @param {string} msg - Message to display
 	 * @param {string} color - Color class (success, error, info)
 	 * @param {string} icon - Material icon name
@@ -127,9 +128,9 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 					break;
 			}
 		}
-		
+
 		const message = `<i class="material-icons ${color}">${icon}</i>${msg}`;
-		
+
 		if ( Hashboard.toast ) {
 			Hashboard.toast( message, duration );
 		} else {
@@ -139,7 +140,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 
 	/**
 	 * Get nested object property safely
-	 * 
+	 *
 	 * @param {Object} obj - Object to traverse
 	 * @param {string} path - Dot-notation path (e.g., 'responseJSON.message')
 	 * @param {*} defaultValue - Default value if path not found
@@ -148,20 +149,20 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 	hbValues = function( obj, path, defaultValue ) {
 		const keys = path.split( '.' );
 		let value = obj;
-		
+
 		for ( let i = 0; i < keys.length; i++ ) {
 			if ( value == null || ! ( keys[ i ] in value ) ) {
 				return defaultValue;
 			}
 			value = value[ keys[ i ] ];
 		}
-		
+
 		return value;
 	};
 
 	/**
 	 * Error handler factory
-	 * 
+	 *
 	 * @return {Function} Error handler function
 	 */
 	hbRestError = function() {
@@ -192,7 +193,7 @@ let hbRest, hbErrorMessage, hbMessage, hbValues, hbRestError;
 }() );
 
 // Export for ES modules
-export { 
+export {
 	hbRest,
 	hbErrorMessage,
 	hbMessage,
@@ -201,4 +202,16 @@ export {
 };
 
 // Default export
-export default hbRest;
+const defaultExport = hbRest;
+
+// Global registration for src/js/hashboard-rest.js
+window.hb = window.hb || {};
+window.hb.hashboardRest = window.hb.hashboardRest || {};
+window.hb.hashboardRest = Object.assign( window.hb.hashboardRest, {
+	hbRest: hbRest,
+	hbErrorMessage: hbErrorMessage,
+	hbMessage: hbMessage,
+	hbValues: hbValues,
+	hbRestError: hbRestError
+} );
+window.hb.hashboardRest = hbRest;

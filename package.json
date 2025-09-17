@@ -104,6 +104,22 @@
 		}
 	},
 	"watch": {
+		"build:js": {
+			"patterns": [
+				"src/js/**/*.js"
+			],
+			"extensions": [
+				"js"
+			]
+		},
+		"build:js:test": {
+			"patterns": [
+				"tests/src/js/**/*.js"
+			],
+			"extensions": [
+				"js"
+			]
+		},
 		"build:css": {
 			"patterns": [
 				"src/scss/**/*.scss"

@@ -184,6 +184,20 @@ $sidenav-zindex: 9999 !default;
 
 		li {
 			padding: 0;
+			position: relative;
+
+			&.active{
+				background: $sidenav-link-active-bg;
+				&::after {
+					display: inline;
+					content: "●";
+					color: $sidenav-link-icon-color;
+					position: absolute;
+					right: 10px;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
 		}
 	}
 
@@ -191,7 +205,7 @@ $sidenav-zindex: 9999 !default;
 		list-style: none;
 		&.hb-menu-item.active > a {
 			position:  relative;
-			&::after {
+			&:last-child::after {
 				display: inline;
 				content: "●";
 				color: $sidenav-link-icon-color;

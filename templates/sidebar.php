@@ -29,14 +29,16 @@
 						<?php echo wp_kses_post( $instance->get_link_label() ); ?>
 					</a>
 				<?php else : ?>
-					<a href="#" class="hb-submenu-trigger">
+					<a href="#" class="hb-submenu-trigger" aria-haspopup="true" aria-expanded="<?php echo $hashboard->current === $instance->slug() ? 'true' : 'false'; ?>">
 						<?php echo wp_kses_post( $instance->get_link_label() ); ?>
 						<i class="material-icons close right">expand_less</i>
 						<i class="material-icons open right">expand_more</i>
 					</a>
 					<ul class="hb-submenu-list">
-						<?php foreach ( $instance->get_children() as $key => $label ) : ?>
-							<li class="hb-submenu-item">
+						<?php foreach ( $instance->get_children() as $key => $label ) :
+							$is_active = $hashboard->current === $instance->slug() && $key === get_query_var( 'hashboard-child' );
+							?>
+							<li class="hb-submenu-item <?php echo $is_active ? 'active' : ''; ?>">
 								<a class="hb-submenu-link" href="<?php echo esc_url( $hashboard->get_url( $instance, $key === $instance->slug() ? '' : $key ) ); ?>">
 									<?php echo esc_html( $label ); ?>
 								</a>
