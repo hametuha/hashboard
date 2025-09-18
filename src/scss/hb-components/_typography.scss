@@ -1,3 +1,36 @@
+// このファイルにはbootstrapのデフォルトマークアップ要素をカスタマイズする内容を記載します。
+// 変数の上書きではなく、要素の追加に利用します。
+
+$main-heading-margin-top: 1.5em !default;
+$main-heading-margin-bottom: 1em !default;
+
+
+$code-bg-color: $gray-200 !default;
+$code-padding-y: .1875rem !default;
+$code-padding-x: .375rem !default;
+$pre-padding-x: 1rem !default;
+$pre-padding-y: 1rem !default;
+$pre-text-color: $gray-700 !default;
+
+// Headings
+.hb-container{
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: $main-heading-margin-top 0 $main-heading-margin-bottom;
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+
+	h6 {
+		font-weight: $font-weight-bold;
+	}
+}
+
 .section-title {
   margin: 0 0 1rem;
   font-size: 20px;
@@ -31,4 +64,16 @@
 
 i.material-icons{
   font-size: inherit;
+}
+
+// コードブロック
+code {
+	background: $code-bg-color;
+	padding: $code-padding-y $code-padding-x;
+}
+
+pre {
+	padding: $pre-padding-y $pre-padding-x;
+	background-color: $code-bg-color;
+	color: $pre-text-color;
 }

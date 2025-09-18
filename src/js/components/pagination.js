@@ -11,7 +11,7 @@ import { useMemo } from '@wordpress/element';
  * @param {Object} props - Component properties
  * @return {JSX.Element} Rendered pagination button
  */
-const PaginationButton = ( props ) => {
+export const PaginationButton = ( props ) => {
 	const {
 		number,
 		current = false,
@@ -56,13 +56,13 @@ const PaginationButton = ( props ) => {
 
 	return (
 		<li className={ className }>
-			<a
+			<button
+				type="button"
 				className="page-link"
-				href="#"
 				onClick={ clickHandler }
 			>
 				{ icon }
-			</a>
+			</button>
 		</li>
 	);
 };
@@ -73,7 +73,7 @@ const PaginationButton = ( props ) => {
  * @param {Object} props - Component properties
  * @return {JSX.Element} Rendered pagination component
  */
-const Pagination = ( props ) => {
+export const Pagination = ( props ) => {
 	const {
 		total,
 		current,
@@ -165,4 +165,3 @@ const Pagination = ( props ) => {
 	);
 };
 
-export default Pagination;

@@ -7,3 +7,7 @@ composer.lock
 compose.yaml
 assets/test/
 .claude/settings.local.json
+test-results/*
+!test-results/.gitkeep
+playwright-report/
+/*.cache

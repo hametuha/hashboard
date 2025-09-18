@@ -1,7 +1,6 @@
 /*!
  * Hashboard main stylesheet.
  *
- * @handle hashboard
  * @deps material-design-icon
  */
 $hb-img-path: '../img' !default;
@@ -12,9 +11,15 @@ $hb-img-path: '../img' !default;
 // Bootstrapのオーバーライド変数を先に読み込む
 @import "hb_bootstrap_override";
 
+// CSS Variables (SASS → CSS変数マッピング)
+@import "hb_css_variables";
+
 // Bootstrapを読み込む
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 // グローバル変数とコンポーネントを読み込む
 @import "hb_globals";
 @import "_hb-components";
+
+// WordPress Components Color Override
+@import "wp-components-override";

@@ -1,16 +1,17 @@
 /*!
  * Line chart component for React
  *
- * @deps @wordpress/element, chart.js
+ * @deps chart-js
  */
 
 import { useEffect, useRef, useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Line Chart Component
  * @param {Object} props - Component props
  */
-const LineChart = ( props ) => {
+export const LineChart = ( props ) => {
 	const {
 		chartData,
 		options = {},
@@ -82,7 +83,7 @@ const LineChart = ( props ) => {
 	if ( ! chartData ) {
 		return (
 			<div className="hb-line-chart">
-				<p>No data available</p>
+				<p className="hb-no-data hb-no-data-chart">{ __( 'No data available', 'hashboard' ) }</p>
 			</div>
 		);
 	}
@@ -98,5 +99,3 @@ const LineChart = ( props ) => {
 	);
 };
 
-// Export component
-export default LineChart;

@@ -1,16 +1,18 @@
 /*!
  * Post List component for React
  *
- * @deps @wordpress/element, @wordpress/api-fetch
+ * @deps wp-api-fetch, hb-components-list-table
  */
 
 import { useState, useEffect, useCallback } from '@wordpress/element';
+const { apiFetch } = wp;
+const { ListTable } = hb.components;
 
 /**
  * Post List Component
  * @param {Object} props - Component props
  */
-const PostList = ( props ) => {
+export const PostList = ( props ) => {
 	const {
 		title = '',
 		postType = 'post',
@@ -24,9 +26,6 @@ const PostList = ( props ) => {
 
 	const [ loading, setLoading ] = useState( true );
 	const [ posts, setPosts ] = useState( [] );
-
-	// Get ListTable component
-	const ListTable = window.hb?.components?.listTable;
 
 	// Parse number from string prop
 	const parseNumber = ( value ) => {
@@ -62,12 +61,6 @@ const PostList = ( props ) => {
 
 	// Fetch posts
 	const fetchPosts = useCallback( async () => {
-		if ( typeof window.wp?.apiFetch !== 'function' ) {
-			// eslint-disable-next-line no-console
-			console.error( 'wp.apiFetch is not available' );
-			return;
-		}
-
 		setLoading( true );
 
 		try {
@@ -83,7 +76,7 @@ const PostList = ( props ) => {
 			const queryString = new URLSearchParams( query ).toString();
 			const path = `wp/v2/${ postType }?${ queryString }`;
 
-			const response = await window.wp.apiFetch( { path } );
+			const response = await apiFetch( { path } );
 			setPosts( response );
 		} catch ( error ) {
 			// eslint-disable-next-line no-console
@@ -113,16 +106,6 @@ const PostList = ( props ) => {
 		</a>
 	);
 
-	// If ListTable component is not available, show fallback
-	if ( ! ListTable ) {
-		return (
-			<div className="hb-post-list">
-				{ title && <p className="hb-post-list-title">{ title }</p> }
-				<p className="text-muted">ListTable component not available</p>
-			</div>
-		);
-	}
-
 	return (
 		<div className="hb-post-list">
 			{ title && <p className="hb-post-list-title">{ title }</p> }
@@ -145,5 +128,3 @@ const PostList = ( props ) => {
 	);
 };
 
-// Export component
-export default PostList;

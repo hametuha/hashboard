@@ -12,7 +12,8 @@
 		"jquery": true
 	},
 	"globals": {
-		"wp": false
+		"wp": false,
+		"hb": false
 	},
 	"extends": [
 		"plugin:@wordpress/eslint-plugin/recommended-with-formatting"

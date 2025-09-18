@@ -15,13 +15,13 @@ global.wp = {
 };
 
 // Import components after setting up mocks
-require('../src/js/components/pagination.js');
-const { HbPagination, HbPaginationButton } = window.hb.components;
+require('../assets/js/components/pagination.js');
+const { Pagination, PaginationButton } = window.hb.components || {};
 
-describe('HbPaginationButton', () => {
+describe('PaginationButton', () => {
 	test('renders page number correctly', () => {
 		const { container } = render(
-			React.createElement(HbPaginationButton, {
+			React.createElement(PaginationButton, {
 				number: 5,
 				current: false,
 				disabled: false,
@@ -34,7 +34,7 @@ describe('HbPaginationButton', () => {
 
 	test('renders left chevron icon', () => {
 		const { container } = render(
-			React.createElement(HbPaginationButton, {
+			React.createElement(PaginationButton, {
 				number: 1,
 				label: 'left',
 				disabled: false,
@@ -49,7 +49,7 @@ describe('HbPaginationButton', () => {
 
 	test('applies active class when current', () => {
 		const { container } = render(
-			React.createElement(HbPaginationButton, {
+			React.createElement(PaginationButton, {
 				number: 3,
 				current: true,
 				onPaginated: jest.fn()
@@ -61,7 +61,7 @@ describe('HbPaginationButton', () => {
 
 	test('applies disabled class when disabled', () => {
 		const { container } = render(
-			React.createElement(HbPaginationButton, {
+			React.createElement(PaginationButton, {
 				number: 1,
 				disabled: true,
 				onPaginated: jest.fn()
@@ -74,7 +74,7 @@ describe('HbPaginationButton', () => {
 	test('calls onPaginated when clicked', () => {
 		const mockOnPaginated = jest.fn();
 		const { container } = render(
-			React.createElement(HbPaginationButton, {
+			React.createElement(PaginationButton, {
 				number: 5,
 				current: false,
 				disabled: false,
@@ -89,7 +89,7 @@ describe('HbPaginationButton', () => {
 	test('does not call onPaginated when disabled', () => {
 		const mockOnPaginated = jest.fn();
 		const { container } = render(
-			React.createElement(HbPaginationButton, {
+			React.createElement(PaginationButton, {
 				number: 5,
 				disabled: true,
 				onPaginated: mockOnPaginated
@@ -101,10 +101,10 @@ describe('HbPaginationButton', () => {
 	});
 });
 
-describe('HbPagination', () => {
+describe('Pagination', () => {
 	test('renders basic pagination correctly', () => {
 		const { container } = render(
-			React.createElement(HbPagination, {
+			React.createElement(Pagination, {
 				total: 10,
 				current: 5,
 				max: 5,
@@ -119,7 +119,7 @@ describe('HbPagination', () => {
 
 	test('renders small pagination without ellipsis', () => {
 		const { container } = render(
-			React.createElement(HbPagination, {
+			React.createElement(Pagination, {
 				total: 3,
 				current: 2,
 				max: 5,
@@ -134,7 +134,7 @@ describe('HbPagination', () => {
 
 	test('applies center alignment class', () => {
 		const { container } = render(
-			React.createElement(HbPagination, {
+			React.createElement(Pagination, {
 				total: 10,
 				current: 5,
 				align: 'center',
@@ -148,7 +148,7 @@ describe('HbPagination', () => {
 	test('calls onPageChanged when page is clicked', () => {
 		const mockOnPageChanged = jest.fn();
 		const { container } = render(
-			React.createElement(HbPagination, {
+			React.createElement(Pagination, {
 				total: 10,
 				current: 5,
 				max: 5,
@@ -166,7 +166,7 @@ describe('HbPagination', () => {
 
 	test('disables previous button on first page', () => {
 		const { container } = render(
-			React.createElement(HbPagination, {
+			React.createElement(Pagination, {
 				total: 10,
 				current: 1,
 				max: 5,
@@ -180,7 +180,7 @@ describe('HbPagination', () => {
 
 	test('disables next button on last page', () => {
 		const { container } = render(
-			React.createElement(HbPagination, {
+			React.createElement(Pagination, {
 				total: 10,
 				current: 10,
 				max: 5,

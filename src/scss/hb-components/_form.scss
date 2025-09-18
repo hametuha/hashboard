@@ -4,6 +4,7 @@ $filedset-border-color: $fieldset-color !default;
 $fieldset-border-width: 50px !default;
 $fieldset-border-height: 5px !default;
 $label-icon-color: $gray-500 !default;
+$form-row-gap: 1em !default;
 
 .hb-form{
   & + & {
@@ -18,6 +19,10 @@ $label-icon-color: $gray-500 !default;
   }
 }
 
+.form-row {
+	margin-bottom: $form-row-gap;
+}
+
 // Icon in label
 .form-row,.input-group{
   label > .prefix {
@@ -30,7 +35,6 @@ $label-icon-color: $gray-500 !default;
 
 .hb-fieldset{
   padding: 0.35em 0 0.75em;
-  @extend %hb-row;
   border-color: $fieldset-color;
   margin-bottom: $fieldset-margin;
   &-description{
@@ -41,9 +45,6 @@ $label-icon-color: $gray-500 !default;
     color: $fieldset-color;
     padding: 5px 0;
     font-weight: bold;
-  }
-  .form-row{
-    margin-bottom: 1em;
   }
 }
 

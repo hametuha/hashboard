@@ -37,7 +37,49 @@ jobs:
         run: npm install
 
       - name: Run Jest
-        run: npm test
+        run: npm run test:js
+
+      - name: Run Lint
+        run: npm run lint:js
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Install NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Run NPM install
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Start WordPress Environment
+        run: npm start &
+
+      - name: Wait for WordPress to be ready
+        run: |
+          timeout 600 bash -c 'until curl -f http://localhost:8888/wp-json/wp/v2/posts > /dev/null 2>&1; do sleep 5; done'
+
+      - name: Run E2E Tests
+        run: npm run test:e2e
+
+      - name: Upload E2E Test Results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-test-results
+          path: test-results/
+          retention-days: 7
+
+      - name: Stop WordPress Environment
+        if: always()
+        run: npm stop
 
   status-check:
     name: Status Check

@@ -15,6 +15,13 @@ abstract class Screen extends ScreenPattern {
 	protected $icon = '';
 
 	/**
+	 * Current page.
+	 *
+	 * @var string
+	 */
+	protected $cur_page = '';
+
+	/**
 	 * @var array
 	 */
 	protected $children = array();
@@ -55,6 +62,15 @@ abstract class Screen extends ScreenPattern {
 	 */
 	public function get_children() {
 		return $this->children;
+	}
+
+	/**
+	 * Get current page.
+	 *
+	 * @return string
+	 */
+	public function current_page() {
+		return $this->cur_page;
 	}
 
 	/**
@@ -290,6 +306,7 @@ abstract class Screen extends ScreenPattern {
 				printf( '<p class="form-text hb-input-description">%s</p>', wp_kses_post( $fields['description'] ) );
 			}
 		}
+
 		/**
 		 * hashboard_after_field_rendered
 		 *
@@ -303,19 +320,18 @@ abstract class Screen extends ScreenPattern {
 		// Wrap fields.
 		if ( ! in_array( $fields['type'], array( 'separator' ) ) ) {
 			$out = sprintf(
-				'<div class="%s col-12 col-md-%d">%s</div>',
+				'<div class="%s col-12 col-sm-%d">%s</div>',
 				'file' == $fields['type'] ? 'file-field' : '',
 				( is_numeric( $fields['col'] ) && $fields['col'] ) ? ceil( 12 / $fields['col'] ) : 12,
 			$out );
 		}
 		if ( 'open' == $fields['group'] ) {
-			$out = '<div class="form-row">' . $out;
+			$out = '<div class="row form-row">' . $out;
 		} elseif ( 'close' == $fields['group'] ) {
 			$out .= '</div>';
 		} else {
-			$out = '<div class="form-row">' . $out . '</div>';
+			$out = '<div class="row form-row">' . $out . '</div>';
 		}
 		echo $out;
 	}
-
 }

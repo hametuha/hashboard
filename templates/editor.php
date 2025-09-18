@@ -1,17 +1,24 @@
 <?php
-/** @var \Hametuha\Hashboard\Pattern\Editor $editor */
-/** @var string $label */
-/** @var string $back_url */
-/** @var string $child */
+/**
+ * Editor Template.
+ * @var array{
+ *     label:string,
+ *     back_url:string,
+ *     page:string,
+ *     child:string,
+ *     editor:\Hametuha\Hashboard\Pattern\Editor,
+ *     object:mixed
+ * } $args
+ */
 $user = wp_get_current_user();
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
-	<title><?php echo esc_html( $label ); ?> | <?php bloginfo( 'name' ); ?></title>
+	<title><?php echo esc_html( $args['label'] ); ?> | <?php bloginfo( 'name' ); ?></title>
 	<?php
-	$editor->head();
-	$editor->enqueue_scripts();
+	$args['editor']->head( $args['child'] );
+	$args['editor']->enqueue_scripts();
 	do_action( 'wp_head' );
 	?>
 </head>
@@ -22,10 +29,10 @@ $user = wp_get_current_user();
 		<div class="hb-container">
 			<div class="nav-wrapper hb-nav-wrapper">
 				<span class="hb-header-title">
-					<?php echo esc_html( $label ); ?>
+					<?php echo esc_html( $args['label'] ); ?>
 				</span>
 				<a title="<?php esc_attr_e( 'Return', 'hashboard' ); ?>" class="btn btn-circle btn-sm btn-link btn-floating waves-effect"
-					href="<?php echo esc_url( $back_url ); ?>">
+					href="<?php echo esc_url( $args['back_url'] ); ?>">
 					<i class="material-icons">chevron_left</i>
 				</a>
 			</div>
@@ -43,9 +50,9 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $editor
 				 * @param string $child
 				 */
-				do_action( 'hashboard_before_main', $editor, $child );
+				do_action( 'hashboard_before_main', $args['editor'], $args['child'] );
 
-				$editor->content();
+				$args['editor']->content();
 
 				/**
 				 * hashboard_after_main
@@ -55,15 +62,14 @@ $user = wp_get_current_user();
 				 * @param \Hametuha\Hashboard\Pattern\Screen $page
 				 * @param string $child
 				 */
-				do_action( 'hashboard_after_main', $editor, $child );
+				do_action( 'hashboard_after_main', $args['editor'], $args['child'] );
 				?>
-
 			</div>
 		</div>
 	</div>
 
 </div>
-<?php $editor->footer(); ?>
+<?php $args['editor']->footer( $args['child'] ); ?>
 <?php do_action( 'wp_footer' ); ?>
 </body>
 </html>

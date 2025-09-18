@@ -1,7 +1,6 @@
 /*!
  * Input field component for React
  *
- * @deps @wordpress/element
  */
 
 import { useState, useEffect } from '@wordpress/element';
@@ -10,7 +9,7 @@ import { useState, useEffect } from '@wordpress/element';
  * Input Field Component
  * @param {Object} props - Component props
  */
-const InputField = ( props ) => {
+export const InputField = ( props ) => {
 	const {
 		id,
 		original = '',
@@ -150,5 +149,3 @@ const InputField = ( props ) => {
 	);
 };
 
-// Export component
-export default InputField;

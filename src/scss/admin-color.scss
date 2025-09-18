@@ -1,0 +1,64 @@
+/*!
+ * Hashboard Admin Color Scheme
+ * WordPress Admin Color Scheme powered by Bootstrap variables
+ *
+ * @deps wp-admin
+ */
+
+// Use sass:color for color manipulation
+@use "sass:color";
+
+// Use WordPress Core SCSS with our custom variables
+@use "wp-admin-colors/admin" with (
+  $scheme-name: "hashboard",
+  $base-color: #1F1C1D,                    // Bootstrap $primary (gray-900) equivalent
+  $highlight-color: #949395,               // Bootstrap $secondary (gray-500) equivalent
+  $notification-color: #f44336,            // Bootstrap $danger equivalent
+  $link: #1F1C1D,
+  $link-focus: color.adjust(#1F1C1D, $lightness: 20%),
+  $button-color: #1F1C1D,
+  $menu-submenu-text: #e9ecef, // gray-200
+  $menu-submenu-focus-text: #fff,
+  $menu-submenu-background: color.adjust(#1F1C1D, $lightness: -10%)
+);
+
+// Import Bootstrap variables after @use for CSS variable generation
+@import "hb_bootstrap_override";
+
+// Additional Hashboard-specific overrides for Bootstrap/WP Components integration
+body.admin-color-hashboard {
+  // Bootstrap integration CSS variables
+  --bs-primary: #{$primary};
+  --bs-secondary: #{$secondary};
+  --bs-success: #{$success};
+  --bs-danger: #{$danger};
+  --bs-warning: #{$warning};
+
+  // WordPress Components integration
+  --wp-components-color-accent: #{$primary};
+  --wp-components-color-accent-darker-10: #{darken($primary, 10%)};
+  --wp-components-color-accent-darker-20: #{darken($primary, 20%)};
+
+  // Ensure theme colors are properly set
+  --wp-admin-theme-color: #{$primary};
+  --wp-admin-theme-color-darker-10: #{darken($primary, 10%)};
+  --wp-admin-theme-color-darker-20: #{darken($primary, 20%)};
+}
+
+// Block Editor integration
+body.admin-color-hashboard .editor-styles-wrapper {
+  --wp-admin-theme-color: #{$primary};
+  --wp-admin-theme-color-darker-10: #{darken($primary, 10%)};
+  --wp-admin-theme-color-darker-20: #{darken($primary, 20%)};
+}
+
+// Frontend Hashboard pages - ensure consistent colors
+.hashboard-page,
+body[class*="hashboard"] {
+  --wp-admin-theme-color: #{$primary};
+  --wp-admin-theme-color-darker-10: #{darken($primary, 10%)};
+  --wp-admin-theme-color-darker-20: #{darken($primary, 20%)};
+  --wp-components-color-accent: #{$primary};
+  --wp-components-color-accent-darker-10: #{darken($primary, 10%)};
+  --wp-components-color-accent-darker-20: #{darken($primary, 20%)};
+}

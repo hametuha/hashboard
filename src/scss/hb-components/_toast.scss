@@ -1,36 +1,107 @@
 $toast-padding: 1em !default;
-$toast-color: #fff !default;
+$toast-color: $white !default;
 $toast-bg: $gray-900 !default;
 $toast-bottom-padding: 20px;
 $toast-box-shadow: 0 0 5px 3px rgba(0, 0, 0, .2) !default;
+$toast-margin: 10px !default;
+$toast-max-width: 350px !default;
+$toast-min-width: 250px !default;
 
-.toast{
-  position: fixed;
-  left: 50%;
-  max-width: 80%;
-  transform: translateX(-50%);
-  opacity: 0;
-  bottom: 0;
-  padding: $toast-padding;
-  transition: opacity .5s linear, bottom .5s ease-in-out;
-  background: $toast-bg;
-  color: $toast-color;
-  box-shadow: $toast-box-shadow;
-  &.init{
-    opacity: 1;
-    bottom: $toast-bottom-padding;
-  }
-  .material-icons{
-    vertical-align:middle;
-    margin-right: 10px;
-  }
-  .success{
-    color: $success;
-  }
-  .info{
-    color: $secondary;
-  }
-  .error{
-    color: $danger;
-  }
+.hb-toast-container {
+	position: fixed;
+	right: $toast-margin;
+	bottom: $toast-margin;
+	display: flex;
+	flex-direction: column-reverse; // 新しいトーストを下から追加
+	align-items: flex-end;
+	gap: $toast-margin;
+	z-index: 10000;
+	pointer-events: none; // コンテナ自体はクリックイベントを通過
+}
+
+.hb-toast {
+	max-width: $toast-max-width;
+	min-width: $toast-min-width;
+	opacity: 0;
+	padding: $toast-padding;
+	transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+	background: $toast-bg;
+	color: $toast-color;
+	box-shadow: $toast-box-shadow;
+	border-radius: 4px;
+	pointer-events: auto; // トースト自体はクリック可能
+	transform: translateX(100%);
+
+	&.init {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	&.removing {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
+	// トーストタイプごとの背景色
+	&.hb-toast-success {
+		background: $success;
+	}
+
+	&.hb-toast-error {
+		background: $danger;
+	}
+
+	&.hb-toast-warning {
+		background: $warning;
+		color: $dark;
+
+		.material-icons {
+			color: $dark;
+		}
+	}
+
+	&.hb-toast-info {
+		background: $info;
+	}
+
+	.material-icons {
+		vertical-align: text-top;
+		margin-right: 10px;
+		font-size: 1.2em;
+		color: inherit;
+	}
+
+	// デフォルトスタイル（タイプ指定なし）でのアイコン色
+	&:not([class*="hb-toast-"]) {
+		.material-icons {
+			&.success {
+				color: lighten($success, 20%);
+			}
+
+			&.error {
+				color: lighten($danger, 20%);
+			}
+
+			&.warning {
+				color: $warning;
+			}
+
+			&.info {
+				color: lighten($info, 20%);
+			}
+		}
+	}
+}
+
+// レスポンシブ対応
+@include media-breakpoint-down(md) {
+	.hb-toast-container {
+		left: $toast-margin;
+		right: $toast-margin;
+	}
+
+	.hb-toast {
+		max-width: 100%;
+		min-width: auto;
+	}
 }

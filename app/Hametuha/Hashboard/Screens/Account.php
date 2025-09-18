@@ -111,17 +111,23 @@ class Account extends Screen {
 			$controller = UserMail::get_instance();
 			if ( $controller->has_queue( $user->ID ) ) {
 				?>
-				<div class="alert alert-warning hb-warning">
+				<div class="alert alert-warning hb-warning mt-2">
 					<?php
 					printf(
 						// translators:
-						wp_kses_post( __( 'You are now requesting <code>%1$s</code> as new email. Please check your mail box and finish confirmation. Otherwise, <a href="%2$s" class="hb-mail-resend alert-link">resend</a> or <a href="%2$s" class="hb-mail-cancel alert-link">cancel request</a>.', 'hashboard' ) ),
+						wp_kses_post( __( 'You are now requesting <code>%1$s</code> as new email. Please check your mailbox and finish confirmation. Otherwise, <a href="%2$s" class="hb-mail-resend alert-link">resend</a> or <a href="%2$s" class="hb-mail-cancel alert-link">cancel request</a>.', 'hashboard' ) ),
 						esc_html( get_user_meta( $user->ID, $controller::NEW_MAIL_KEY, true ) ),
 						rest_url( 'hashboard/v1/user/account' )
 					)
 					?>
 				</div>
 				<?php
+			}
+			if ( filter_input( INPUT_GET, 'emailchanged' ) ) {
+				printf(
+					'<div class="alert alert-success mt-2">%s</div>',
+					esc_html__( 'Your email is successfully changed.', 'hashboard' )
+				);
 			}
 		}
 		if ( 'user_pass2' == $key ) {
@@ -144,7 +150,7 @@ class Account extends Screen {
 	/**
 	 * Footer action
 	 */
-	public function footer() {
+	public function footer( $child = '' ) {
 		wp_enqueue_script( 'hb-components-password' );
 	}
 }

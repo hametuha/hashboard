@@ -1,7 +1,7 @@
 /*!
- * Date range picker
+ * Date range picker using WordPress DatePicker components
  *
  */
 /*!
- * @deps wp-components, wp-element
+ * @deps wp-components, wp-element, wp-i18n
  */

@@ -9,14 +9,16 @@
 		"WPMS_SMTP_HOST": "mailhog",
 		"WPMS_SMTP_PORT": 1025,
 		"WPMS_MAILER": "smtp",
-		"HAMAIL_DEBUG": true
+		"HAMAIL_DEBUG": true,
+		"WP_ENVIRONMENT_TYPE": "local"
 	},
 	"plugins": [
 		".",
 		"https://downloads.wordpress.org/plugin/wp-mail-smtp.zip",
 		"https://downloads.wordpress.org/plugin/query-monitor.latest-stable.zip",
 		"https://downloads.wordpress.org/plugin/localhost2host-docker-internal.latest-stable.zip",
-		"https://downloads.wordpress.org/plugin/fakerpress.latest-stable.zip"
+		"https://downloads.wordpress.org/plugin/fakerpress.latest-stable.zip",
+		"https://github.com/tarosky/viewport-grid/releases/latest/download/viewport-grid.zip"
 	],
 	"themes": [
 		"https://downloads.wordpress.org/theme/twentytwentyfive.latest-stable.zip"

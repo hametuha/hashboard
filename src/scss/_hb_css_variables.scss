@@ -1,0 +1,105 @@
+/*!
+ * Hashboard CSS Variables
+ * Maps SASS variables to CSS custom properties for runtime theming
+ */
+
+// Import Bootstrap override variables
+@import "hb_bootstrap_override";
+
+// Generate CSS variables from SASS variables
+:root {
+  // Core theme colors (mapped from SASS variables)
+  --hb-primary: #{$primary};
+  --hb-primary-rgb: #{red($primary), green($primary), blue($primary)};
+  --hb-secondary: #{$secondary};
+  --hb-secondary-rgb: #{red($secondary), green($secondary), blue($secondary)};
+  --hb-success: #{$success};
+  --hb-success-rgb: #{red($success), green($success), blue($success)};
+  --hb-danger: #{$danger};
+  --hb-danger-rgb: #{red($danger), green($danger), blue($danger)};
+  --hb-warning: #{$warning};
+  --hb-warning-rgb: #{red($warning), green($warning), blue($warning)};
+
+  // Brand colors
+  --hb-yellow: #{$yellow};
+  --hb-brown: #{$brown};
+  --hb-red: #{$red};
+  --hb-blue: #{$blue};
+  --hb-green: #{$green};
+
+  // UI colors
+  --hb-link-color: #{$link-color};
+  --hb-code-color: #{$code-color};
+  --hb-site-title-color: #{$site-title-color};
+  --hb-page-description-color: #{$page-description-color};
+  --hb-page-description-bg: #{$page-description-bg};
+  --hb-separator-color: #{$separator-color};
+
+  // Layout variables
+  --hb-navbar-height: #{$navbar-height};
+  --hb-sidenav-padding: #{$sidenav-padding};
+  --hb-site-icon-max-width: #{$site-icon-max-width};
+
+  // Animation
+  --hb-animation-duration: #{$animation-duration};
+
+  // Color variations (automatically generated)
+  --hb-primary-darker-10: #{darken($primary, 10%)};
+  --hb-primary-darker-20: #{darken($primary, 20%)};
+  --hb-primary-lighter-10: #{lighten($primary, 10%)};
+  --hb-primary-lighter-20: #{lighten($primary, 20%)};
+
+  --hb-success-darker-10: #{darken($success, 10%)};
+  --hb-success-darker-20: #{darken($success, 20%)};
+
+  --hb-danger-darker-10: #{darken($danger, 10%)};
+  --hb-danger-darker-20: #{darken($danger, 20%)};
+
+  --hb-warning-darker-10: #{darken($warning, 10%)};
+  --hb-warning-darker-20: #{darken($warning, 20%)};
+
+  // Bootstrap variable overrides for consistency
+  --bs-primary: var(--hb-primary);
+  --bs-primary-rgb: var(--hb-primary-rgb);
+  --bs-secondary: var(--hb-secondary);
+  --bs-secondary-rgb: var(--hb-secondary-rgb);
+  --bs-success: var(--hb-success);
+  --bs-success-rgb: var(--hb-success-rgb);
+  --bs-danger: var(--hb-danger);
+  --bs-danger-rgb: var(--hb-danger-rgb);
+  --bs-warning: var(--hb-warning);
+  --bs-warning-rgb: var(--hb-warning-rgb);
+
+  // WordPress component variables
+  --wp-admin-theme-color: var(--hb-primary);
+  --wp-admin-theme-color-darker-10: var(--hb-primary-darker-10);
+  --wp-admin-theme-color-darker-20: var(--hb-primary-darker-20);
+  --wp-components-color-accent: var(--hb-primary);
+  --wp-components-color-accent-darker-10: var(--hb-primary-darker-10);
+  --wp-components-color-accent-darker-20: var(--hb-primary-darker-20);
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Override variables for dark mode if needed
+    --hb-link-color: #{lighten($link-color, 40%)};
+    --hb-site-title-color: #{lighten($site-title-color, 60%)};
+  }
+}
+
+// Alternative color schemes (can be toggled via CSS classes)
+.hb-theme-blue {
+  --hb-primary: var(--hb-blue);
+  --hb-primary-rgb: #{red($blue), green($blue), blue($blue)};
+}
+
+.hb-theme-green {
+  --hb-primary: var(--hb-green);
+  --hb-primary-rgb: #{red($green), green($green), blue($green)};
+}
+
+.hb-theme-red {
+  --hb-primary: var(--hb-red);
+  --hb-primary-rgb: #{red($red), green($red), blue($red)};
+}

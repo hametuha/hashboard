@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
  * Month Selector Component
  * @param {Object} props - Component props
  */
-const MonthSelector = ( props ) => {
+export const MonthSelector = ( props ) => {
 	const {
 		label,
 		maxYear = new Date().getFullYear(),
@@ -105,5 +105,3 @@ const MonthSelector = ( props ) => {
 	);
 };
 
-// Export component
-export default MonthSelector;

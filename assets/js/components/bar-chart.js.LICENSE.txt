@@ -3,5 +3,5 @@
  *
  */
 /*!
- * @deps chart.js, wp-element
+ * @deps chart-js, wp-element, wp-i18n
  */

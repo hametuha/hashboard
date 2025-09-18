@@ -5,162 +5,94 @@
 // @jest-environment jsdom
 
 /* eslint-env jest */
+import React from 'react';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
-// モック関数
-const mockSetAttribute = jest.fn();
-const mockRemoveAttribute = jest.fn();
-const mockUseEffect = jest.fn();
-const mockCreateRef = jest.fn();
-const mockAnimate = jest.fn();
-const mockTranslate = jest.fn();
-
-// WordPress依存関係のモック
+// Mock WordPress dependencies
 global.wp = {
-	element: {
-		useEffect: mockUseEffect,
-		createRef: mockCreateRef,
-	},
+	element: require('@wordpress/element'),
 	components: {
-		Animate: mockAnimate,
+		Spinner: ({ style }) => React.createElement('div', {
+			className: 'spinner',
+			style
+		}),
 	},
 	i18n: {
-		__: mockTranslate,
+		__: (text) => text,
 	},
 };
 
-// HbComponentsLoadingのモック
-global.HbComponentsLoading = {
-	img: '../../assets/img/ripple.gif',
-};
-
-// loading.jsモジュールをモック
-jest.mock( '../src/js/components/loading', () => {
-	// モック実装
-	const mockLoadingIndicator = ( props ) => {
-		const { loading, title = 'Loading…' } = props;
-
-		// loading=falseの場合はnullを返す
-		if ( ! loading ) {
-			return null;
-		}
-
-		// 親要素に属性を設定（テスト用）
-		mockSetAttribute( 'data-loading-wrapper', 'true' );
-
-		// loading=trueの場合はダミーのJSX構造を返す
-		return {
-			props: {
-				type: 'fade-in',
-				children: ( animateProps ) => ( {
-					props: {
-						className: `hb-loading-indicator ${ animateProps.className }`,
-						title: title,
-						children: [
-							{
-								props: {
-									src: '../../assets/img/ripple.gif',
-									width: '100',
-									height: '100',
-									alt: title,
-								},
-							},
-							{
-								props: {
-									className: 'hb-loading-indicator-title',
-									children: title,
-								},
-							},
-						],
-					},
-				} ),
-			},
-		};
-	};
-
-	return {
-		__esModule: true,
-		LoadingIndicator: mockLoadingIndicator,
-		default: mockLoadingIndicator,
-	};
-} );
-
-// テスト対象のコンポーネント
-import { LoadingIndicator } from '../src/js/components/loading';
+// Import compiled component
+require('../assets/js/components/loading.js');
+const { LoadingIndicator } = window.hb?.components || {};
 
 describe( 'LoadingIndicator Component', () => {
-	beforeEach( () => {
-		// 各テスト前にモックをリセット
-		jest.clearAllMocks();
+	// Skip tests if component is not compiled yet
+	const skipIfNoComponent = LoadingIndicator ? describe : describe.skip;
 
-		// useEffectのモック実装
-		mockUseEffect.mockImplementation( ( callback ) => {
-			const cleanup = callback();
-			return cleanup;
+	skipIfNoComponent('LoadingIndicator Component Tests', () => {
+		test( 'renders hidden div when loading is false', () => {
+			const { container } = render(
+				React.createElement(LoadingIndicator, { loading: false })
+			);
+
+			const hiddenDiv = container.querySelector('div[style*="display: none"]');
+			expect( hiddenDiv ).toBeInTheDocument();
 		} );
 
-		// createRefのモック実装
-		mockCreateRef.mockImplementation( () => ( {
-			current: {
-				parentElement: {
-					setAttribute: mockSetAttribute,
-					removeAttribute: mockRemoveAttribute,
-				},
-			},
-		} ) );
+		test( 'renders loading indicator when loading is true', () => {
+			const { container } = render(
+				React.createElement(LoadingIndicator, { loading: true })
+			);
 
-		// Animateのモック実装
-		mockAnimate.mockImplementation( ( props ) => props.children( { className: `wp-animation-${ props.type }` } ) );
+			expect( container.querySelector('.hb-loading-indicator') ).toBeInTheDocument();
+			expect( container.querySelector('.spinner') ).toBeInTheDocument();
+		} );
 
-		// __のモック実装
-		mockTranslate.mockImplementation( ( text ) => text );
-	} );
+		test( 'displays correct title in span', () => {
+			const customTitle = 'テスト中...';
+			const { container } = render(
+				React.createElement(LoadingIndicator, {
+					loading: true,
+					title: customTitle
+				})
+			);
 
-	test( 'sets data-loading-wrapper attribute on parent element', () => {
-		// コンポーネントをレンダリング
-		LoadingIndicator( { loading: true } );
+			const titleSpan = container.querySelector('.hb-loading-indicator-title');
+			expect( titleSpan ).toBeInTheDocument();
+			expect( titleSpan ).toHaveTextContent( customTitle );
+		} );
 
-		// 親要素に属性が設定されたことを確認
-		expect( mockSetAttribute ).toHaveBeenCalledWith( 'data-loading-wrapper', 'true' );
-	} );
+		test( 'hides title when showTitle is false', () => {
+			const { container } = render(
+				React.createElement(LoadingIndicator, {
+					loading: true,
+					showTitle: false
+				})
+			);
 
-	test( 'removes data-loading-wrapper attribute on unmount', () => {
-		// コンポーネントをレンダリング
-		LoadingIndicator( { loading: true } );
+			expect( container.querySelector('.hb-loading-indicator-title') ).not.toBeInTheDocument();
+		} );
 
-		// クリーンアップ関数を直接呼び出す
-		mockRemoveAttribute( 'data-loading-wrapper' );
+		test( 'applies custom size to spinner', () => {
+			const customSize = 60;
+			const { container } = render(
+				React.createElement(LoadingIndicator, {
+					loading: true,
+					size: customSize
+				})
+			);
 
-		// 親要素から属性が削除されたことを確認
-		expect( mockRemoveAttribute ).toHaveBeenCalledWith( 'data-loading-wrapper' );
-	} );
+			const spinner = container.querySelector('.spinner');
+			expect( spinner ).toHaveStyle({
+				height: `${customSize}px`,
+				width: `${customSize}px`
+			});
+		} );
+	});
 
-	test( 'returns null when loading is false', () => {
-		// loading=falseでコンポーネントをレンダリング
-		const result = LoadingIndicator( { loading: false } );
-
-		// nullが返されることを確認
-		expect( result ).toBeNull();
-	} );
-
-	test( 'returns loading indicator when loading is true', () => {
-		// loading=trueでコンポーネントをレンダリング
-		const result = LoadingIndicator( { loading: true } );
-
-		// 結果がnullでないことを確認
-		expect( result ).not.toBeNull();
-	} );
-
-	test( 'displays correct title', () => {
-		// カスタムタイトルでコンポーネントをレンダリング
-		const customTitle = 'テスト中...';
-		const result = LoadingIndicator( { loading: true, title: customTitle } );
-
-		// 結果がnullでないことを確認
-		expect( result ).not.toBeNull();
-
-		// タイトルが正しく設定されていることを確認
-		expect( result.props.children ).toBeInstanceOf( Function );
-		const childrenResult = result.props.children( { className: 'test-class' } );
-		expect( childrenResult.props.title ).toBe( customTitle );
+	test( 'component is exported correctly', () => {
+		expect( LoadingIndicator ).toBeDefined();
 	} );
 } );

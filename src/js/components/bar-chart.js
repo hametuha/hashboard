@@ -1,16 +1,17 @@
 /*!
  * Bar chart component for React
  *
- * @deps chart.js
+ * @deps chart-js
  */
 
 import { useEffect, useRef, useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Bar Chart Component
  * @param {Object} props - Component props
  */
-const BarChart = ( props ) => {
+export const BarChart = ( props ) => {
 	const {
 		chartData,
 		options = {},
@@ -82,7 +83,7 @@ const BarChart = ( props ) => {
 	if ( ! chartData ) {
 		return (
 			<div className="hb-bar-chart">
-				<p>No data available</p>
+				<p className="hb-no-data hb-no-data-chart">{ __( 'No data available.', 'hashboard' ) }</p>
 			</div>
 		);
 	}
@@ -98,5 +99,3 @@ const BarChart = ( props ) => {
 	);
 };
 
-// Export component
-export default BarChart;

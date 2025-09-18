@@ -1,22 +1,24 @@
 /*!
  * List table with pagination and search for React
  *
- * @deps @wordpress/element
+ * @deps hb-components-pagination, hb-components-loading
  */
 
 import { useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+const { Pagination, LoadingIndicator } = hb.components;
 
 /**
  * List Table Component
  * @param {Object} props - Component props
  */
-const ListTable = ( props ) => {
+export const ListTable = ( props ) => {
 	const {
 		loading = false,
 		items = [],
 		curPage = 1,
 		totalPage = 1,
-		listClass = 'list-item hb-post-list-item',
+		listClass = 'list-group-item hb-post-list-item',
 		wrapperClass = '',
 		listWrapperClass = 'list-group hb-post-list',
 		onPageChanged,
@@ -25,8 +27,8 @@ const ListTable = ( props ) => {
 		renderItem,
 		renderEmpty,
 		// Dependencies for child components
-		LoadingComponent,
-		PaginationComponent,
+		Loading = LoadingIndicator,
+		PaginationComponent = Pagination,
 	} = props;
 
 	// Compute wrapper class names
@@ -47,7 +49,7 @@ const ListTable = ( props ) => {
 	);
 
 	const defaultRenderEmpty = () => (
-		<p className="text-muted text-center">No items found</p>
+		<p className="hb-no-data hb-no-data-table">{ __( 'No items found', 'hashboard' ) }</p>
 	);
 
 	// Handle pagination
@@ -57,15 +59,11 @@ const ListTable = ( props ) => {
 		}
 	};
 
-	// Use provided components or existing components
-	const Loading = LoadingComponent || ( window.hb?.components?.loading || DefaultLoading );
-	const Pagination = PaginationComponent || ( window.hb?.components?.pagination || DefaultPagination );
-
 	return (
 		<div className={ wrapperClassName }>
 			{ renderHeader && renderHeader() }
 
-			{ ( items.length > 0 ) ? (
+			{ items.length > 0 && (
 				<ul className={ listWrapperClass }>
 					{ items.map( ( item ) => (
 						<li key={ item.id } className={ listClass }>
@@ -73,12 +71,14 @@ const ListTable = ( props ) => {
 						</li>
 					) ) }
 				</ul>
-			) : (
+			) }
+
+			{ items.length === 0 && (
 				renderEmpty ? renderEmpty() : defaultRenderEmpty()
 			) }
 
 			{ ! loading && totalPage > 1 && (
-				<Pagination
+				<PaginationComponent
 					current={ curPage }
 					total={ totalPage }
 					onPageChanged={ handlePagination }
@@ -90,43 +90,3 @@ const ListTable = ( props ) => {
 	);
 };
 
-// Default Loading Component
-const DefaultLoading = ( { loading } ) => {
-	if ( ! loading ) {
-		return null;
-	}
-
-	return (
-		<div className="hb-loading-overlay">
-			<div className="spinner-border" role="status">
-				<span className="sr-only">Loading...</span>
-			</div>
-		</div>
-	);
-};
-
-// Default Pagination Component (placeholder - should use the actual HbPagination)
-const DefaultPagination = ( { current, total, onPageChanged } ) => {
-	// This is a placeholder - in real implementation,
-	// we would use the actual HbPagination component
-	return (
-		<div className="pagination-wrapper">
-			<button
-				onClick={ () => onPageChanged( current - 1 ) }
-				disabled={ current <= 1 }
-			>
-				Previous
-			</button>
-			<span>Page { current } of { total }</span>
-			<button
-				onClick={ () => onPageChanged( current + 1 ) }
-				disabled={ current >= total }
-			>
-				Next
-			</button>
-		</div>
-	);
-};
-
-// Export component
-export default ListTable;

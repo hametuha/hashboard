@@ -3,5 +3,5 @@
  *
  */
 /*!
- * @deps @wordpress/element, wp-element
+ * @deps hb-components-pagination, hb-components-loading, wp-element, wp-i18n
  */

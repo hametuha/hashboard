@@ -10,12 +10,40 @@
 /.github export-ignore
 /.git export-ignore
 /.gitignore export-ignore
-/.gitignore export-ignore
 /bin export-ignore
 /tests export-ignore
 /gulpfile.js export-ignore
 /stylelint.config.js export-ignore
 /webpack.config.js export-ignore
+
+# Development files
+/.editorconfig export-ignore
+/.wp-env.json export-ignore
+/CLAUDE.md export-ignore
+/jest.config.js export-ignore
+/jest.setup.js export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/node_modules export-ignore
+/playwright.config.js export-ignore
+/playwright-report export-ignore
+/postcss.config.js export-ignore
+/phpcs.ruleset.xml export-ignore
+/test-results export-ignore
+/compose.template.yaml export-ignore
+/compose.yaml export-ignore
+/.wp_install_path export-ignore
+/wordpress export-ignore
+/vendor export-ignore
+/composer.lock export-ignore
+/.idea export-ignore
+/.claude export-ignore
+/artifacts export-ignore
+/doc export-ignore
+/scripts export-ignore
+/src export-ignore
+/assets/test export-ignore
+/.gitattributes export-ignore
 
 #
 # Auto detect text files and perform LF normalization

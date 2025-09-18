@@ -3,21 +3,29 @@
 		"handle": "hb-hashboard-rest",
 		"path": "assets/js/hashboard-rest.js",
 		"ext": "js",
-		"hash": "975e65a976a1f66751b5cc09161d4b32",
+		"hash": "41dbb31e1de4002dc0ee461efe65d621",
 		"version": "0.0.0",
-		"deps": [],
+		"deps": [
+			"hb-plugins-toast",
+			"wp-api-fetch",
+			"wp-url"
+		],
 		"footer": true,
 		"media": "all",
-		"strategy": ""
+		"strategy": "defer"
 	},
 	{
 		"handle": "hb-hashboard-helper",
 		"path": "assets/js/hashboard-helper.js",
 		"ext": "js",
-		"hash": "795b8f0268b4ba720213efc44c1d51b2",
+		"hash": "33877db3ed2d796f4933b857a05eda25",
 		"version": "0.0.0",
 		"deps": [
-			"jquery"
+			"jquery",
+			"hb-plugins-toast",
+			"hb-plugins-fitrows",
+			"wp-api-fetch",
+			"wp-url"
 		],
 		"footer": true,
 		"media": "all",
@@ -27,7 +35,7 @@
 		"handle": "hb-plugins-toast",
 		"path": "assets/js/plugins/toast.js",
 		"ext": "js",
-		"hash": "755f816e555cabb64d5d8cb4fe8c3399",
+		"hash": "855b1fb74eced9591a31bd43e7bcf09e",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -49,7 +57,7 @@
 		"handle": "hb-plugins-date",
 		"path": "assets/js/plugins/date.js",
 		"ext": "js",
-		"hash": "3e3bf4be4fcb25245194c8a066f57eb5",
+		"hash": "2e8e482f1f0920534282319d236108d8",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -60,7 +68,7 @@
 		"handle": "hb-filters-numbers",
 		"path": "assets/js/filters/numbers.js",
 		"ext": "js",
-		"hash": "a64bd6aef1cecac39dc488ee251c340b",
+		"hash": "c1c2c5f066f87af7db976f0381606eaf",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,
@@ -71,10 +79,9 @@
 		"handle": "hb-components-sequence",
 		"path": "assets/js/components/sequence.js",
 		"ext": "js",
-		"hash": "5409dbee8adacc07464214204da694cf",
+		"hash": "31819c622a9fed74a115ddea9269cd24",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
 			"wp-element"
 		],
 		"footer": true,
@@ -85,11 +92,11 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "e091bc52d1ff4ca094048b9c872f1dc1",
+		"hash": "f00595e951042a15fd02d66574d31d08",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
-			"@wordpress/api-fetch",
+			"wp-api-fetch",
+			"hb-components-list-table",
 			"wp-element"
 		],
 		"footer": true,
@@ -100,7 +107,7 @@
 		"handle": "hb-components-period-picker",
 		"path": "assets/js/components/period-picker.js",
 		"ext": "js",
-		"hash": "4021eaf4ee9f4216e1cf9a03e9ce14bd",
+		"hash": "e0e9e0f91b42892cad60b85a99eb831a",
 		"version": "0.0.0",
 		"deps": [
 			"@wordpress/element",
@@ -130,7 +137,7 @@
 		"handle": "hb-components-pagination",
 		"path": "assets/js/components/pagination.js",
 		"ext": "js",
-		"hash": "c319c4e5b332ba1dc54f8b6611ca7d23",
+		"hash": "3e700c198fc52f049be9aa8b09611bde",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -143,7 +150,7 @@
 		"handle": "hb-components-month-selector",
 		"path": "assets/js/components/month-selector.js",
 		"ext": "js",
-		"hash": "64717e532e3c69f28a3683299d76ca0d",
+		"hash": "265a18133daa259a789f205a1c11ab12",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element",
@@ -157,7 +164,7 @@
 		"handle": "hb-components-loading",
 		"path": "assets/js/components/loading.js",
 		"ext": "js",
-		"hash": "b266d73d869313df3210530968e71b4d",
+		"hash": "7c5ffddecf053b9e70b995577fd9921a",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",
@@ -172,11 +179,13 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "cc176137fafac91fa358eb8210f6beb3",
+		"hash": "4872f749a93f726315aba0cb7b3eb757",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
-			"wp-element"
+			"hb-components-pagination",
+			"hb-components-loading",
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",
@@ -186,12 +195,12 @@
 		"handle": "hb-components-line-chart",
 		"path": "assets/js/components/line-chart.js",
 		"ext": "js",
-		"hash": "d7bf8a3931ad3380bd14bbfbbf818711",
+		"hash": "c5f1d95072795c8572fa3474fb2b7915",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
-			"chart.js",
-			"wp-element"
+			"chart-js",
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",
@@ -201,10 +210,9 @@
 		"handle": "hb-components-input",
 		"path": "assets/js/components/input.js",
 		"ext": "js",
-		"hash": "d823ea5063fb4273edd59d9088f01bdd",
+		"hash": "1276ceff2054c6f6af08507bc077b825",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
 			"wp-element"
 		],
 		"footer": true,
@@ -215,11 +223,12 @@
 		"handle": "hb-components-date-range",
 		"path": "assets/js/components/date-range.js",
 		"ext": "js",
-		"hash": "f272f58382a74f4c01c02296711247ab",
+		"hash": "6a9e7d3283436c14f2f5b5c60cdd7d69",
 		"version": "0.0.0",
 		"deps": [
 			"wp-components",
-			"wp-element"
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",
@@ -229,24 +238,38 @@
 		"handle": "hb-components-bar-chart",
 		"path": "assets/js/components/bar-chart.js",
 		"ext": "js",
-		"hash": "70e744fa119d7da8ba36b66a49201509",
+		"hash": "e8e771bbd6e32627213156e5262ffbd5",
 		"version": "0.0.0",
 		"deps": [
-			"chart.js",
-			"wp-element"
+			"chart-js",
+			"wp-element",
+			"wp-i18n"
 		],
 		"footer": true,
 		"media": "all",
 		"strategy": ""
 	},
 	{
-		"handle": "hashboard",
-		"path": "assets/css/hashboard.css",
+		"handle": "hb-app",
+		"path": "assets/css/app.css",
 		"ext": "css",
-		"hash": "874b21d4af9614d96480690b6c253114",
+		"hash": "eee019804c2070ad9ab1eaf2dba78e98",
 		"version": "0.0.0",
 		"deps": [
 			"material-design-icon"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "hb-admin-color",
+		"path": "assets/css/admin-color.css",
+		"ext": "css",
+		"hash": "24317f605b78c9a466d5969735ca1acc",
+		"version": "0.0.0",
+		"deps": [
+			"wp-admin"
 		],
 		"footer": true,
 		"media": "all",

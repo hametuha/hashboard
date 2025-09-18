@@ -28,45 +28,21 @@
 したがって、ローカル開発では「簡単なモックアプページを用意する」必要があります。
 このために、`test/app/Bootstrap.php` を用意しており、プラグインファイル `hashboard.php` がローカル環境（require --dev）で読み込まれた場合に、モックアプリケーションを起動します。
 
-## リニューアル計画
+## フレームワークの技術的変遷
 
-このライブラリは2017年から開発されていましたが、当時はWordPressがどのライブラリを採用するのか定かではなかったので、Vue.jsを採用していました。
-しかし、現在はWordPressがReactを採用していることが明らかになったため、2025年はVue.jsからReactに移行したいです。
-あわせて、kunoichi/grab-depsパッケージが@wordpress/scriptsを利用しているため、これを利用してJavaScriptのビルドやテストを行うようにしたいです。
+### Vue.jsからReactへの移行（完了済み）
 
-### 取り組みタスクリスト
+このライブラリは2017年から開発されており、当初はVue.js 1.x系を採用していました。当時はWordPressがどのJavaScriptライブラリを標準採用するか定かではなかったためです。
 
-以下の順序でReact移行を進めることを推奨します：
+その後、WordPressがReactを採用することが明確になったため、2024-2025年にかけてVue.jsからReactへの完全移行を実施し、**2025年1月時点で移行は完了**しています。
 
-1. **基盤整備**
-   - `@wordpress/scripts`を使用したビルドシステムの構築
-   - React/JSXテストの実行環境整備
-   - 既存のVue.js依存関係の段階的削除
+#### 移行の成果
+- ✅ すべてのコンポーネントがReact（`@wordpress/element`）で実装済み
+- ✅ Vue.js依存コードの完全削除済み
+- ✅ `@kunoichi/grab-deps`によるES6+JSXビルドシステム構築済み
+- ✅ WordPress標準パッケージ（`@wordpress/components`、`@wordpress/i18n`）への統合完了
 
-2. **UIコンポーネントの移行**
-   - 基本UIコンポーネントのReact化（input, pagination, loading）
-   - 日付関連コンポーネントのReact化（date-range, period-picker, month-selector）
-   - チャートコンポーネントのReact化（bar-chart, line-chart）
-
-3. **データ駆動コンポーネントの移行**
-   - リスト表示コンポーネントのReact化（list-table, post-list）
-   - シーケンス・ダッシュボードコンポーネントのReact化
-
-4. **フィルター・ユーティリティの移行**
-   - Vue.jsフィルターをReactユーティリティ関数に変換
-   - moment.jsのWordPress標準日付ライブラリへの移行
-
-5. **グローバル状態管理の移行
-6. **
-   - Vue.jsイベントバスからReact Context/Stateへの移行
-   - コンポーネント間通信の再設計
-
-6. **統合テストと動作確認**
-   - 各コンポーネントの単体テスト実行
-   - 統合テストでの動作確認
-   - Vue.js関連コードとライブラリの完全削除
-
-各タスクは独立して実行・テストが可能で、段階的なリリースが可能です。
+現在、`assets/js`フォルダ内のすべてのコンポーネントはReactで実装されており、WordPressのエコシステムと完全に統合されています。
 
 ## 特殊なビルドシステム
 
@@ -434,3 +410,52 @@ ListTableコンポーネントは以下の既存コンポーネントを自動�
 - `window.hb.components.pagination` - ページネーション
 
 これらのコンポーネントが利用可能な場合、プレースホルダーの代わりに使用されます。
+
+## Hashboardフレームワークについて
+
+このプラグインは**会員制サイトのためのユーザーダッシュボードを作るフレームワーク**です。
+
+### 重要な特徴
+
+1. **フロントエンド向けダッシュボード**
+   - `/dashboard` などの公開URLでアクセス
+   - WordPress管理画面（wp-admin）ではなく、フロントエンド側にユーザー専用ページを提供
+   - ログインが必要な会員制機能
+
+2. **拡張前提の設計**
+   - デフォルトのページ数は最小限（`app/Hametuha/Hashboard/Screens`参照）
+   - 実際の利用では開発者が拡張してカスタムページを作成
+   - フレームワークとしての柔軟性を重視
+
+3. **KitchenSinkの役割**
+   - フレームワークのテスト・デモ用途
+   - 各種コンポーネントの動作確認
+   - 開発者向けの参考実装
+
+### Claude用開発支援機能
+
+ローカル開発環境では、Claude（AI）が直接Hashboardダッシュボードにアクセスできる自動ログイン機能を実装しています。
+
+#### 使用方法
+
+```bash
+# Claude識別ヘッダーを付けてアクセス
+curl -H "X-Claude-Debug: true" -L http://localhost:8888/dashboard/kitchen-sink/components
+```
+
+#### 実装詳細
+
+- `tests/app/Bootstrap.php`の`auto_login_for_claude()`メソッドで実装
+- ローカル環境（`WP_DEBUG=true`）でのみ動作
+- `X-Claude-Debug: true`ヘッダーで自動的に`claude`ユーザーとしてログイン
+- セキュリティ：本番環境では絶対に動作しない仕組み
+
+#### 利用可能なURL
+
+- `/dashboard/` - メインダッシュボード
+- `/dashboard/kitchen-sink/bootstrap` - Bootstrapコンポーネントテスト
+- `/dashboard/kitchen-sink/components` - WordPressコンポーネントテスト  
+- `/dashboard/kitchen-sink/charts` - チャートコンポーネントテスト
+- `/dashboard/kitchen-sink/tables` - テーブルコンポーネントテスト
+
+この機能により、Claude（AI）が実際のHTMLレスポンス、JSファイルの読み込み、コンポーネントの動作を直接確認できます。

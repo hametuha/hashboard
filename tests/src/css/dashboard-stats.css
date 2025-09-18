@@ -1,0 +1,68 @@
+/**
+ * Dashboard Statistics Block Styles
+ */
+
+#user-stats .card-body {
+	padding: 1.5rem;
+}
+
+#user-stats h3 {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 0.25rem;
+}
+
+#user-stats small {
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+#user-stats .col-4 {
+	position: relative;
+}
+
+#user-stats .col-4:not(:last-child)::after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	height: 50%;
+	width: 1px;
+	background-color: #dee2e6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	#user-stats h3 {
+		font-size: 1.5rem;
+	}
+	
+	#user-stats small {
+		font-size: 0.75rem;
+	}
+}
+
+/* Hover effect */
+#user-stats .col-4:hover h3 {
+	color: #0d6efd;
+	transition: color 0.3s ease;
+}
+
+/* Animation for number changes */
+@keyframes countUp {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+#user-stats h3 {
+	animation: countUp 0.5s ease-out;
+}

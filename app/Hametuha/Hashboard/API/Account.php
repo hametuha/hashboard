@@ -33,10 +33,8 @@ class Account extends Api {
 						},
 					),
 				);
-				break;
-			case 'PUSH': // Send email again
+			case 'PUT': // Send email again
 				return array();
-				break;
 			case 'GET':  // Activate
 				return array(
 					'hash' => array(
@@ -44,18 +42,15 @@ class Account extends Api {
 						'validate_callback' => array( $this, 'is_not_empty' ),
 					),
 				);
-				break;
 			case 'DELETE': // Cancel mail change
 				return array();
-				break;
 			default:
 				return array();
-				break;
 		}
 	}
 
 	/**
-	 * Handle POST request.
+	 * Handle POST request for email change request.
 	 *
 	 * @param \WP_REST_Request $request
 	 * @return array|\WP_Error
@@ -84,7 +79,7 @@ class Account extends Api {
 	}
 
 	/**
-	 * Handle put request.
+	 * Handle put request for resending email confirmation.
 	 *
 	 * @param \WP_REST_Request $request
 	 * @return array|bool|\WP_Error
@@ -107,7 +102,7 @@ class Account extends Api {
 	}
 
 	/**
-	 * Handle delete request.
+	 * Handle delete request for canceling email change.
 	 *
 	 * @param \WP_REST_Request $request
 	 * @return array
@@ -121,7 +116,7 @@ class Account extends Api {
 	}
 
 	/**
-	 * Check hash and redirect user.
+	 * Check hash and redirect user by email changing.
 	 *
 	 * @param \WP_REST_Request $request
 	 * @return void
@@ -136,7 +131,9 @@ class Account extends Api {
 				}
 				throw new \Exception( $result->get_error_message(), $code );
 			}
-			wp_redirect( Hashboard::get_instance()->get_url() );
+			wp_redirect( add_query_arg( [
+				'mailchanged' => true,
+			], Hashboard::get_instance()->get_url( Hashboard\Screens\Account::get_instance() ) ) );
 			exit;
 		} catch ( \Exception $e ) {
 			header( 'Content-Type: text/html; charset=UTF8' );

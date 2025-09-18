@@ -1,0 +1,143 @@
+/*!
+ * WordPress Components Color Override
+ * Unifies wp-components colors with Bootstrap theme
+ */
+
+:root {
+  /* Custom semantic colors to match Bootstrap (WordPress doesn't have these by default) */
+  --hb-wp-success-color: #4D8E26 !important;
+  --hb-wp-success-color-darker-10: #458226 !important;
+  --hb-wp-success-color-darker-20: #3d7520 !important;
+
+  --hb-wp-danger-color: #E03A01 !important;
+  --hb-wp-danger-color-darker-10: #ca3401 !important;
+  --hb-wp-danger-color-darker-20: #b42e01 !important;
+
+  --hb-wp-warning-color: #ff6f00 !important;
+  --hb-wp-warning-color-darker-10: #e66300 !important;
+  --hb-wp-warning-color-darker-20: #cc5700 !important;
+
+  --hb-wp-secondary-color: #176B86 !important;
+  --hb-wp-secondary-color-darker-10: #155f79 !important;
+  --hb-wp-secondary-color-darker-20: #13536c !important;
+}
+
+/* Specific component overrides for better integration */
+.components-button.is-primary {
+  background-color: var(--wp-components-color-accent) !important;
+  border-color: var(--wp-components-color-accent) !important;
+}
+
+.components-button.is-primary:hover,
+.components-button.is-primary:focus {
+  background-color: var(--wp-components-color-accent-darker-10) !important;
+  border-color: var(--wp-components-color-accent-darker-10) !important;
+}
+
+.components-button.is-primary:active {
+  background-color: var(--wp-components-color-accent-darker-20) !important;
+  border-color: var(--wp-components-color-accent-darker-20) !important;
+}
+
+/* Semantic color buttons (custom implementation) */
+.components-button.is-destructive,
+.components-button.is-danger {
+  background-color: var(--hb-wp-danger-color) !important;
+  border-color: var(--hb-wp-danger-color) !important;
+  color: white !important;
+}
+
+.components-button.is-destructive:hover,
+.components-button.is-destructive:focus,
+.components-button.is-danger:hover,
+.components-button.is-danger:focus {
+  background-color: var(--hb-wp-danger-color-darker-10) !important;
+  border-color: var(--hb-wp-danger-color-darker-10) !important;
+}
+
+.components-button.is-success {
+  background-color: var(--hb-wp-success-color) !important;
+  border-color: var(--hb-wp-success-color) !important;
+  color: white !important;
+}
+
+.components-button.is-success:hover,
+.components-button.is-success:focus {
+  background-color: var(--hb-wp-success-color-darker-10) !important;
+  border-color: var(--hb-wp-success-color-darker-10) !important;
+}
+
+.components-button.is-warning {
+  background-color: var(--hb-wp-warning-color) !important;
+  border-color: var(--hb-wp-warning-color) !important;
+  color: white !important;
+}
+
+.components-button.is-warning:hover,
+.components-button.is-warning:focus {
+  background-color: var(--hb-wp-warning-color-darker-10) !important;
+  border-color: var(--hb-wp-warning-color-darker-10) !important;
+}
+
+/* DatePicker and Calendar components */
+.components-datetime__date .DayPicker-Day--selected {
+  background-color: var(--wp-components-color-accent) !important;
+}
+
+.components-datetime__date .DayPicker-Day--selected:hover {
+  background-color: var(--wp-components-color-accent-darker-10) !important;
+}
+
+/* Checkbox and Radio controls */
+.components-checkbox-control__input:checked,
+.components-radio-control__input:checked {
+  background-color: var(--wp-components-color-accent) !important;
+  border-color: var(--wp-components-color-accent) !important;
+}
+
+/* Toggle control */
+.components-form-toggle.is-checked .components-form-toggle__track {
+  background-color: var(--wp-components-color-accent) !important;
+}
+
+/* Range control */
+.components-range-control__slider::-webkit-slider-thumb {
+  background-color: var(--wp-components-color-accent) !important;
+}
+
+.components-range-control__slider::-moz-range-thumb {
+  background-color: var(--wp-components-color-accent) !important;
+}
+
+/* Notice/Alert components (custom semantic styling) */
+.components-notice.is-error,
+.components-notice.is-warning,
+.components-notice.is-success {
+  border-left: 4px solid;
+}
+
+.components-notice.is-error {
+  border-left-color: var(--hb-wp-danger-color) !important;
+  background-color: rgba(224, 58, 1, 0.1) !important;
+}
+
+.components-notice.is-warning {
+  border-left-color: var(--hb-wp-warning-color) !important;
+  background-color: rgba(255, 111, 0, 0.1) !important;
+}
+
+.components-notice.is-success {
+  border-left-color: var(--hb-wp-success-color) !important;
+  background-color: rgba(77, 142, 38, 0.1) !important;
+}
+
+/* Custom utility classes for semantic colors */
+.hb-text-success { color: var(--hb-wp-success-color) !important; }
+.hb-text-danger { color: var(--hb-wp-danger-color) !important; }
+.hb-text-warning { color: var(--hb-wp-warning-color) !important; }
+.hb-text-secondary { color: var(--hb-wp-secondary-color) !important; }
+
+.hb-bg-success { background-color: var(--hb-wp-success-color) !important; }
+.hb-bg-danger { background-color: var(--hb-wp-danger-color) !important; }
+.hb-bg-warning { background-color: var(--hb-wp-warning-color) !important; }
+.hb-bg-secondary { background-color: var(--hb-wp-secondary-color) !important; }

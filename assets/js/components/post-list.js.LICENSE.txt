@@ -3,5 +3,5 @@
  *
  */
 /*!
- * @deps @wordpress/element, @wordpress/api-fetch, wp-element
+ * @deps wp-api-fetch, hb-components-list-table, wp-element
  */

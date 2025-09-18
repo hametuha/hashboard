@@ -1,6 +1,6 @@
 // Import from compiled assets (grab-deps output)
 require('../assets/js/filters/numbers');
-const { numberFormat, moneyFormat } = window.hb.filters.numbers;
+const { numberFormat, moneyFormat } = window.hb?.filters || {};
 
 describe( 'Check number format', () => {
 	test( 'Thousnad', () => {

@@ -9,7 +9,7 @@
 		"node": ">=18.20.0"
 	},
 	"volta": {
-		"node": "18.20.8"
+		"node": "20.19.4"
 	},
 	"repository": {
 		"type": "git",
@@ -21,7 +21,7 @@
 	"scripts": {
 		"start": "wp-env start",
 		"update": "wp-env start --update",
-		"stop": "wp-env stop",
+		"stop": "wp-env stop && bash bin/stop-mailhog.sh",
 		"env": "wp-env",
 		"cli": "wp-env run cli wp",
 		"cli:test": "wp-env run tests-cli wp",
@@ -41,19 +41,26 @@
 		"format:css:file": "stylelint --fix",
 		"test": "RESULT=${PWD##*/} && wp-env run tests-cli ./wp-content/plugins/$RESULT/vendor/bin/phpunit -c ./wp-content/plugins/$RESULT/phpunit.xml.dist",
 		"test:js": "jest --config=jest.config.js",
+		"test:e2e": "playwright test",
+		"test:e2e:debug": "playwright test --debug",
 		"watch": "npm-watch",
 		"watch:js": "node scripts/watch.js",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
 		"copy": "./bin/copy.sh"
 	},
 	"author": "Hametuha INC.",
 	"license": "GPL-3.0",
 	"devDependencies": {
 		"@babel/preset-react": "^7.27.1",
-		"@kunoichi/grab-deps": "^3.0.0",
+		"@kunoichi/grab-deps": "^3.1.4",
+		"@playwright/test": "^1.54.2",
 		"@popperjs/core": "^2.11.8",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/react": "^16.3.0",
+		"@wordpress/api-fetch": "^7.31.0",
 		"@wordpress/components": "^29.12.0",
+		"@wordpress/e2e-test-utils-playwright": "^1.28.0",
 		"@wordpress/env": "^10.24.0",
 		"@wordpress/i18n": "^5.26.0",
 		"@wordpress/jest-preset-default": "^12.26.0",
@@ -85,21 +92,22 @@
 	],
 	"grabDeps": {
 		"namespace": "hb",
-		"srcDir": "assets/js",
-		"autoHandleGeneration": true,
-		"autoImportDetection": true,
-		"globalExportGeneration": true
+		"js": {
+			"srcDir": "src/js",
+			"dumpDir": "assets/js",
+			"autoHandleGeneration": true,
+			"globalExportGeneration": true
+		},
+		"css": {
+			"srcDir": "src/css",
+			"dumpDir": "assets/css",
+			"autoHandleGeneration": true
+		}
 	},
 	"watch": {
 		"build:js": {
 			"patterns": [
 				"src/js/**/*.js"
-			],
-			"ignore": [
-				"assets/js/**/*",
-				"**/*.LICENSE.txt",
-				"**/*.backup",
-				".grab-deps-temp/**/*"
 			],
 			"extensions": [
 				"js"
@@ -109,13 +117,25 @@
 			"patterns": [
 				"tests/src/js/**/*.js"
 			],
-			"ignore": [
-				"tests/src/js/**/*",
-				"**/*.LICENSE.txt",
-				"**/*.backup",
-				".grab-deps-temp/**/*"
+			"extensions": [
+				"js"
+			]
+		},
+		"build:css": {
+			"patterns": [
+				"src/scss/**/*.scss"
 			],
 			"extensions": [
+				"scss"
+			]
+		},
+		"dump": {
+			"patterns": [
+				"assets/css/**/*.css",
+				"assets/js/**/*.js"
+			],
+			"extensions": [
+				"css",
 				"js"
 			]
 		}

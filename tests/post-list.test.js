@@ -27,15 +27,15 @@ const mockListTable = jest.fn(({ loading, items, renderItem, listWrapperClass, l
 
 global.window.hb = {
 	components: {
-		listTable: mockListTable
+		ListTable: mockListTable
 	}
 };
 
 // Import compiled component after setting up mocks
 require('../assets/js/components/post-list.js');
-const HbPostList = window.hb?.components?.postList;
+const { PostList } = window.hb?.components || {};
 
-describe('HbPostList', () => {
+describe('PostList', () => {
 	// Mock posts data
 	const mockPosts = [
 		{
@@ -67,7 +67,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					title: 'Latest Posts',
 					onPostListUpdated: jest.fn()
 				})
@@ -86,7 +86,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 
 			render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					postType: 'custom_post',
 					max: '5',
 					author: '123',
@@ -105,7 +105,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					onPostListUpdated: jest.fn()
 				})
 			);
@@ -130,7 +130,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue([recentPost]);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					newDays: '7', // Show "new" badge for posts within 7 days
 					onPostListUpdated: jest.fn()
 				})
@@ -155,7 +155,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue([oldPost]);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					newDays: '7',
 					onPostListUpdated: jest.fn()
 				})
@@ -170,7 +170,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					moreButton: 'https://example.com/all-posts',
 					moreLabel: 'View All Posts',
 					onPostListUpdated: jest.fn()
@@ -189,7 +189,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					onPostListUpdated: jest.fn()
 				})
 			);
@@ -203,7 +203,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockImplementation(() => new Promise(() => {})); // Never resolves
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					onPostListUpdated: jest.fn()
 				})
 			);
@@ -217,7 +217,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockRejectedValue(new Error('API Error'));
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					onPostListUpdated: jest.fn()
 				})
 			);
@@ -234,7 +234,7 @@ describe('HbPostList', () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 
 			render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					onPostListUpdated: mockCallback
 				})
 			);
@@ -244,48 +244,30 @@ describe('HbPostList', () => {
 			});
 		});
 
-		test('handles missing wp.apiFetch gracefully', () => {
-			const originalApiFetch = global.window.wp.apiFetch;
-			delete global.window.wp.apiFetch;
 
-			const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-			render(
-				React.createElement(HbPostList, {
-					onPostListUpdated: jest.fn()
-				})
-			);
-
-			expect(consoleSpy).toHaveBeenCalledWith('wp.apiFetch is not available');
-
-			// Restore
-			global.window.wp.apiFetch = originalApiFetch;
-			consoleSpy.mockRestore();
-		});
-
-		test('shows fallback when ListTable is not available', () => {
-			const originalListTable = global.window.hb.components.listTable;
-			delete global.window.hb.components.listTable;
+		test('renders with mock ListTable when provided', async () => {
+			mockApiFetch.mockResolvedValue([]);
 
 			const { container } = render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					title: 'Test Posts',
 					onPostListUpdated: jest.fn()
 				})
 			);
 
 			expect(container).toHaveTextContent('Test Posts');
-			expect(container).toHaveTextContent('ListTable component not available');
 
-			// Restore
-			global.window.hb.components.listTable = originalListTable;
+			// Wait for loading to complete
+			await waitFor(() => {
+				expect(container.querySelector('.list-table')).toBeInTheDocument();
+			});
 		});
 
 		test('parses string props to numbers correctly', async () => {
 			mockApiFetch.mockResolvedValue([]);
 
 			render(
-				React.createElement(HbPostList, {
+				React.createElement(PostList, {
 					max: '10',
 					author: '456',
 					newDays: '3',

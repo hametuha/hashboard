@@ -4,8 +4,9 @@
 
 /* eslint-env jest */
 
-// ESモジュールとしてインポート
-import { toast } from '../src/js/plugins/toast';
+// Import compiled plugin
+require('../assets/js/plugins/toast.js');
+const { toast } = window.hb?.plugins || {};
 
 describe( 'Toast Plugin', () => {
 	// 各テスト後にDOMをクリーンアップ
@@ -13,18 +14,22 @@ describe( 'Toast Plugin', () => {
 		document.body.innerHTML = '';
 	} );
 
-	test( 'creates toast element with correct HTML', () => {
-		const testHtml = '<p>Test Toast</p>';
-		const toastElement = toast( testHtml );
+	test( 'creates toast element with correct structure', () => {
+		const testMessage = 'Test Toast';
+		const toastElement = toast( testMessage );
 
 		// 要素が作成されていることを確認
 		expect( toastElement ).toBeDefined();
 		expect( toastElement instanceof HTMLElement ).toBe( true );
-		expect( toastElement.className ).toContain( 'toast' );
-		expect( toastElement.innerHTML ).toBe( testHtml );
+		expect( toastElement.className ).toContain( 'hb-toast' );
+
+		// メッセージがspan要素内に含まれていることを確認
+		const spanElement = toastElement.querySelector( 'span' );
+		expect( spanElement ).not.toBeNull();
+		expect( spanElement.textContent ).toBe( testMessage );
 
 		// DOMに追加されていることを確認
-		const toastInDOM = document.querySelector( '.toast' );
+		const toastInDOM = document.querySelector( '.hb-toast' );
 		expect( toastInDOM ).not.toBeNull();
 		expect( toastInDOM ).toBe( toastElement );
 	} );
@@ -35,26 +40,28 @@ describe( 'Toast Plugin', () => {
 		// 最初はinitクラスがない
 		expect( toastElement.classList.contains( 'init' ) ).toBe( false );
 
-		// setTimeout後にinitクラスが追加される
-		setTimeout( () => {
+		// requestAnimationFrame後にinitクラスが追加される
+		requestAnimationFrame( () => {
 			expect( toastElement.classList.contains( 'init' ) ).toBe( true );
 			done();
-		}, 10 );
+		} );
 	} );
 
 	test( 'removes init class after duration', ( done ) => {
 		const duration = 50;
-		const toastElement = toast( 'Test', duration );
+		const toastElement = toast( 'Test', { duration } );
 
-		// durationミリ秒後にinitクラスが削除される
-		setTimeout( () => {
+		// requestAnimationFrame後にinitクラスが追加される
+		requestAnimationFrame( () => {
 			expect( toastElement.classList.contains( 'init' ) ).toBe( true );
 
+			// duration後にinitクラスが削除される
 			setTimeout( () => {
 				expect( toastElement.classList.contains( 'init' ) ).toBe( false );
+				expect( toastElement.classList.contains( 'removing' ) ).toBe( true );
 				done();
 			}, duration + 10 );
-		}, 10 );
+		} );
 	} );
 
 	test( 'registers in global namespace when in browser environment', () => {
@@ -62,9 +69,5 @@ describe( 'Toast Plugin', () => {
 		expect( window.hb ).toBeDefined();
 		expect( window.hb.plugins ).toBeDefined();
 		expect( typeof window.hb.plugins.toast ).toBe( 'function' );
-
-		// 後方互換性のための名前空間も確認
-		expect( window.Hashboard ).toBeDefined();
-		expect( typeof window.Hashboard.toast ).toBe( 'function' );
 	} );
 } );
