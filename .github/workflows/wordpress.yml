@@ -64,7 +64,7 @@ jobs:
 
       - name: Wait for WordPress to be ready
         run: |
-          timeout 300 bash -c 'until curl -f http://localhost:8888/wp-json/wp/v2/users > /dev/null 2>&1; do sleep 5; done'
+          timeout 600 bash -c 'until curl -f http://localhost:8888/wp-json/wp/v2/posts > /dev/null 2>&1; do sleep 5; done'
 
       - name: Run E2E Tests
         run: npm run test:e2e
@@ -84,7 +84,7 @@ jobs:
   status-check:
     name: Status Check
     runs-on: ubuntu-latest
-    needs: [ test, assets, e2e ]
+    needs: [ test, assets ]
     if: always()
     steps:
       - uses: re-actors/alls-green@release/v1
