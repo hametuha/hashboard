@@ -19,12 +19,18 @@ $form-row-gap: 1em !default;
   }
 }
 
-.form-row {
-	margin-bottom: $form-row-gap;
+// Bootstrap 5: form-row は削除されたため、.hb-form / .hb-fieldset 内の .row にマージンを適用
+.hb-form,
+.hb-fieldset {
+	> .row {
+		margin-bottom: $form-row-gap;
+	}
 }
 
 // Icon in label
-.form-row,.input-group{
+.hb-form .row,
+.hb-fieldset .row,
+.input-group {
   label > .prefix {
     font-size: inherit;
     color: $label-icon-color;

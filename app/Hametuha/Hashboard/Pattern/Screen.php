@@ -132,7 +132,7 @@ abstract class Screen extends ScreenPattern {
 				$this->render_field( wp_get_current_user(), $key, $field );
 			}
 			if ( $settings['submit'] ) {
-				printf( '<div class="form-row"><div class="col-12"><button class="btn btn-outline-primary ripple" type="submit">%s</button></div></div>', esc_html( $settings['submit'] ) );
+				printf( '<div class="row g-2"><div class="col-12"><button class="btn btn-outline-primary ripple" type="submit">%s</button></div></div>', esc_html( $settings['submit'] ) );
 			}
 			/**
 			 * hashboard_after_fields_rendered
@@ -255,7 +255,7 @@ abstract class Screen extends ScreenPattern {
 					);
 					break;
 				case 'select':
-					printf( '<select id="%1$s" name="%2$s" class="form-control">', esc_attr( $key ), esc_attr( $fields['name'] ) );
+					printf( '<select id="%1$s" name="%2$s" class="form-select">', esc_attr( $key ), esc_attr( $fields['name'] ) );
 					foreach ( $fields['options'] as $v => $l ) {
 						$cur = $fields['value'] ?: $fields['default'];
 						printf(
@@ -326,11 +326,11 @@ abstract class Screen extends ScreenPattern {
 			$out );
 		}
 		if ( 'open' == $fields['group'] ) {
-			$out = '<div class="row form-row">' . $out;
+			$out = '<div class="row g-2">' . $out;
 		} elseif ( 'close' == $fields['group'] ) {
 			$out .= '</div>';
 		} else {
-			$out = '<div class="row form-row">' . $out . '</div>';
+			$out = '<div class="row g-2">' . $out . '</div>';
 		}
 		echo $out;
 	}

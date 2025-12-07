@@ -76,8 +76,8 @@ export const InputField = ( props ) => {
 
 	return (
 		<div className="hb-input-field">
-			<div className="form-row">
-				<div className="form-group col-sm-10">
+			<div className="row g-2">
+				<div className="col-sm-10">
 					<label className="hb-input-field-label" htmlFor={ id }>
 						{ title }
 						{ description && (
@@ -126,7 +126,7 @@ export const InputField = ( props ) => {
 					<p className="hb-input-field-helper" />
 				</div>
 
-				<div className="form-group col-sm-2 text-right">
+				<div className="col-sm-2 text-end">
 					<div className="switch">
 						<input
 							className="switch-input sr-only"

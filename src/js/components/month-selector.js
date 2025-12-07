@@ -65,10 +65,10 @@ export const MonthSelector = ( props ) => {
 	};
 
 	return (
-		<div className="hb-month-selector form-row" title={ label }>
-			<div className="form-group col">
+		<div className="hb-month-selector row g-2" title={ label }>
+			<div className="col">
 				<select
-					className="form-control"
+					className="form-select"
 					value={ curYear }
 					onChange={ ( e ) => setCurYear( parseInt( e.target.value ) ) }
 				>
@@ -79,9 +79,9 @@ export const MonthSelector = ( props ) => {
 					) ) }
 				</select>
 			</div>
-			<div className="form-group col">
+			<div className="col">
 				<select
-					className="form-control"
+					className="form-select"
 					value={ curMonth }
 					onChange={ ( e ) => setCurMonth( parseInt( e.target.value ) ) }
 				>
@@ -92,7 +92,7 @@ export const MonthSelector = ( props ) => {
 					) ) }
 				</select>
 			</div>
-			<div className="form-group col">
+			<div className="col">
 				<button
 					type="button"
 					className="btn btn-secondary ripple"
