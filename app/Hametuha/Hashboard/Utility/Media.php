@@ -27,11 +27,14 @@ class Media extends Singleton {
 	 * @return string
 	 */
 	public static function get_mime( $src ) {
-		if ( ! file_exists( $src ) || ! ( $info = getimagesize( $src ) ) ) {
+		if ( ! file_exists( $src ) ) {
 			return '';
-		} else {
-			return $info['mime'];
 		}
+		$info = getimagesize( $src );
+		if ( ! $info ) {
+			return '';
+		}
+		return $info['mime'];
 	}
 
 	/**

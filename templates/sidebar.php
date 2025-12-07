@@ -35,8 +35,9 @@
 						<i class="material-icons open right">expand_more</i>
 					</a>
 					<ul class="hb-submenu-list">
-						<?php foreach ( $instance->get_children() as $key => $label ) :
-							$is_active = $hashboard->current === $instance->slug() && $key === get_query_var( 'hashboard-child' );
+						<?php
+						foreach ( $instance->get_children() as $key => $label ) :
+							$is_active = $instance->slug() === $hashboard->current && get_query_var( 'hashboard-child' ) === $key;
 							?>
 							<li class="hb-submenu-item <?php echo $is_active ? 'active' : ''; ?>">
 								<a class="hb-submenu-link" href="<?php echo esc_url( $hashboard->get_url( $instance, $key === $instance->slug() ? '' : $key ) ); ?>">

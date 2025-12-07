@@ -231,7 +231,7 @@ abstract class Screen extends ScreenPattern {
 					esc_html( $fields['icon'] )
 				) . $fields['label'];
 			}
-			if ( ! in_array( $fields['type'], array( 'hidden', 'media', 'file', 'separator' ) ) ) {
+			if ( ! in_array( $fields['type'], array( 'hidden', 'media', 'file', 'separator' ), true ) ) {
 				printf(
 					'<label for="%s">%s %s</label>',
 					esc_attr( $key ),
@@ -317,16 +317,16 @@ abstract class Screen extends ScreenPattern {
 		$out = ob_get_contents();
 		ob_end_clean();
 		// Wrap fields.
-		if ( ! in_array( $fields['type'], array( 'separator' ) ) ) {
+		if ( ! in_array( $fields['type'], array( 'separator' ), true ) ) {
 			$out = sprintf(
 				'<div class="%s col-12 col-sm-%d">%s</div>',
-				'file' == $fields['type'] ? 'file-field' : '',
+				'file' === $fields['type'] ? 'file-field' : '',
 				( is_numeric( $fields['col'] ) && $fields['col'] ) ? ceil( 12 / $fields['col'] ) : 12,
 			$out );
 		}
-		if ( 'open' == $fields['group'] ) {
+		if ( 'open' === $fields['group'] ) {
 			$out = '<div class="row g-2">' . $out;
-		} elseif ( 'close' == $fields['group'] ) {
+		} elseif ( 'close' === $fields['group'] ) {
 			$out .= '</div>';
 		} else {
 			$out = '<div class="row g-2">' . $out . '</div>';

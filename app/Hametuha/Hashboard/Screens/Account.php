@@ -107,7 +107,7 @@ class Account extends Screen {
 	 * @param \WP_User $user
 	 */
 	public function after_field_rendered( $key, $fields, $user ) {
-		if ( 'user_email' == $key ) {
+		if ( 'user_email' === $key ) {
 			$controller = UserMail::get_instance();
 			if ( $controller->has_queue( $user->ID ) ) {
 				?>
@@ -130,7 +130,7 @@ class Account extends Screen {
 				);
 			}
 		}
-		if ( 'user_pass2' == $key ) {
+		if ( 'user_pass2' === $key ) {
 			$black_lists = array( $user->user_login, current( explode( '@', $user->user_email ) ), $user->first_name, $user->last_name );
 			printf( '<div id="hb-password-strength" data-blacklists="%s">%s<span></span></div>', esc_attr( implode( ',', $black_lists ) ), esc_html__( 'Password Strength: ', 'hashboard' ) );
 		}

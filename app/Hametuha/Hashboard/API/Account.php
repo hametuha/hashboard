@@ -131,9 +131,9 @@ class Account extends Api {
 				}
 				throw new \Exception( $result->get_error_message(), $code );
 			}
-			wp_redirect( add_query_arg( [
+			wp_redirect( add_query_arg( array(
 				'mailchanged' => true,
-			], Hashboard::get_instance()->get_url( Hashboard\Screens\Account::get_instance() ) ) );
+			), Hashboard::get_instance()->get_url( Hashboard\Screens\Account::get_instance() ) ) );
 			exit;
 		} catch ( \Exception $e ) {
 			header( 'Content-Type: text/html; charset=UTF8' );
@@ -157,9 +157,9 @@ class Account extends Api {
 	 * @return bool
 	 */
 	public function permission_callback( \WP_REST_Request $request ) {
-		if ( 'GET' == $request->get_method() ) {
+		if ( 'GET' === $request->get_method() ) {
 			return true;
-		} elseif ( in_array( $request->get_method(), array( 'PUT', 'DELETE' ) ) ) {
+		} elseif ( in_array( $request->get_method(), array( 'PUT', 'DELETE' ), true ) ) {
 			return UserMail::get_instance()->has_queue( get_current_user_id() );
 		} else {
 			return parent::permission_callback( $request );

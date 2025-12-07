@@ -15,7 +15,7 @@ class Dashboard extends Screen {
 	 *
 	 * @var array<int, array{id:string, html:string, title:string, size:int, scripts?:array<string>, styles?:array<string>, action?:string, action_label?:string, card_class?:string}>
 	 */
-	private $blocks = [];
+	private $blocks = array();
 
 	protected $icon = 'dashboard';
 
@@ -59,7 +59,7 @@ HTML;
 	public function head( $child = '' ) {
 		parent::head( $child );
 		$this->blocks = $this->get_blocks();
-		
+
 		// Enqueue scripts and styles for each block
 		foreach ( $this->blocks as $block ) {
 			// Enqueue scripts
@@ -68,7 +68,7 @@ HTML;
 					wp_enqueue_script( $script );
 				}
 			}
-			
+
 			// Enqueue styles
 			if ( ! empty( $block['styles'] ) ) {
 				foreach ( $block['styles'] as $style ) {
@@ -100,7 +100,7 @@ HTML;
 						'action_label' => '',
 						'card_class'   => '',
 					) );
-					$size = max( min( $block['size'], 3 ), 1 );
+					$size  = max( min( $block['size'], 3 ), 1 );
 
 					// Calculate column class based on size
 					$col_class = '';
@@ -115,7 +115,7 @@ HTML;
 							$col_class = 'col-12';
 							break;
 					}
-					$card_class = [ 'card', 'h-100' ];
+					$card_class = array( 'card', 'h-100' );
 					if ( $block['card_class'] ) {
 						$card_class[] = $block['card_class'];
 					}

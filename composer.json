@@ -12,7 +12,7 @@
 	"scripts": {
 		"test": "phpunit",
 		"lint": "phpcs --standard=phpcs.ruleset.xml $(find ./ -name '*.php')",
-		"fix": "phpcbf --standard=phpcs.ruleset.xml $(find ./ -name '*.php')",
+		"fix": "phpcbf -w --standard=phpcs.ruleset.xml $(find ./ -name '*.php')",
 		"copy-wp-colors": [
 			"mkdir -p src/scss/wp-admin-colors",
 			"cp wordpress/wp-admin/css/colors/_admin.scss src/scss/wp-admin-colors/_admin.scss",
