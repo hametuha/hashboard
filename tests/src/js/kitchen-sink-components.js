@@ -245,11 +245,44 @@ const DateRangeTest = () => {
 	);
 };
 
+// MonthSelector Component Test
+const MonthSelectorTest = () => {
+	const { MonthSelector } = hb.components;
+	const [ selectedDate, setSelectedDate ] = useState( null );
+
+	const handleDateUpdated = useCallback( ( year, month ) => {
+		setSelectedDate( { year, month } );
+	}, [] );
+
+	if ( ! MonthSelector ) {
+		return <p>MonthSelector component not available</p>;
+	}
+
+	return (
+		<>
+			<MonthSelector
+				label="月を選択"
+				onDateUpdated={ handleDateUpdated }
+			/>
+			{ selectedDate && (
+				<p>
+					Selected: { selectedDate.year }年{ selectedDate.month }月
+				</p>
+			) }
+		</>
+	);
+};
+
 // Mount components
 const componentsContainer = document.getElementById( 'components-container' );
 if ( componentsContainer ) {
 	createRoot( componentsContainer ).render(
 		<>
+			<div className="component-section">
+				<h3>月選択コンポーネント（MonthSelector）</h3>
+				<MonthSelectorTest />
+			</div>
+
 			<div className="component-section">
 				<h3>日付選択コンポーネント</h3>
 				<DateRangeTest />
