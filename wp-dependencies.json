@@ -92,7 +92,7 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "f00595e951042a15fd02d66574d31d08",
+		"hash": "be64e1fa7fd5d71fc3723e38f6db207f",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
@@ -150,7 +150,7 @@
 		"handle": "hb-components-month-selector",
 		"path": "assets/js/components/month-selector.js",
 		"ext": "js",
-		"hash": "265a18133daa259a789f205a1c11ab12",
+		"hash": "8170559084da68cff87e95b1c7e100c4",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element",
@@ -210,7 +210,7 @@
 		"handle": "hb-components-input",
 		"path": "assets/js/components/input.js",
 		"ext": "js",
-		"hash": "1276ceff2054c6f6af08507bc077b825",
+		"hash": "74e388f7db3bebef8e07a14a0e1f6fd0",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -253,7 +253,7 @@
 		"handle": "hb-app",
 		"path": "assets/css/app.css",
 		"ext": "css",
-		"hash": "eee019804c2070ad9ab1eaf2dba78e98",
+		"hash": "cf0337973d5422a2f441fec25cbfec5e",
 		"version": "0.0.0",
 		"deps": [
 			"material-design-icon"
@@ -266,7 +266,7 @@
 		"handle": "hb-admin-color",
 		"path": "assets/css/admin-color.css",
 		"ext": "css",
-		"hash": "24317f605b78c9a466d5969735ca1acc",
+		"hash": "748dc8be73e698cc84b0463542560f08",
 		"version": "0.0.0",
 		"deps": [
 			"wp-admin"

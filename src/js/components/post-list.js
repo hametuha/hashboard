@@ -59,6 +59,15 @@ export const PostList = ( props ) => {
 		} );
 	};
 
+	// Get REST base from post type (handle common built-in types)
+	const getRestBase = ( type ) => {
+		const mapping = {
+			post: 'posts',
+			page: 'pages',
+		};
+		return mapping[ type ] || type;
+	};
+
 	// Fetch posts
 	const fetchPosts = useCallback( async () => {
 		setLoading( true );
@@ -74,7 +83,8 @@ export const PostList = ( props ) => {
 			}
 
 			const queryString = new URLSearchParams( query ).toString();
-			const path = `wp/v2/${ postType }?${ queryString }`;
+			const restBase = getRestBase( postType );
+			const path = `wp/v2/${ restBase }?${ queryString }`;
 
 			const response = await apiFetch( { path } );
 			setPosts( response );
@@ -120,9 +130,11 @@ export const PostList = ( props ) => {
 			/>
 
 			{ moreButton && (
-				<a href={ moreButton } className="btn btn-block btn-secondary">
-					{ moreLabel }
-				</a>
+				<div className="d-grid">
+					<a href={ moreButton } className="btn btn-secondary">
+						{ moreLabel }
+					</a>
+				</div>
 			) }
 		</div>
 	);

@@ -277,7 +277,7 @@ describe('PostList', () => {
 
 			await waitFor(() => {
 				expect(mockApiFetch).toHaveBeenCalledWith({
-					path: 'wp/v2/post?per_page=10&author%5B%5D=456'
+					path: 'wp/v2/posts?per_page=10&author%5B%5D=456'
 				});
 			});
 		});

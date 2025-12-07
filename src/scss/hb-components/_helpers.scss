@@ -17,11 +17,14 @@ strong{
 
 //
 // Text align
+// Bootstrap 5: text-left/right は text-start/end に変更されたが、後方互換性のため両方定義
 //
-.text-right{
+.text-right,
+.text-end {
   text-align: right;
 }
-.text-left{
+.text-left,
+.text-start {
   text-align: left;
 }
 .text-center{
