@@ -31,14 +31,14 @@ $child     = $args['child'] ?: '';
 				</button>
 
 				<div class="hb-header-dropdown btn-group">
-					<button class="dropdown hb-header-dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<button class="dropdown hb-header-dropdown-trigger" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<?php
 						echo get_avatar( get_current_user_id(), 96, '', $user->display_name, array(
 							'class' => 'circle responsive-img hb-header-avatar',
 						) )
 						?>
 					</button>
-					<div id="hb-sub-menu" class="dropdown-menu dropdown-menu-right hb-header-dropdown-menu">
+					<div id="hb-sub-menu" class="dropdown-menu dropdown-menu-end hb-header-dropdown-menu">
 						<?php foreach ( $hashboard->user_actions() as $link ) : ?>
 							<?php if ( 'divider' === $link['label'] ) : ?>
 								<div class="dropdown-divider"></div>
