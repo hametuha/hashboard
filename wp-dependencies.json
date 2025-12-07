@@ -210,7 +210,7 @@
 		"handle": "hb-components-input",
 		"path": "assets/js/components/input.js",
 		"ext": "js",
-		"hash": "21467e96c1002301dd0afabca969ae74",
+		"hash": "74e388f7db3bebef8e07a14a0e1f6fd0",
 		"version": "0.0.0",
 		"deps": [
 			"wp-element"
@@ -253,7 +253,7 @@
 		"handle": "hb-app",
 		"path": "assets/css/app.css",
 		"ext": "css",
-		"hash": "589b2bae0771c17e30578e61615790e7",
+		"hash": "cf0337973d5422a2f441fec25cbfec5e",
 		"version": "0.0.0",
 		"deps": [
 			"material-design-icon"

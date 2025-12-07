@@ -293,13 +293,12 @@ abstract class Screen extends ScreenPattern {
 					);
 					break;
 				case 'file':
-					$lang = explode( '_', get_locale() )[0];
-					printf( '
-						<div class="custom-file">
-							<input type="file" class="custom-file-input" name="%4$s" id="%2$s" lang="%3$s">
-							<label class="custom-file-label" for="%2$s">%1$s</label>
-						</div>
-    				', esc_html( $fields['label'] ), esc_attr( $key ), esc_attr( $lang ), esc_attr( $fields['name'] ) );
+					// Bootstrap 5: custom-file は廃止され、単純な form-control を使用
+					printf(
+						'<input type="file" class="form-control" name="%2$s" id="%1$s">',
+						esc_attr( $key ),
+						esc_attr( $fields['name'] )
+					);
 					break;
 			}
 			if ( $fields['description'] ) {

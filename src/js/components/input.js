@@ -129,7 +129,7 @@ export const InputField = ( props ) => {
 				<div className="col-sm-2 text-end">
 					<div className="switch">
 						<input
-							className="switch-input sr-only"
+							className="switch-input visually-hidden"
 							id={ forId }
 							type="checkbox"
 							checked={ editing }
