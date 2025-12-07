@@ -92,7 +92,7 @@
 		"handle": "hb-components-post-list",
 		"path": "assets/js/components/post-list.js",
 		"ext": "js",
-		"hash": "f00595e951042a15fd02d66574d31d08",
+		"hash": "be64e1fa7fd5d71fc3723e38f6db207f",
 		"version": "0.0.0",
 		"deps": [
 			"wp-api-fetch",
