@@ -15,7 +15,7 @@ $child     = $args['child'] ?: '';
 </head>
 <body><?php wp_body_open(); ?>
 
-<?php include __DIR__ . '/sidebar.php'; ?>
+<?php require __DIR__ . '/sidebar.php'; ?>
 
 <main class="hb with-side-nav">
 	<nav class="top-nav">

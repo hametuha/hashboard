@@ -75,7 +75,8 @@ class Profile extends Singleton {
 	 * @return bool
 	 */
 	public function user_can( $user_id ) {
-		if ( ! ( $user = get_userdata( $user_id ) ) ) {
+		$user = get_userdata( $user_id );
+		if ( ! $user ) {
 			return false;
 		}
 		/**

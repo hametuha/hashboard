@@ -77,7 +77,7 @@ class UserColorScheme extends Singleton {
 			echo "  --hb-{$name}-rgb: {$rgb};\n";
 
 			// Generate variations
-			if ( in_array( $name, array( 'primary', 'success', 'danger', 'warning' ) ) ) {
+			if ( in_array( $name, array( 'primary', 'success', 'danger', 'warning' ), true ) ) {
 				$darker_10 = $this->adjust_color_brightness( $color, 10, true );
 				$darker_20 = $this->adjust_color_brightness( $color, 20, true );
 				echo "  --hb-{$name}-darker-10: {$darker_10};\n";
@@ -86,7 +86,7 @@ class UserColorScheme extends Singleton {
 		}
 
 		// Theme-specific overrides
-		if ( $current_theme !== 'default' ) {
+		if ( 'default' !== $current_theme ) {
 			echo "  /* Theme: {$current_theme} */\n";
 			$this->output_theme_specific_variables( $current_theme );
 		}

@@ -29,7 +29,7 @@ class Gianism extends Singleton {
 	 * @return mixed
 	 */
 	public function add_gianism_screen( $children, $slug ) {
-		if ( 'account' == $slug ) {
+		if ( 'account' === $slug ) {
 			$children['sns'] = __( 'SNS Account', 'hashboard' );
 			add_action( 'hashboard_head', array( \Gianism\Bootstrap::get_instance(), 'enqueue_global_assets' ) );
 		}
@@ -46,7 +46,7 @@ class Gianism extends Singleton {
 	 * @return array
 	 */
 	public function add_field_groups( $fields, $user, $slug, $page ) {
-		if ( 'account' == $slug && 'sns' == $page ) {
+		if ( 'account' === $slug && 'sns' === $page ) {
 			ob_start();
 			Hashboard::load_template( 'gianism.php', array( 'user' => $user ) );
 			$html = ob_get_contents();
@@ -73,7 +73,7 @@ class Gianism extends Singleton {
 	 * @param string $name
 	 */
 	public function account_notice( $slug, $page, $name ) {
-		if ( 'account' != $slug || '' != $page ) {
+		if ( 'account' !== $slug || '' !== $page ) {
 			return;
 		}
 		$string = esc_html__( 'Your %s is generated automatically by SNS login. Please change it to valid one. Otherwise, you may be locked from your account.', 'hashboard' );

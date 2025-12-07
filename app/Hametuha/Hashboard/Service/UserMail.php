@@ -72,6 +72,7 @@ class UserMail extends Singleton {
 			  AND meta_value = %s
 			LIMIT 1
 SQL;
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $query uses placeholders, prepared below.
 		return (bool) $wpdb->get_var( $wpdb->prepare( $query, self::NEW_MAIL_KEY, $mail ) );
 	}
 
@@ -88,6 +89,7 @@ SQL;
 			WHERE meta_key = %s
 			  AND meta_value = %s
 SQL;
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $query uses placeholders, prepared below.
 		return (int) $wpdb->get_var( $wpdb->prepare( $query, self::MAIL_HASH_KEY, $hash ) );
 	}
 

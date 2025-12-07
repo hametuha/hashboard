@@ -372,7 +372,7 @@ class Hashboard extends Singleton {
 				throw new \Exception( 'no screen', 404 );
 			}
 		} catch ( \Exception $e ) {
-			if ( 404 == $e->getCode() ) {
+			if ( 404 === $e->getCode() ) {
 				// Do nothing.
 				global $wp_query;
 				$wp_query->set_404();

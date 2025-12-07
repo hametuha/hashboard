@@ -235,7 +235,8 @@ class UserPicture extends Singleton {
 		// Search user meta
 		if ( $user_id && $this->has_profile_pic( $user_id ) ) {
 			$attachment_id = get_user_meta( $user_id, $this->user_meta_key, true );
-			if ( $url = wp_get_attachment_image_url( $attachment_id, $size ) ) {
+			$url           = wp_get_attachment_image_url( $attachment_id, $size );
+			if ( $url ) {
 				$args['url'] = $url;
 			}
 		}
@@ -272,7 +273,7 @@ class UserPicture extends Singleton {
 	 */
 	public function is_available_for( $user_id, $attachment_id ) {
 		$post = get_post( $attachment_id );
-		if ( ! $post || $post->post_author != $user_id || ! get_post_meta( $attachment_id, $this->post_meta_key, true ) ) {
+		if ( ! $post || (int) $post->post_author !== (int) $user_id || ! get_post_meta( $attachment_id, $this->post_meta_key, true ) ) {
 			return false;
 		} else {
 			return true;

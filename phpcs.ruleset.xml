@@ -27,6 +27,7 @@
 		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames" />
 		<exclude name="Universal.Operators.DisallowShortTernary.Found" />
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
+		<exclude name="WordPress.WP.I18n.NoHtmlWrappedStrings" />
 	</rule>
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
