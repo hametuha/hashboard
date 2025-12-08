@@ -9,7 +9,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Hashboard gives you a user-oriented and extensible dashboard.
 
-![Hashboard Test](https://github.com/hametuha/hashboard/workflows/Hashboard%20Test/badge.svg?branch=master)
+[![Hashboard Test](https://github.com/hametuha/hashboard/actions/workflows/test.yml/badge.svg)](https://github.com/hametuha/hashboard/actions/workflows/test.yml)
 
 ## Description
 
