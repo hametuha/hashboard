@@ -61,11 +61,24 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Start WordPress Environment
-        run: npm start &
+        # Detach with nohup so the process survives this step, and capture all
+        # output to a log file so startup failures are visible (a bare
+        # `npm start &` discards output and can be reaped when the step ends).
+        run: |
+          nohup npm start > wp-env-start.log 2>&1 &
+          echo "wp-env start launched (pid $!)"
 
       - name: Wait for WordPress to be ready
         run: |
-          timeout 600 bash -c 'until curl -f http://localhost:8888/wp-json/wp/v2/posts > /dev/null 2>&1; do sleep 5; done'
+          if ! timeout 600 bash -c 'until curl -fsS http://localhost:8888/?rest_route=/wp/v2/types > /dev/null 2>&1; do sleep 5; done'; then
+            echo "::error::WordPress did not become ready within 600s."
+            echo "----- wp-env start log -----"
+            cat wp-env-start.log || true
+            echo "----- docker ps -----"
+            docker ps -a || true
+            exit 1
+          fi
+          echo "WordPress is ready."
 
       - name: Run E2E Tests
         run: npm run test:e2e
