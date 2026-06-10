@@ -1,7 +1,8 @@
 /*!
  * Period Picker component for React
  *
- * @deps @wordpress/element, @wordpress/i18n
+ * WordPress dependencies (wp-element / wp-i18n) are detected automatically
+ * from the import statements below, so no manual @deps annotation is needed.
  */
 
 import { useState, useEffect, useMemo, useCallback, useRef } from '@wordpress/element';

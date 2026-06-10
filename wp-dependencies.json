@@ -110,8 +110,6 @@
 		"hash": "e0e9e0f91b42892cad60b85a99eb831a",
 		"version": "0.0.0",
 		"deps": [
-			"@wordpress/element",
-			"@wordpress/i18n",
 			"wp-element",
 			"wp-i18n"
 		],
