@@ -63,6 +63,12 @@ jobs:
         # (Hametuha\Hashboard\Tests\). Without this, every request fatals.
         run: composer install --no-interaction --prefer-dist
 
+      - name: Build test assets
+        # assets/test/* (the kitchen-sink mount scripts the E2E specs rely on)
+        # is gitignored and generated from tests/src/js. Without this build the
+        # scripts 404 and the React components never mount.
+        run: npm run build:js:test
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
