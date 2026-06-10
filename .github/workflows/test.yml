@@ -57,6 +57,12 @@ jobs:
       - name: Run NPM install
         run: npm install
 
+      - name: Install Composer dependencies
+        # hashboard.php requires vendor/autoload.php, and the kitchen-sink mock
+        # app used by the E2E specs is registered via the dev autoloader
+        # (Hametuha\Hashboard\Tests\). Without this, every request fatals.
+        run: composer install --no-interaction --prefer-dist
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
