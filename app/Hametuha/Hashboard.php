@@ -54,6 +54,10 @@ class Hashboard extends Singleton {
 		add_filter( 'query_vars', array( $this, 'query_vars' ) );
 		add_filter( 'rewrite_rules_array', array( $this, 'rewrite_rules' ) );
 		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+		// Prevent WordPress canonical redirect on Hashboard pages.
+		// The editor rewrite uses `p={id}` which would otherwise make
+		// redirect_canonical() bounce to the public permalink of that post.
+		add_filter( 'redirect_canonical', array( $this, 'redirect_canonical' ) );
 		add_action( 'template_redirect', array( $this, 'template_redirect' ), 99999 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ), 11 );
 		add_action( 'init', array( $this, 'register_screens' ), 1 );
@@ -290,6 +294,24 @@ class Hashboard extends Singleton {
 	}
 
 	/**
+	 * Disable canonical redirect on Hashboard pages.
+	 *
+	 * The editor rewrite maps to `p={id}`, so WordPress core's
+	 * redirect_canonical() treats the request as a post and redirects to that
+	 * post's public permalink. Returning false for any Hashboard request keeps
+	 * the user on the dashboard route.
+	 *
+	 * @param string|false $redirect_url The redirect URL.
+	 * @return string|false
+	 */
+	public function redirect_canonical( $redirect_url ) {
+		if ( get_query_var( 'hashboard' ) ) {
+			return false;
+		}
+		return $redirect_url;
+	}
+
+	/**
 	 * Handle request
 	 *
 	 * @param \WP_Query $wp_query
@@ -342,6 +364,15 @@ class Hashboard extends Singleton {
 				if ( $reflection->isAbstract() || ! $reflection->isSubclassOf( Editor::class ) ) {
 					throw new \Exception( 'no editor', 404 );
 				}
+				/**
+				 * hashboard_enqueue_scripts
+				 *
+				 * Fires before a Hashboard page (screen or editor) is rendered.
+				 * Hook here to enqueue scripts/styles for dashboard pages.
+				 *
+				 * @param string $slug Current page slug. 'editor' for editor pages.
+				 */
+				do_action( 'hashboard_enqueue_scripts', $slug );
 				/** @var Editor $class_name */
 				$class_name::get_instance()->render( get_query_var( 'p' ), wp_get_current_user() );
 				exit;
@@ -358,10 +389,12 @@ class Hashboard extends Singleton {
 				/**
 				 * hashboard_enqueue_scripts
 				 *
-				 * Print scripts
+				 * Fires before a Hashboard page (screen or editor) is rendered.
+				 * Hook here to enqueue scripts/styles for dashboard pages.
 				 *
-				 * @param bool $is_head
+				 * @param string $slug Current page slug.
 				 */
+				do_action( 'hashboard_enqueue_scripts', $slug );
 				self::load_template( 'body.php', array(
 					'page'      => $screen,
 					'hashboard' => self::get_instance(),
