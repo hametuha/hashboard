@@ -57,15 +57,38 @@ jobs:
       - name: Run NPM install
         run: npm install
 
+      - name: Install Composer dependencies
+        # hashboard.php requires vendor/autoload.php, and the kitchen-sink mock
+        # app used by the E2E specs is registered via the dev autoloader
+        # (Hametuha\Hashboard\Tests\). Without this, every request fatals.
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Build test assets
+        # assets/test/* (the kitchen-sink mount scripts the E2E specs rely on)
+        # is gitignored and generated from tests/src/js. Without this build the
+        # scripts 404 and the React components never mount.
+        run: npm run build:js:test
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Start WordPress Environment
-        run: npm start &
+        # `wp-env start` is blocking: it returns only after the containers are
+        # up AND WordPress is installed. Run it synchronously (NOT `npm start &`)
+        # so the following steps don't race against an unfinished install.
+        run: npm start
 
-      - name: Wait for WordPress to be ready
+      - name: Verify WordPress is installed
+        run: npx wp-env run cli wp core is-installed
+
+      - name: Configure pretty permalinks
+        # Hashboard routes (/dashboard/...) rely on rewrite rules. A fresh
+        # wp-env defaults to plain permalinks, so Apache returns 404 for these
+        # paths. Enable a pretty structure and flush so the rules + .htaccess
+        # are generated.
         run: |
-          timeout 600 bash -c 'until curl -f http://localhost:8888/wp-json/wp/v2/posts > /dev/null 2>&1; do sleep 5; done'
+          npx wp-env run cli wp rewrite structure '/%postname%/' --hard
+          npx wp-env run cli wp rewrite flush --hard
 
       - name: Run E2E Tests
         run: npm run test:e2e
