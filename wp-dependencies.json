@@ -107,9 +107,10 @@
 		"handle": "hb-components-period-picker",
 		"path": "assets/js/components/period-picker.js",
 		"ext": "js",
-		"hash": "e0e9e0f91b42892cad60b85a99eb831a",
+		"hash": "c032f4150c0d7b939322ae7d3d5b2960",
 		"version": "0.0.0",
 		"deps": [
+			"hb-components-date-range",
 			"wp-element",
 			"wp-i18n"
 		],

@@ -2,7 +2,11 @@
  * Period Picker component for React
  *
  * WordPress dependencies (wp-element / wp-i18n) are detected automatically
- * from the import statements below, so no manual @deps annotation is needed.
+ * from the import statements below. The DateRange component is consumed via
+ * the runtime global ( window.hb.components.DateRange ), which cannot be
+ * expressed as an import, so it is declared explicitly with @deps.
+ *
+ * @deps hb-components-date-range
  */
 
 import { useState, useEffect, useMemo, useCallback, useRef } from '@wordpress/element';
@@ -33,7 +37,7 @@ export const PeriodPicker = ( props ) => {
 	const initializedRef = useRef( false );
 
 	// Get DateRange component from global registry
-	const DateRange = window.hb?.components?.dateRange;
+	const DateRange = window.hb?.components?.DateRange;
 
 	// Calculate date range based on mode
 	const calculate = useCallback( ( days ) => {
@@ -142,7 +146,7 @@ export const PeriodPicker = ( props ) => {
 
 			<div className="hb-period-dates" style={ dateRangeStyle }>
 				{ DateRange ? (
-					<DateRange onDateChanged={ datePickerHandler } />
+					<DateRange onPeriodChanged={ datePickerHandler } />
 				) : (
 					<p className="text-muted">DateRange component not available</p>
 				) }

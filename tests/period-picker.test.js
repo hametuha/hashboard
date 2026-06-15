@@ -5,13 +5,15 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-// Mock DateRange component
-const mockDateRange = jest.fn(({ onDateChanged }) => {
-	return React.createElement('div', { 
+// Mock DateRange component.
+// DateRange exposes an `onPeriodChanged` callback and is registered in the
+// global registry under the PascalCase key `DateRange` (see issue #44).
+const mockDateRange = jest.fn(({ onPeriodChanged }) => {
+	return React.createElement('div', {
 		'data-testid': 'date-range',
 		onClick: () => {
-			if (onDateChanged) {
-				onDateChanged(new Date('2024-01-01'), new Date('2024-01-31'));
+			if (onPeriodChanged) {
+				onPeriodChanged(new Date('2024-01-01'), new Date('2024-01-31'));
 			}
 		}
 	}, 'Mock Date Range');
@@ -19,7 +21,7 @@ const mockDateRange = jest.fn(({ onDateChanged }) => {
 
 global.window.hb = {
 	components: {
-		dateRange: mockDateRange
+		DateRange: mockDateRange
 	}
 };
 
@@ -202,8 +204,8 @@ describe('PeriodPicker', () => {
 
 		test('shows fallback when DateRange component not available', () => {
 			// Temporarily remove DateRange
-			const originalDateRange = global.window.hb.components.dateRange;
-			delete global.window.hb.components.dateRange;
+			const originalDateRange = global.window.hb.components.DateRange;
+			delete global.window.hb.components.DateRange;
 
 			const { container } = render(
 				React.createElement(PeriodPicker, {
@@ -219,7 +221,7 @@ describe('PeriodPicker', () => {
 			expect(container).toHaveTextContent('DateRange component not available');
 
 			// Restore DateRange
-			global.window.hb.components.dateRange = originalDateRange;
+			global.window.hb.components.DateRange = originalDateRange;
 		});
 
 		test('uses custom buttons when provided', () => {

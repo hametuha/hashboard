@@ -2,8 +2,11 @@
  * Period Picker component for React
  *
  * WordPress dependencies (wp-element / wp-i18n) are detected automatically
- * from the import statements below, so no manual @deps annotation is needed.
+ * from the import statements below. The DateRange component is consumed via
+ * the runtime global ( window.hb.components.DateRange ), which cannot be
+ * expressed as an import, so it is declared explicitly with @deps.
+ *
  */
 /*!
- * @deps wp-element, wp-i18n
+ * @deps hb-components-date-range, wp-element, wp-i18n
  */
