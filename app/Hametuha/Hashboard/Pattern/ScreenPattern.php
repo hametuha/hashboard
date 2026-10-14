@@ -2,6 +2,7 @@
 
 namespace Hametuha\Hashboard\Pattern;
 
+use Hametuha\Hashboard;
 use Hametuha\SingletonPattern\Singleton;
 
 
@@ -79,6 +80,9 @@ abstract class ScreenPattern extends Singleton {
 	 * @return array
 	 */
 	public function title_parts( $title ) {
+		if ( ! $this->is_current_screen() ) {
+			return $title;
+		}
 		$title['title'] = $this->label();
 		$title['site']  = get_bloginfo( 'name' );
 		return $title;
@@ -90,9 +94,24 @@ abstract class ScreenPattern extends Singleton {
 	 * This will be used in <meta name="description" content="...">
 	 */
 	public function render_meta_description() {
+		if ( ! $this->is_current_screen() ) {
+			return;
+		}
 		$meta_description = $this->meta_description( get_query_var( 'hashboard-child' ) );
 		if ( ! empty( $meta_description ) ) {
 			echo '<meta name="description" content="' . esc_attr( $meta_description ) . '">' . "\n";
 		}
+	}
+
+	/**
+	 * Detect if this screen is the one being rendered.
+	 *
+	 * Title and meta description hooks are registered on every request,
+	 * so they must bail unless this screen is the current one.
+	 *
+	 * @return bool
+	 */
+	protected function is_current_screen() {
+		return Hashboard::is_page( $this->slug() );
 	}
 }

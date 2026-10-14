@@ -89,6 +89,15 @@ abstract class Editor extends ScreenPattern {
 	abstract public function content();
 
 	/**
+	 * Editors are routed as /editor/{slug}/{id}.
+	 *
+	 * {@inheritDoc}
+	 */
+	protected function is_current_screen() {
+		return Hashboard::is_page( 'editor' ) && get_query_var( 'hashboard-child' ) === $this->slug();
+	}
+
+	/**
 	 * Register editor.
 	 */
 	public static function register() {

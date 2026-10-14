@@ -24,6 +24,9 @@ class Bootstrap extends Singleton {
 
 		// カスタムダッシュボード
 		CustomDashboard::get_instance();
+
+		// 利用側がスクリーンを先行インスタンス化するケースを再現（#48）
+		KitchenSink::get_instance();
 	}
 
 	public function register_screens( $screens ) {
