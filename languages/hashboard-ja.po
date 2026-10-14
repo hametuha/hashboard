@@ -518,6 +518,10 @@ msgstr "Hametuha INC."
 msgid "https://hametuha.co.jp"
 msgstr "https://hametuha.co.jp"
 
+#: app/Hametuha/Hashboard.php
+msgid "You do not have permission to access this page."
+msgstr "このページを表示する権限がありません。"
+
 #~ msgid "Model %1$s has no column \"%2$s\"."
 #~ msgstr "モデル %1$s には、カラム \"%2$s\" がありません。"
 
