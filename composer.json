@@ -53,6 +53,9 @@
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"johnpbloch/wordpress-core-installer": true
+		},
+		"platform": {
+			"php": "7.4"
 		}
 	},
 	"extra": {

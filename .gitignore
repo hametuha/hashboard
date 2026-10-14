@@ -1,7 +1,6 @@
 /vendor/
 /node_modules/
 assets/*.html
-composer.lock
 /wordpress/
 /.wp_install_path
 compose.yaml
