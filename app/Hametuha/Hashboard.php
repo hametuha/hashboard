@@ -321,10 +321,57 @@ class Hashboard extends Singleton {
 			// At least, Hashboard is requested.
 			// Check authentication.
 			if ( ! current_user_can( self::get_default_capability() ) ) {
-				auth_redirect();
-				exit;
+				if ( ! is_user_logged_in() ) {
+					auth_redirect();
+					exit;
+				}
+				// Logged in but not allowed. auth_redirect() would log the user out
+				// because the auth cookie is not sent to /dashboard.
+				$this->forbidden( $wp_query );
 			}
 		}
+	}
+
+	/**
+	 * Handle a logged-in user who lacks the default capability.
+	 *
+	 * @param \WP_Query $wp_query Main query.
+	 * @return void
+	 */
+	public function forbidden( \WP_Query $wp_query ) {
+		$user = wp_get_current_user();
+		/**
+		 * hashboard_forbidden
+		 *
+		 * Fires when a logged-in user without the default capability requests a Hashboard page.
+		 *
+		 * @param \WP_User  $user     Current user.
+		 * @param \WP_Query $wp_query Main query.
+		 */
+		do_action( 'hashboard_forbidden', $user, $wp_query );
+		/**
+		 * hashboard_forbidden_redirect
+		 *
+		 * Return a URL to redirect the forbidden user to. Empty string shows 403.
+		 * Do not return a Hashboard URL, or the user will loop.
+		 *
+		 * @param string    $url      Redirect URL. Default empty.
+		 * @param \WP_User  $user     Current user.
+		 * @param \WP_Query $wp_query Main query.
+		 */
+		$redirect = apply_filters( 'hashboard_forbidden_redirect', '', $user, $wp_query );
+		if ( $redirect ) {
+			wp_safe_redirect( $redirect );
+			exit;
+		}
+		wp_die(
+			esc_html__( 'You do not have permission to access this page.', 'hashboard' ),
+			esc_html( get_status_header_desc( 403 ) ),
+			array(
+				'response'  => 403,
+				'back_link' => true,
+			)
+		);
 	}
 
 	/**
