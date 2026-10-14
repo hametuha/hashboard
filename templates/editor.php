@@ -15,7 +15,10 @@ $user = wp_get_current_user();
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
-	<title><?php echo esc_html( $args['label'] ); ?> | <?php bloginfo( 'name' ); ?></title>
+	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
+		<?php // Themes with title-tag support print the title in wp_head. ?>
+		<title><?php echo esc_html( $args['label'] ); ?> | <?php bloginfo( 'name' ); ?></title>
+	<?php endif; ?>
 	<?php
 	$args['editor']->head( $args['child'] );
 	$args['editor']->enqueue_scripts();
