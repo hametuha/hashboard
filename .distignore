@@ -1,0 +1,43 @@
+# Files excluded from the WordPress plugin zip (release.yml).
+# Composer dist archives are controlled by .gitattributes (export-ignore).
+# Leading "/" anchors to the plugin root; without it rsync also strips vendor/*/src etc.
+/.babelrc
+/.browserslistrc
+/.claude
+/.distignore
+/.editorconfig
+/.eslintrc
+/.git
+/.gitattributes
+/.github
+/.gitignore
+/.idea
+/.phpunit.result.cache
+/.wp-env.json
+/.wp_install_path
+.DS_Store
+/artifacts
+/assets/test
+/bin
+/CLAUDE.md
+/compose.template.yaml
+/compose.yaml
+/composer.lock
+/doc
+/jest.config.js
+/jest.setup.js
+/node_modules
+/package.json
+/package-lock.json
+/phpcs.ruleset.xml
+/phpunit.xml.dist
+/playwright.config.js
+/playwright-report
+/postcss.config.js
+/scripts
+/src
+/stylelint.config.js
+/test-results
+/tests
+/webpack.config.js
+/wordpress
