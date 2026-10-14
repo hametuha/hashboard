@@ -4,6 +4,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   release:
     name: Build and Upload Release Asset
@@ -13,17 +16,33 @@ jobs:
       url: https://packagist.org/packages/hametuha/hashboard
     steps:
       - name: Checkout code
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
-      - name: Build package
-        run: bash bin/cleanup.sh
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer
+
+      - name: Install production dependencies
+        # hashboard.php requires vendor/autoload.php.
+        # --no-scripts: post-install-cmd copies SCSS from the dev-only WordPress core.
+        run: composer install --no-dev --prefer-dist --no-scripts --optimize-autoloader
+
+      - name: Versioning
+        uses: tarosky/workflows/actions/versioning@main
+        with:
+          version: ${{ github.event.release.tag_name }}
+          files: hashboard.php
 
       - name: Create Zip
-        run: zip -r ${{ github.event.repository.name }}.zip ./
+        # Plugin zip is controlled by .distignore. Composer dist uses .gitattributes.
+        run: |
+          mkdir -p build/${{ github.event.repository.name }}
+          rsync -a --exclude-from=.distignore --exclude=build ./ build/${{ github.event.repository.name }}/
+          cd build && zip -rq ../${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
 
       - name: Upload release asset
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: ${{ github.event.repository.name }}.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
