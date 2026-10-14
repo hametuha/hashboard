@@ -72,9 +72,9 @@ class EditorTitleTest extends WP_UnitTestCase {
 	}
 
 	public function test_title_tag_theme_prints_one_title() {
-		// Registering title-tag after wp_loaded triggers _doing_it_wrong(), which is fine in a test.
-		$this->setExpectedIncorrectUsage( "add_theme_support( 'title-tag' )" );
-		add_theme_support( 'title-tag' );
+		// add_theme_support( 'title-tag' ) is a no-op after wp_loaded, so register it directly.
+		global $_wp_theme_features;
+		$_wp_theme_features['title-tag'] = true;
 		$html = $this->render();
 		$this->assertSame( 1, preg_match_all( '#<title>#', $html ) );
 		$this->assertStringContainsString( 'Title Editor', $html );
@@ -84,6 +84,6 @@ class EditorTitleTest extends WP_UnitTestCase {
 		remove_theme_support( 'title-tag' );
 		$html = $this->render();
 		$this->assertSame( 1, preg_match_all( '#<title>#', $html ) );
-		$this->assertStringContainsString( '<title>Title Editor | ', $html );
+		$this->assertStringContainsString( '<title>Title Editor &#8211; ', $html );
 	}
 }

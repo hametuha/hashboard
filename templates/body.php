@@ -8,6 +8,10 @@ $child     = $args['child'] ?: '';
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
+	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
+		<?php // Themes with title-tag support print the title in wp_head. Block themes don't (#50). ?>
+		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
+	<?php endif; ?>
 	<?php
 	$page->head( $child );
 	do_action( 'wp_head' );

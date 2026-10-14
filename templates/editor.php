@@ -17,7 +17,7 @@ $user = wp_get_current_user();
 	<meta charset="<?php bloginfo( 'charset' ); ?>"/>
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<?php // Themes with title-tag support print the title in wp_head. ?>
-		<title><?php echo esc_html( $args['label'] ); ?> | <?php bloginfo( 'name' ); ?></title>
+		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
 	<?php endif; ?>
 	<?php
 	$args['editor']->head( $args['child'] );
