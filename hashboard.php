@@ -14,7 +14,13 @@
 defined( 'ABSPATH' ) || die();
 
 add_action( 'plugins_loaded', function () {
-	require __DIR__ . '/vendor/autoload.php';
+	// Installed by composer, the site's autoloader has already loaded the classes.
+	if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+		require __DIR__ . '/vendor/autoload.php';
+	}
+	if ( ! class_exists( 'Hametuha\Hashboard' ) ) {
+		return;
+	}
 	Hametuha\Hashboard::get_instance();
 	if ( class_exists( 'Hametuha\Hashboard\Tests\Bootstrap' ) ) {
 		\Hametuha\Hashboard\Tests\Bootstrap::get_instance();

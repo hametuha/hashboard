@@ -3,7 +3,6 @@
 #
 /.phpcs.xml.dist export-ignore
 /phpunit.xml.dist export-ignore
-/hashboard.php export-ignore
 /.babelrc export-ignore
 /.browserslistrc export-ignore
 /.eslintrc export-ignore
