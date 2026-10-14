@@ -27,7 +27,9 @@ export const ListTable = ( props ) => {
 		renderItem,
 		renderEmpty,
 		// Dependencies for child components
-		Loading = LoadingIndicator,
+		// `LoadingComponent` is the documented name; `Loading` is kept for backward compatibility.
+		LoadingComponent = LoadingIndicator,
+		Loading = LoadingComponent,
 		PaginationComponent = Pagination,
 	} = props;
 

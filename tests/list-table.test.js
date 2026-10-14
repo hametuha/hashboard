@@ -6,12 +6,15 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 // Import compiled component after setting up mocks
+// Load dependencies first, as wp-dependencies.json does in the browser.
+require('../assets/js/components/loading.js');
+require('../assets/js/components/pagination.js');
 require('../assets/js/components/list-table.js');
-const HbListTable = window.hb?.components?.listTable;
+const HbListTable = window.hb?.components?.ListTable;
 
 // Also import the actual Pagination and Loading components if they're available
-const HbPagination = window.hb?.components?.pagination;
-const HbLoading = window.hb?.components?.loading;
+const HbPagination = window.hb?.components?.Pagination;
+const HbLoading = window.hb?.components?.LoadingIndicator;
 
 describe('HbListTable', () => {
 	// Mock data
@@ -45,10 +48,8 @@ describe('HbListTable', () => {
 		},
 	];
 
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbListTable ? describe : describe.skip;
 
-	skipIfNoComponent('ListTable Component Tests', () => {
+	describe('ListTable Component Tests', () => {
 		test('renders list with default item renderer', () => {
 			const { container } = render(
 				React.createElement(HbListTable, {
@@ -179,8 +180,9 @@ describe('HbListTable', () => {
 				})
 			);
 
-			expect(container.querySelector('.pagination-wrapper')).toBeInTheDocument();
-			expect(container).toHaveTextContent('Page 1 of 5');
+			// Real Pagination component is rendered.
+			expect(container.querySelector('ul.pagination')).toBeInTheDocument();
+			expect(container.querySelector('.page-item.active')).toHaveTextContent('1');
 		});
 
 		test('hides pagination when loading', () => {
@@ -194,8 +196,8 @@ describe('HbListTable', () => {
 				})
 			);
 
-			expect(container.querySelector('.pagination-wrapper')).not.toBeInTheDocument();
-			expect(container.querySelector('.hb-loading-overlay')).toBeInTheDocument();
+			expect(container.querySelector('ul.pagination')).not.toBeInTheDocument();
+			expect(container.querySelector('.hb-loading-indicator')).toBeInTheDocument();
 		});
 
 		test('calls onPageChanged when pagination is clicked', () => {
@@ -209,7 +211,7 @@ describe('HbListTable', () => {
 				})
 			);
 
-			const nextButton = container.querySelector('button:last-child');
+			const nextButton = screen.getByText('3').closest('button');
 			fireEvent.click(nextButton);
 
 			expect(mockPageChanged).toHaveBeenCalledWith(3);

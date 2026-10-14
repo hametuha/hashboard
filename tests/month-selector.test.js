@@ -7,13 +7,11 @@ import '@testing-library/jest-dom';
 
 // Import compiled component after setting up mocks
 require('../assets/js/components/month-selector.js');
-const HbMonthSelector = window.hb?.components?.monthSelector;
+const HbMonthSelector = window.hb?.components?.MonthSelector;
 
 describe('HbMonthSelector', () => {
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbMonthSelector ? describe : describe.skip;
 
-	skipIfNoComponent('Component Tests', () => {
+	describe('Component Tests', () => {
 		test('renders month and year selectors', () => {
 			const { container } = render(
 				React.createElement(HbMonthSelector, {
