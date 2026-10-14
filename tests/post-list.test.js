@@ -60,9 +60,8 @@ describe('PostList', () => {
 	});
 
 	// Component is compiled and available
-	const skipIfNoComponent = describe;
 
-	skipIfNoComponent('PostList Component Tests', () => {
+	describe('PostList Component Tests', () => {
 		test('renders post list with title', async () => {
 			mockApiFetch.mockResolvedValue(mockPosts);
 

@@ -28,7 +28,7 @@ HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
 
 // Import compiled component after setting up mocks
 require('../assets/js/components/bar-chart.js');
-const HbBarChart = window.hb?.components?.barChart;
+const HbBarChart = window.hb?.components?.BarChart;
 
 describe('HbBarChart', () => {
 	// Mock chart data
@@ -52,10 +52,8 @@ describe('HbBarChart', () => {
 		mockChart.update.mockClear();
 	});
 
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbBarChart ? describe : describe.skip;
 
-	skipIfNoComponent('BarChart Component Tests', () => {
+	describe('BarChart Component Tests', () => {
 		test('renders bar chart with canvas element', () => {
 			const { container } = render(
 				React.createElement(HbBarChart, {

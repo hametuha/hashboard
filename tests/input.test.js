@@ -7,13 +7,11 @@ import '@testing-library/jest-dom';
 
 // Import compiled component after setting up mocks
 require('../assets/js/components/input.js');
-const HbInputField = window.hb?.components?.input;
+const HbInputField = window.hb?.components?.InputField;
 
 describe('HbInputField', () => {
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbInputField ? describe : describe.skip;
 
-	skipIfNoComponent('InputField Component Tests', () => {
+	describe('InputField Component Tests', () => {
 		test('renders input field with title', () => {
 			const { container } = render(
 				React.createElement(HbInputField, {

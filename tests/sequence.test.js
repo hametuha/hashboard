@@ -7,8 +7,8 @@ import '@testing-library/jest-dom';
 
 // Import compiled component after setting up mocks
 require('../assets/js/components/sequence.js');
-const HbSequence = window.hb?.components?.sequence;
-const HbSequenceItem = window.hb?.components?.sequence?.SequenceItem;
+const HbSequence = window.hb?.components?.Sequence;
+const HbSequenceItem = window.hb?.components?.SequenceItem;
 
 describe('HbSequence', () => {
 	// Test data
@@ -18,10 +18,8 @@ describe('HbSequence', () => {
 		{ label: 'Step 3', icon: 'settings' },
 	];
 
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbSequence ? describe : describe.skip;
 
-	skipIfNoComponent('Sequence Component Tests', () => {
+	describe('Sequence Component Tests', () => {
 		test('renders sequence with steps', () => {
 			const { container } = render(
 				React.createElement(HbSequence, {

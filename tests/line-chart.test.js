@@ -28,7 +28,7 @@ HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
 
 // Import compiled component after setting up mocks
 require('../assets/js/components/line-chart.js');
-const HbLineChart = window.hb?.components?.lineChart;
+const HbLineChart = window.hb?.components?.LineChart;
 
 describe('HbLineChart', () => {
 	// Mock chart data
@@ -52,10 +52,8 @@ describe('HbLineChart', () => {
 		mockChart.update.mockClear();
 	});
 
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = HbLineChart ? describe : describe.skip;
 
-	skipIfNoComponent('LineChart Component Tests', () => {
+	describe('LineChart Component Tests', () => {
 		test('renders line chart with canvas element', () => {
 			const { container } = render(
 				React.createElement(HbLineChart, {

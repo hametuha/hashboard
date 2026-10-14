@@ -28,10 +28,8 @@ require('../assets/js/components/loading.js');
 const { LoadingIndicator } = window.hb?.components || {};
 
 describe( 'LoadingIndicator Component', () => {
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = LoadingIndicator ? describe : describe.skip;
 
-	skipIfNoComponent('LoadingIndicator Component Tests', () => {
+	describe('LoadingIndicator Component Tests', () => {
 		test( 'renders hidden div when loading is false', () => {
 			const { container } = render(
 				React.createElement(LoadingIndicator, { loading: false })

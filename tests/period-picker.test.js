@@ -39,10 +39,8 @@ describe('PeriodPicker', () => {
 		mockDateRange.mockClear();
 	});
 
-	// Skip tests if component is not compiled yet
-	const skipIfNoComponent = PeriodPicker ? describe : describe.skip;
 
-	skipIfNoComponent('PeriodPicker Component Tests', () => {
+	describe('PeriodPicker Component Tests', () => {
 		test('renders period picker with default buttons', () => {
 			const { container } = render(
 				React.createElement(PeriodPicker, {

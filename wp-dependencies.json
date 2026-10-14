@@ -178,7 +178,7 @@
 		"handle": "hb-components-list-table",
 		"path": "assets/js/components/list-table.js",
 		"ext": "js",
-		"hash": "4872f749a93f726315aba0cb7b3eb757",
+		"hash": "ea7290293fe0d4ec47d52c7b6a4d4360",
 		"version": "0.0.0",
 		"deps": [
 			"hb-components-pagination",
@@ -265,7 +265,7 @@
 		"handle": "hb-admin-color",
 		"path": "assets/css/admin-color.css",
 		"ext": "css",
-		"hash": "748dc8be73e698cc84b0463542560f08",
+		"hash": "d30d43fd0f3cadb39cb33e38156d6896",
 		"version": "0.0.0",
 		"deps": [
 			"wp-admin"
