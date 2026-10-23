@@ -26,7 +26,7 @@ jobs:
       - name: Install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version-file: '.node-version'
 
       - name: Run NPM install
         run: npm ci
@@ -45,14 +45,15 @@ jobs:
 
   e2e:
     name: E2E Tests
-    runs-on: ubuntu-latest
+    # Playwright does not support ubuntu-latest (26.04) yet.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@main
 
       - name: Install NPM
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version-file: '.node-version'
 
       - name: Run NPM install
         run: npm ci

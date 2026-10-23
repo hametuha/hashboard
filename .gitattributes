@@ -19,6 +19,7 @@
 
 # Development files
 /.editorconfig export-ignore
+/.node-version export-ignore
 /.wp-env.json export-ignore
 /CLAUDE.md export-ignore
 /jest.config.js export-ignore
