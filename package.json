@@ -6,10 +6,7 @@
 	"main": "gulpfile.js",
 	"engineStrict": true,
 	"engines": {
-		"node": ">=18.20.0"
-	},
-	"volta": {
-		"node": "20.19.4"
+		"node": ">=24.22.1"
 	},
 	"repository": {
 		"type": "git",

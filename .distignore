@@ -12,6 +12,7 @@
 /.github
 /.gitignore
 /.idea
+/.node-version
 /.phpunit.result.cache
 /.wp-env.json
 /.wp_install_path
