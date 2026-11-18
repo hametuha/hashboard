@@ -1,5 +1,6 @@
 <?php
-/* @var WP_User $user */
+/** @var array{user: WP_User} $args */
+$user = $args['user'];
 ?>
 <div class="hb-gravatar">
 	<?php echo get_avatar( $user->ID, 96, '', '', array( 'class' => 'hb-gravatar-img rounded mx-auto d-block' ) ); ?>

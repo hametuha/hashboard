@@ -1,7 +1,8 @@
 <?php
 use Hametuha\Hashboard;
 
-/** @var WP_User $user */
+/** @var array{user: WP_User} $args */
+$user            = $args['user'];
 $service_manager = \Gianism\Helper\ServiceManager::get_instance();
 
 
