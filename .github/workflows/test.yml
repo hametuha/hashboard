@@ -47,6 +47,9 @@ jobs:
     name: E2E Tests
     # Playwright does not support ubuntu-latest (26.04) yet.
     runs-on: ubuntu-24.04
+    # A normal run takes ~5 min. Without a limit, a hung step blocks the
+    # required check for GitHub's default 6 hours.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@main
 
@@ -71,7 +74,8 @@ jobs:
         run: npm run build:js:test
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        # Only the chromium project is configured in playwright.config.js.
+        run: npx playwright install --with-deps chromium
 
       - name: Start WordPress Environment
         # `wp-env start` is blocking: it returns only after the containers are
