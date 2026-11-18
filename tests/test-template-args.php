@@ -11,12 +11,18 @@
 class TemplateArgsTest extends WP_UnitTestCase {
 
 	public function test_gravatar_template_uses_passed_user() {
-		$user_id = self::factory()->user->create( array( 'user_email' => 'gravatar-test@example.com' ) );
-		$user    = get_userdata( $user_id );
+		$user_id = self::factory()->user->create();
+		$queried = null;
+		// Capture what get_avatar() receives instead of matching the URL hash (MD5 before WP 6.8, SHA-256 after).
+		$capture = function ( $args, $id_or_email ) use ( &$queried ) {
+			$queried = $id_or_email;
+			return $args;
+		};
+		add_filter( 'pre_get_avatar_data', $capture, 10, 2 );
 		ob_start();
-		\Hametuha\Hashboard::load_template( 'gravatar.php', array( 'user' => $user ) );
-		$html = ob_get_clean();
-		// Avatar for the passed user: Gravatar hashes the email (SHA-256 since WP 6.8).
-		$this->assertStringContainsString( hash( 'sha256', 'gravatar-test@example.com' ), $html );
+		\Hametuha\Hashboard::load_template( 'gravatar.php', array( 'user' => get_userdata( $user_id ) ) );
+		ob_end_clean();
+		remove_filter( 'pre_get_avatar_data', $capture, 10 );
+		$this->assertSame( $user_id, $queried );
 	}
 }
