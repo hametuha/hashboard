@@ -88,7 +88,7 @@ class Profile extends Singleton {
 		 * @return array
 		 */
 		$roles = apply_filters( 'hashboard_allowed_roles', $this->allowed_roles );
-		foreach ( $this->allowed_roles as $role ) {
+		foreach ( (array) $roles as $role ) {
 			if ( $user->has_cap( $role ) ) {
 				return true;
 			}
